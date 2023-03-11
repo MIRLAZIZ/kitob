@@ -1,0 +1,13 @@
+/.idea
+/.phpintel
+/.vscode
+/node_modules
+/public/vue
+/public/mix-manifest
+.env
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+package-lock.json
+.DS_Store
