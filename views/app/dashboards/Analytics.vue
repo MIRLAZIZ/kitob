@@ -1,12 +1,14 @@
 <template>
     <div>
         <b-row>
+            <b-col cols="12"> <CreateBook/></b-col>
             <b-colxx xxs="12">
                 <piaf-breadcrumb :heading="$t('menu.analytics')" />
                 <div class="separator mb-5"></div>
             </b-colxx>
         </b-row>
         <b-row>
+        
             <b-colxx sm="12" md="6" class="mb-4" v-if="loaded">
                 <website-visit-chart-card
                     :title="'Total new users'"
@@ -103,6 +105,7 @@ import SalesChartCard from "../../../containers/dashboards/SalesChartCard";
 import SmallLineCharts from "../../../containers/dashboards/SmallLineCharts";
 import SortableStaticticsRow from "../../../containers/dashboards/SortableStaticticsRow";
 import WebsiteVisitsChartCard from "../../../containers/dashboards/WebsiteVisitsChartCard";
+import CreateBook  from '../pages/bookCreate/CreateBook'
 
 import { mapGetters, mapActions } from "vuex";
 import { adminRoot } from "../../../constants/config";
@@ -118,6 +121,7 @@ export default {
         "small-line-charts": SmallLineCharts,
         "sortable-statictics-row": SortableStaticticsRow,
         "website-visit-chart-card": WebsiteVisitsChartCard,
+        CreateBook
     },
     data() {
         return {

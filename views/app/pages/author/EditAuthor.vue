@@ -9,7 +9,7 @@
                         v-if="!isLoad"
                     >
                         <div class="alerts" v-if="errorMsgs">
-                	    <div class="alert alert-danger"><template  v-for="(err) in errorMsgs" > {{err[0]}} </br></template> </div>
+                	    <div class="alert alert-danger"><template  v-for="(err) in errorMsgs" > {{err[0]}} </template> </div>
                     </div>
                         <div class="alerts" v-if="successMsg">
                             <div class="alert alert-success">{{ successMsg }}</div>
@@ -127,6 +127,7 @@ export default {
             }
             this.isLoad = false;
             // this.$router.push(`${adminRoot}/author`);
+            this.$router.push(`${adminRoot}/author/default`)
         },
     },
     created() {

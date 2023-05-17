@@ -36,7 +36,7 @@ const mutations = {
 const actions = {
     async storeImage({ commit }, file) {
         await axios
-            .post(`/api/file/store`, file)
+            .post(`${apiUrl}/api/file/store`, file)
             .then((r) => r.data)
             .then((res) => {
                 if (res.success) {
@@ -58,7 +58,7 @@ const actions = {
             },
         };
         await axios
-            .post(`/api/book/epub`, file, config)
+            .post(`${apiUrl}/api/book/epub`, file, config)
             .then((r) => r.data)
             .then((res) => {
                 if (res.success) {
@@ -68,7 +68,7 @@ const actions = {
     },
     async storeCropImage({ commit }, file) {
         await axios
-            .post(`/api/file/cropped`, file)
+            .post(`${apiUrl}/api/file/cropped`, file)
             .then((r) => r.data)
             .then((res) => {
                 if (res.success) {

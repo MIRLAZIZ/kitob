@@ -1,5 +1,6 @@
 <template>
     <user-layout>
+
         <b-row class="h-100">
             <b-colxx xxs="12" md="10" class="mx-auto my-auto">
                 <b-card class="auth-card" no-body>
@@ -19,10 +20,15 @@
                         </router-link>
                         <h6 class="mb-4">{{ $t("user.login-title") }}</h6>
 
+
+
                         <b-form
                             @submit.prevent="formSubmit"
                             class="av-tooltip tooltip-label-bottom"
                         >
+
+
+
                             <b-form-group
                                 :label="$t('user.email')"
                                 class="has-float-label mb-4"
@@ -49,6 +55,9 @@
                                 >
                             </b-form-group>
 
+
+
+
                             <b-form-group
                                 :label="$t('user.password')"
                                 class="has-float-label mb-4"
@@ -72,6 +81,9 @@
                                     символов</b-form-invalid-feedback
                                 >
                             </b-form-group>
+
+
+
                             <div
                                 class="d-flex justify-content-between align-items-center"
                             >

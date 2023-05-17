@@ -14,7 +14,7 @@ const path = require('path');
 
 mix.webpackConfig({
         output: {
-            publicPath: '/',
+            publicPath: '/public/',
             filename: '[name].js',
             chunkFilename: 'vue/chunks/[name].js',//remove "public" before npm run prod
         },

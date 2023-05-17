@@ -185,8 +185,30 @@ const data = [
             meta: { con: 'AuthorController', action: 'store' },
           },
         ]
+      },
+      {
+        id: "bookshelf",
+        icon: "iconsminds-men",
+        label: "kitob jovoni",
+        to: `${adminRoot}/bookshelf`,
+        meta: { con: 'AuthorController', action: 'index' },
+
+        subs: [
+          {
+            icon: "simple-icon-list",
+            label: "menu.list",
+            to: `${adminRoot}/bookshelf`,
+            meta: { con: 'AuthorController', action: 'index' },
+          },
+          {
+            icon: "simple-icon-magnifier-add",
+            label: "menu.add-new",
+            to: `${adminRoot}/author/add`,
+            meta: { con: 'AuthorController', action: 'store' },
+          },
+        ]
       }
-    ]
+    ]   
   },
     {
         id: "book-store",

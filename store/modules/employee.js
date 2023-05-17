@@ -59,7 +59,7 @@ const mutations = {
 const actions = {
     getUsersList({ commit }) {
         axios
-            .get(`/api/author`)
+            .get(`${apiUrl}/api/author`)
             .then((r) => r.data)
             .then((res) => {
                 if (res.success) {
@@ -69,7 +69,7 @@ const actions = {
     },
     getUsersListArray({ commit }) {
         axios
-            .get(`/api/author/list`)
+            .get(`${apiUrl}/api/author/list`)
             .then((r) => r.data)
             .then((res) => {
                 if (res.success) {
@@ -79,7 +79,7 @@ const actions = {
     },
     async getRolesApi({ commit }) {
         await axios
-            .get(`/api/role/list`)
+            .get(`${apiUrl}/api/role/list`)
             .then((r) => r.data)
             .then((res) => {
                 if (res.success) {
@@ -89,7 +89,7 @@ const actions = {
     },
     async addUser({ commit }, user) {
         await axios
-            .post(`/api/user/store`, user)
+            .post(`${apiUrl}/api/user/store`, user)
             .then((r) => r.data)
             .then((res) => {
                 commit("addNewUser", res);
@@ -97,7 +97,7 @@ const actions = {
     },
     async getTheEmployee({ commit }, id) {
         await axios
-            .get(`/api/user/edit/${id}`)
+            .get(`${apiUrl}/api/user/edit/${id}`)
             .then((r) => r.data)
             .then((res) => {
                 if (res.success) {
@@ -107,7 +107,7 @@ const actions = {
     },
     async updateEmployee({ commit }, user) {
         await axios
-            .post(`/api/user/update/${user.id}`, user.data)
+            .post(`${apiUrl}/api/user/update/${user.id}`, user.data)
             .then((r) => r.data)
             .then((res) => {
                 if (res.success) {
@@ -117,7 +117,7 @@ const actions = {
     },
     updateUser({ commit }, author) {
         axios
-            .post(`/api/author/update/${author.id}`, author)
+            .post(`${apiUrl}/api/author/update/${author.id}`, author)
             .then((r) => r.data)
             .then((res) => {
                 if (res.success) {
@@ -127,7 +127,7 @@ const actions = {
     },
     getTheUser({ commit }, id) {
         axios
-            .get(`/api/author/edit/${id}`)
+            .get(`${apiUrl}/api/author/edit/${id}`)
             .then((r) => r.data)
             .then((res) => {
                 if (res.success) {
@@ -137,7 +137,7 @@ const actions = {
     },
     deleteUser({ commit }, author) {
         axios
-            .delete(`/api/author/destroy/${author.id}`)
+            .delete(`${apiUrl}/api/author/destroy/${author.id}`)
             .then((r) => r.data)
             .then((res) => {
                 if (res.success) {
@@ -147,7 +147,7 @@ const actions = {
     },
     async deleteEmployee({ commit }, id) {
         await axios
-            .delete(`/api/user/destroy/${id}`)
+            .delete(`${apiUrl}/api/user/destroy/${id}`)
             .then((r) => r.data)
             .then((res) => {
                 if (res.success) {

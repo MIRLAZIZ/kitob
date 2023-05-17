@@ -381,6 +381,7 @@ export default {
 }
 .navbar .navbar-logo .logo {
     background: url(/assets/logos/logo-lg.png) no-repeat;
+    
     background-size: cover;
     background-position: center;
 }

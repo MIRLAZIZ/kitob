@@ -68,7 +68,7 @@ export default {
             if (this.getBookAlertMsg.error) {
                 this.errorMsg = this.getBookAlertMsg.message;
             } else {
-                this.$router.push(`${adminRoot}/book/default`);
+                this.$router.push(`${adminRoot}/`);
             }
         },
         setSelectedBook(event) {

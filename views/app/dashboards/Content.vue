@@ -14,6 +14,7 @@
             <quick-post></quick-post>
           </b-colxx>
         </b-row>
+        
       </b-colxx>
       <b-colxx lg="12" xl="6">
         <best-sellers :title="$t('dashboards.top-viewed-posts')"></best-sellers>

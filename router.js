@@ -17,7 +17,7 @@ const routes = [
         meta: {
             requiredAuth: true
         },
-        component: () => import(/* webpackChunkName: "app" */ "./views/app"),
+        component: () => import(/* webpackChunkName: "app" */ "./views/app/index.vue"),
         redirect: `${adminRoot}/dashboards/default`,
         beforeEnter: AuthRequired,
         children: [
@@ -139,7 +139,7 @@ const routes = [
                 },
                 component: () =>
                     import(
-                        /* webpackChunkName: "CategoryList" */ "./views/app/pages/book-category/Tree"
+                        /* webpackChunkName: "CategoryList" */ "./views/app/pages/book-category/Tree.vue"
                     )
             },
             {
@@ -359,7 +359,7 @@ const routes = [
                 },
                 component: () =>
                     import(
-                        /* webpackChunkName: "bookIndex" */ "./views/app/pages/book/Book"
+                        /* webpackChunkName: "bookIndex" */ "./views/app/pages/book/Book.vue"
                     )
             },
             {
@@ -370,7 +370,7 @@ const routes = [
                 },
                 component: () =>
                     import(
-                        /* webpackChunkName: "AddBook" */ "./views/app/pages/book/AddBook"
+                        /* webpackChunkName: "AddBook" */ "./views/app/pages/book/AddBook.vue"
                     )
             },
             {
@@ -747,6 +747,62 @@ const routes = [
                         /* webpackChunkName: "EditTCategory" */ "./views/app/pages/tcategory/EditTCategory"
                     )
             },
+
+
+            {
+                path: "bookshelf",
+                meta: {
+                    action: "bookshelf",
+                    subject: "bookshelf"
+                },
+                component: () =>
+                    import(
+                        /* webpackChunkName: "EditTCategory" */ "./views/app/pages/bookCreate/BookShelf.vue"
+                    )
+            },
+            
+
+            {
+                path: "createbook",
+                meta: {
+                    action: "createbook",
+                    subject: "createbook"
+                },
+                component: () =>
+                    import(
+                        /* webpackChunkName: "EditTCategory" */ "./views/app/pages/bookCreate/CreateBook.vue"
+                    )
+            },
+
+            {
+                path: "booksteps",
+                meta: {
+                    action: "booksteps",
+                    subject: "booksteps"
+                },
+                component: () =>
+                    import(
+                        /* webpackChunkName: "EditTCategory" */ "./views/app/pages/bookCreate/BookSteps.vue"
+                    )
+            },
+            {
+                path: "booksteps/:id",
+                meta: {
+                    action: "booksteps",
+                    subject: "booksteps"
+                },
+                component: () =>
+                    import(
+                        /* webpackChunkName: "EditTCategory" */ "./views/app/pages/bookCreate/BookSteps.vue"
+                    )
+            },
+            
+
+            
+
+
+
+
             {
                 path: "settings",
                 meta: {

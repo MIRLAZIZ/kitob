@@ -32,7 +32,7 @@
                 </div>
                 <div class="w-10 w-sm-100">
                     <b-badge pill :variant="statusColor(data.status)">
-                        {{ upppercase(data.status) }}
+                        {{ upppercase(data.status)}}
                     </b-badge>
                 </div>
                 <div class="w-25 w-sm-100 text-right">

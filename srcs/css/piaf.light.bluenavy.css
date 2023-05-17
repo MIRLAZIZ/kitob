@@ -347,7 +347,7 @@ hr {
 .logo-single {
   width: 110px;
   height: 35px;
-  background: url("/assets/logos/black.svg") no-repeat;
+  background: url("/assets/logos/black.png") no-repeat;
   background-position: center center;
   display: inline-block;
   margin-bottom: 60px;
@@ -1884,7 +1884,7 @@ button {
 .navbar .navbar-logo .logo {
   width: 100%;
   height: 100%;
-  background: url("/assets/logos/black.svg") no-repeat;
+  background: url("/assets/logos/black.png") no-repeat;
   background-position: center center;
 }
 
@@ -10271,7 +10271,7 @@ body:not(.no-footer) .v-contextmenu {
   display: inline-block;
   width: 100px;
   height: 30px;
-  background: url("/assets/logos/black.svg");
+  background: url("/assets/logos/black.png");
   background-repeat: no-repeat;
 }
 
@@ -10449,7 +10449,7 @@ body:not(.no-footer) .v-contextmenu {
 .landing-page .landing-page-nav .navbar-logo .dark {
   width: 120px;
   height: 40px;
-  background: url("/assets/logos/black.svg");
+  background: url("/assets/logos/black.png");
   background-repeat: no-repeat;
   display: none;
 }

@@ -49,7 +49,7 @@ const mutations = {
 const actions = {
     getAuthorsList({ commit }) {
         axios
-            .get(`/api/author`)
+            .get(`${apiUrl}/api/author`)
             .then((r) => r.data)
             .then((res) => {
                 if (res.success) {
@@ -65,7 +65,7 @@ const actions = {
     },
     getAuthorsListArray({ commit }) {
         axios
-            .get(`/api/author/list`)
+            .get(`${apiUrl}/api/author/list`)
             .then((r) => r.data)
             .then((res) => {
                 if (res.success) {
@@ -81,7 +81,7 @@ const actions = {
     },
     async addAuthor({ commit }, author) {
         await axios
-            .post(`/api/author/store`, author)
+            .post(`${apiUrl}/api/author/store`, author)
             .then((r) => r.data)
             .then((res) => {
                 commit("addNewAuthor", res);
@@ -89,7 +89,7 @@ const actions = {
     },
     async updateAuthor({ commit }, author) {
         await axios
-            .post(`/api/author/update/${author.id}`, author)
+            .post(`${apiUrl}/api/author/update/${author.id}`, author)
             .then((r) => r.data)
             .then((res) => {
                 commit("addNewAuthor", res);
@@ -97,7 +97,7 @@ const actions = {
     },
     getTheAuthor({ commit }, id) {
         axios
-            .get(`/api/author/edit/${id}`)
+            .get(`${apiUrl}/api/author/edit/${id}`)
             .then((r) => r.data)
             .then((res) => {
                 if (res.success) {
@@ -107,7 +107,7 @@ const actions = {
     },
     deleteAuthor({ commit }, author) {
         axios
-            .delete(`/api/author/destroy/${author.id}`)
+            .delete(`${apiUrl}/api/author/destroy/${author.id}`)
             .then((r) => r.data)
             .then((res) => {
                 if (res.success) {

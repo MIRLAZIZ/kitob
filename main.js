@@ -31,6 +31,8 @@ import { getCurrentLanguage } from './utils'
 
 import { abilitiesPlugin } from "@casl/vue";
 import { ability } from "./store/index";
+import axios from 'axios';
+import toasts from './srcs/mixin/toast'
 
 Vue.use(abilitiesPlugin, ability)
 
@@ -55,6 +57,19 @@ Vue.component('piaf-breadcrumb', Breadcrumb);
 Vue.component('b-refresh-button', RefreshButton);
 Vue.component('b-colxx', Colxx);
 Vue.component('vue-perfect-scrollbar', vuePerfectScrollbar);
+Vue.mixin(toasts)
+
+const axiosIns = axios.create({
+  baseURL: "https://beta.kytab.uz",
+  timeout: 20000,
+  // You can add your headers here
+  // ================================
+  // baseURL: 'https://some-domain.com/api/',
+  // timeout: 1000,
+  // headers: {'X-Custom-Header': 'foobar'}
+})
+
+Vue.prototype.$http = axiosIns
 
 // firebase.initializeApp(firebaseConfig);
 Vue.config.productionTip = false
@@ -63,5 +78,6 @@ export default new Vue({
   i18n,
   router,
   store,
+  axiosIns,
   render: h => h(Application)
 }).$mount('#app')
