@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="px-3">
     <validation-observer ref="step2">
       <!-- --------------------elektron kitobi ISBN-------------------- -->
       <b-row class="bg-white mt-4 p-3 forFonts">

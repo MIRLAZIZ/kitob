@@ -1,14 +1,16 @@
 <template>
-  <div class="px-5">
+  <div>
     <div class="formSteps">
       <div
         class="steps"
         :class="[{ stepProcess: step === 1 }, { stepSuccessful: stepOne }]"
       >
         <div class="ml-1">
-          <span>Elektron kitobi tafsilotlari</span>
-          <br />
+          <h2>Elektron kitobi tafsilotlari</h2>
+          <img src="../../../../srcs/assets/img/book/Yes-check-icon-transparent.png" alt="">
+   
           <span>
+            
             {{
               step == 1 ? "jarayonda" : step > 1 ? "Bajarildi" : "Boshlanmagan"
             }}</span
@@ -98,16 +100,14 @@ export default {
 .formSteps {
   display: flex;
   width: 100%;
-  background: #f5f5f5;
   overflow: hidden;
-  border: 1px solid #ddd;
   border-radius: 5px;
 }
 
 .steps {
   position: relative;
-  width: 20%;
-  height: 70px;
+  width: 30%;
+  height: 100px;
   background: #f5f5f5;
   display: flex;
   justify-content: center;
@@ -115,7 +115,7 @@ export default {
 }
 
 .steps:before {
-  content: " ";
+  content: "";
   display: block;
   width: 0;
   height: 0;
@@ -131,7 +131,7 @@ export default {
 }
 
 .steps:after {
-  content: " ";
+  content: "";
   display: block;
   width: 0;
   height: 0;
@@ -148,13 +148,12 @@ export default {
 /* progress */
 .stepProcess {
   position: relative;
-  width: 20%;
-  height: 70px;
+  width: 30%;
+  height: 100px;
   background: #b1dfbbff;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #fff;
 }
 .stepProcess:after {
   content: " ";
@@ -175,13 +174,12 @@ export default {
 
 .stepSuccessful {
   position: relative;
-  width: 20%;
-  height: 70px;
+  width: 30%;
+  height: 100px;
   background: #5cb85cff;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #fff;
 }
 .stepSuccessful:after {
   content: " ";

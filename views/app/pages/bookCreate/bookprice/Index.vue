@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="px-3">
     <ValidationObserver ref="bookPrice">
       <!-- ------------------------------kitob narxi----------------------------------------- -->
       <b-row class="bg-white mt-5 p-3 forFonts">
@@ -26,7 +26,7 @@
       </b-row>
       <!-- -----------------------------------------Chegirma--------------------------------- -->
 
-      <b-row class="bg-white mt-2 p-3 forFonts">
+      <b-row class="bg-white mt-3 p-3 forFonts">
         <b-col cols="2"><p class="fontWeght">Chegirma</p></b-col>
         <b-col cols="10">
           <b-input-group class="w-50" append="%">
@@ -37,7 +37,7 @@
         ></b-col>
       </b-row>
       <!-- -----------------------------kitob ogirligi----------------------- -->
-      <b-row class="bg-white mt-2 p-3 forFonts">
+      <b-row class="bg-white mt-3 p-3 forFonts">
         <b-col cols="2"><p class="fontWeght">Kitob og'irligi</p></b-col>
         <b-col cols="10">
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, voluptas earum consectetur voluptatem itaque nulla?</p>
@@ -62,7 +62,7 @@
       </b-row>
       <!-- ---------------kitob muqovasi-------------- -->
 
-      <b-row class="bg-white mt-2 p-3 forFonts">
+      <b-row class="bg-white mt-3 p-3 forFonts">
         <b-col cols="2"><p class="fontWeght">Kitob muqovasi</p></b-col>
         <b-col cols="10">
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, voluptas earum consectetur voluptatem itaque nulla?</p>
@@ -100,7 +100,7 @@
         </b-col>
       </b-row>
       <!-- -----------------------Sahifalar soni--------------- -->
-      <b-row class="bg-white mt-2 p-3 forFonts">
+      <b-row class="bg-white mt-3 p-3 forFonts">
         <b-col cols="2"><p class="fontWeght">Sahifalar soni</p></b-col>
         <b-col cols="10">
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, voluptas earum consectetur voluptatem itaque nulla?</p>

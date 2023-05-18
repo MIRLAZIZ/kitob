@@ -47,12 +47,8 @@
               boshqa har qanday fayl formatidan ko'ra ko'proq qo'shimcha
               qurilmalar uchun elektron kitoblarni o'qiydi.
             </p>
-            <div >
-              <div
-                
-                style="position: relative"
-                v-if="!book.epubfile"
-              >
+            <div>
+              <div style="position: relative" v-if="!book.epubfile">
                 <input
                   ref="epub"
                   type="file"
@@ -61,8 +57,8 @@
                   @change="setEpubFile($event, 'ebook')"
                 />
                 <b-button @click="$refs.epub.click()" variant="primary">
-                  <i class="simple-icon-notebook"></i> Epub file
-                  yuklang</b-button
+                  <i class="simple-icon-notebook"></i>
+                  Epub file yuklang</b-button
                 >
 
                 <!-- <span>{{ $t("book.ebook") }}</span> -->
@@ -112,10 +108,7 @@
                     :src="params.coverImg"
                     ref="cropperImgoptions"
                   ></cropper>
-                  <button
-                    type="button"
-                    @click="cropImg('cropperImgoptions')"
-                  >
+                  <button type="button" @click="cropImg('cropperImgoptions')">
                     <i class="simple-icon-crop"></i>
                   </button>
                 </div>
@@ -248,9 +241,9 @@
                       placeholder="ism"
                     />
                   </b-form-group>
-                  <p class="text-danger">{{ errors[0] }}</p> 
-                  </validation-provider
-              ></b-col>
+                  <p class="text-danger">{{ errors[0] }}</p>
+                </validation-provider></b-col
+              >
               <b-col cols="6">
                 <validation-provider
                   #default="{ errors }"
@@ -380,7 +373,6 @@
               #default="{ errors }"
               name="categorya"
               rules="required"
-              
             >
               <b-row>
                 <b-col cols="6">
@@ -388,7 +380,6 @@
                     :options="categoryListArray"
                     v-model="book.category"
                     :multiple="true"
-                    
                     :style="{ border: errors[0] ? '1px solid #E28275FF' : '' }"
                 /></b-col>
               </b-row>
