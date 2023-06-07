@@ -770,7 +770,35 @@
     "twoCategories": "Ikkitagacha toifani tanlang",
     "save": "Saqlash",
     "requiredPrice": "Kitob narxini kiritish talab qilinadi!",
-    "requiredTheft": "Kitobning vaznini kiritish shart!"
+    "requiredTheft": "Kitobning vaznini kiritish shart!",
+    "requiredDiscription": "Tavsif kiritish talab qilinadi",
+    "CreateOrder": "Buyurtma yaratish",
+    "create": "Buyrtma yaratish",
+    "createUser": "Foydalanuvchi yaratish",
+    "firstName": "Ism",
+    "lastName": "Familiya",
+    "address": "Manzil",
+    "email": "Elektron pochta",
+    "telephone": "Telifon nomeri",
+    "additionalPhone": "Qo'shimcha telifon nomeri",
+    "age": "Yoshi",
+    "exstraNumer": "Qo'shimcha telifon nomeri qo'shish",
+    "discount": "Chegirma",
+    "hardCover": "Qattiq muqovali",
+    "softCover": "Yumshoq muqovali",
+    "telphoneRegistr": "Bu telefon raqami ro'yxatdan o'tgan",
+    "information": "Iltimos, ma'lumotlarni to'ldiring.",
+    "numberMax": "Telefon 12 ta belgidan oshmasligi kerak."
+
+
+  
+
+
+
+
+
+
+
 
   }
 }

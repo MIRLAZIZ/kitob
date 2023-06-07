@@ -52,7 +52,7 @@ const mutations = {
 const actions = {
     async getInvoicesList({ commit }) {
         await axios
-            .get(`/api/payment/invoice`)
+            .get(`${apiUrl}/api/payment/invoice`)
             .then((r) => r.data)
             .then((res) => {
                 //commit("addNewUzcard", res.result);
@@ -61,7 +61,7 @@ const actions = {
     },
     async getMyInvoices({ commit }) {
         await axios
-            .get(`/api/payment/my-invoice`)
+            .get(`${apiUrl}/api/payment/my-invoice`)
             .then((r) => r.data)
             .then((res) => {
                 commit("setMyInvoices", res.result);
@@ -69,7 +69,7 @@ const actions = {
     },
     async getUzcardsList({ commit }) {
         await axios
-            .get(`/api/payment/uzcard`)
+            .get(`${apiUrl}/api/payment/uzcard`)
             .then((r) => r.data)
             .then((res) => {
                 commit("setUzcards", res.result);
@@ -77,7 +77,7 @@ const actions = {
     },
     async getUzcardsListSelect({ commit }) {
         await axios
-            .get(`/api/payment/uzcard-list`)
+            .get(`${apiUrl}/api/payment/uzcard-list`)
             .then((r) => r.data)
             .then((res) => {
                 commit("setUzcardsSelect", res.result);
@@ -85,7 +85,7 @@ const actions = {
     },
     async getTheUzcard({ commit }, id) {
         await axios
-            .get(`/api/ticket/edit/${id}`)
+            .get(`${apiUrl}/api/ticket/edit/${id}`)
             .then((r) => r.data)
             .then((res) => {
                 commit("currentUzcard", res.result);
@@ -93,7 +93,7 @@ const actions = {
     },
     async getTheOrder({ commit }, id) {
         await axios
-            .get(`/api/payment/invoice/${id}`)
+            .get(`${apiUrl}/api/payment/invoice/${id}`)
             .then((r) => r.data)
             .then((res) => {
                 commit("setCurrentOrder", res.result);
@@ -101,7 +101,7 @@ const actions = {
     },
     async addUzcard({ commit }, uzcard) {
         await axios
-            .post(`/api/payment/token`, uzcard)
+            .post(`${apiUrl}/api/payment/token`, uzcard)
             .then((r) => r.data)
             .then((res) => {
                 commit("addNewUzcard", res);
@@ -110,7 +110,7 @@ const actions = {
     },
     async createOrder({ commit }, uzcard) {
         await axios
-            .post(`/api/payment/order/create`, uzcard)
+            .post(`${apiUrl}/api/payment/order/create`, uzcard)
             .then((r) => r.data)
             .then((res) => {
                 commit("addNewUzcard", res);
@@ -118,7 +118,7 @@ const actions = {
     },
     async completeOrder({ commit }, uzcard) {
         await axios
-            .post(`/api/payment/order/complete`, uzcard)
+            .post(`${apiUrl}/api/payment/order/complete`, uzcard)
             .then((r) => r.data)
             .then((res) => {
                 commit("addNewUzcard", res);
@@ -126,7 +126,7 @@ const actions = {
     },
     async destroyUzcard({ commit }, id) {
         await axios
-            .delete(`/api/ticket/destroy/${id}`)
+            .delete(`${apiUrl}/api/ticket/destroy/${id}`)
             .then((r) => r.data)
             .then((res) => {
                 commit("addNewUzcard", res);
@@ -134,7 +134,7 @@ const actions = {
     },
     async cancelOrderOfFargo({ commit }, id) {
         await axios
-            .get(`/api/payment/fargo/cancel/${id}`)
+            .get(`${apiUrl}/api/payment/fargo/cancel/${id}`)
             .then((r) => r.data)
             .then((res) => {
                 commit("addNewUzcard", res);
@@ -142,7 +142,7 @@ const actions = {
     },
     async createFargoOrder({ commit }, invoice_id) {
         await axios
-            .post(`/api/payment/create-fargo-order`, invoice_id)
+            .post(`${apiUrl}/api/payment/create-fargo-order`, invoice_id)
             .then((r) => r.data)
             .then((res) => {
                 commit("addNewUzcard", res);
@@ -150,7 +150,7 @@ const actions = {
     },
     async getFargoOrderStatus({ commit }, data) {
         await axios
-            .post(`/api/payment/check-fargo-order`, data)
+            .post(`${apiUrl}/api/payment/check-fargo-order`, data)
             .then((r) => r.data)
             .then((res) => {
                 commit("addNewUzcard", res);

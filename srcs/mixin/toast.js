@@ -10,15 +10,11 @@ export default {
            
           })
     },
-    $_errorToast(erorTitle) {
-      this.$toast({
-        component: ToastificationContent,
-        props: {
-          title:erorTitle,
-          icon: 'AlertCircleIcon',
-          variant: 'primary',
-        },
+    errorToast(error) {
+      this.$bvToast.toast(error, {
+        variant: "danger",
+        solid: true
       })
-    },
+    }
   },
 }

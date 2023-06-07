@@ -277,7 +277,7 @@ export default {
         },
         apiUrl() {
             // return `${this.apiBase}?sort=${this.sort.column}&page=${this.page}&per_page=${this.perPage}&search=${this.search}&role_id=${this.role_id}`;
-            return `/api/user?name=${this.name}&page=${this.page}&per_page=${this.perPage}&email=${this.email}&phone=${this.phone}&gender=${this.gender}&status=${this.status}&role_id=${this.role_id}`;
+            return `${apiUrl}/api/user?name=${this.name}&page=${this.page}&per_page=${this.perPage}&email=${this.email}&phone=${this.phone}&gender=${this.gender}&status=${this.status}&role_id=${this.role_id}`;
         },
         roles() {
             let option = {

@@ -88,7 +88,7 @@ const actions = {
             });
     },
     async addUser({ commit }, user) {
-        await axios
+      return await axios
             .post(`${apiUrl}/api/user/store`, user)
             .then((r) => r.data)
             .then((res) => {

@@ -5,7 +5,10 @@
       <b-row class="bg-white mt-5 p-3 forFonts">
         <b-col cols="2"><p class="fontWeght">Kitob naxi</p></b-col>
         <b-col cols="10">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, voluptas earum consectetur voluptatem itaque nulla?</p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi,
+            voluptas earum consectetur voluptatem itaque nulla?
+          </p>
           <ValidationProvider
             #default="{ errors }"
             name="kitob narxi"
@@ -40,7 +43,10 @@
       <b-row class="bg-white mt-3 p-3 forFonts">
         <b-col cols="2"><p class="fontWeght">Kitob og'irligi</p></b-col>
         <b-col cols="10">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, voluptas earum consectetur voluptatem itaque nulla?</p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi,
+            voluptas earum consectetur voluptatem itaque nulla?
+          </p>
           <ValidationProvider
             #default="{ errors }"
             name="kitob o'girligi"
@@ -65,7 +71,10 @@
       <b-row class="bg-white mt-3 p-3 forFonts">
         <b-col cols="2"><p class="fontWeght">Kitob muqovasi</p></b-col>
         <b-col cols="10">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, voluptas earum consectetur voluptatem itaque nulla?</p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi,
+            voluptas earum consectetur voluptatem itaque nulla?
+          </p>
           <b-row
             v-for="(item, index) in participants"
             :key="index"
@@ -103,12 +112,24 @@
       <b-row class="bg-white mt-3 p-3 forFonts">
         <b-col cols="2"><p class="fontWeght">Sahifalar soni</p></b-col>
         <b-col cols="10">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, voluptas earum consectetur voluptatem itaque nulla?</p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi,
+            voluptas earum consectetur voluptatem itaque nulla?
+          </p>
           <b-input-group class="w-50">
             <b-form-input type="number"></b-form-input> </b-input-group
         ></b-col> </b-row
     ></ValidationObserver>
+
+    <b-row v-show="success">
+      <b-col cols="12" class="forBordered">
+        <h3>Bo'sh qoldirilgan maydonni to'ldiring</h3></b-col
+      >
+    </b-row>
     <div class="d-flex justify-content-end mt-3">
+      <b-button variant="success" class="ml-1" @click="$emit('stepValue', 2)"
+        >back</b-button
+      >
       <b-button variant="success" class="ml-1" @click="bookPriceSend"
         >next</b-button
       >
@@ -142,6 +163,7 @@ export default {
         discount: null,
       },
       cover: ["Qatiq muqovali", "Yumshoq muqovali"],
+      success: false,
     };
   },
 
@@ -166,10 +188,11 @@ export default {
     bookPriceSend() {
       this.$refs.bookPrice.validate().then((success) => {
         if (success) {
-        //   this.CREATE_BOOK(this.book);
+          //   this.CREATE_BOOK(this.book);
 
-        console.log('success');
+          console.log("success");
         } else {
+          this.success = true;
           console.log("xatooooooooooooooooooo");
         }
       });

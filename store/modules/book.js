@@ -18,6 +18,9 @@ const state = {
   alertMsg: null,
   msgTableOfContent: null,
   gallery: [],
+  serchBooks: {
+    result: [],
+  },
 };
 
 const getters = {
@@ -31,6 +34,7 @@ const getters = {
   getFoundBook: (state) => state.found_books,
   getMsgTableOfContent: (state) => state.msgTableOfContent,
   getGallery: (state) => state.gallery,
+  GET_BOOKS_SEARCH: (state) => state.serchBooks,
 };
 
 const mutations = {
@@ -136,6 +140,7 @@ const actions = {
         commit("setSearchResult", res.result);
       });
   },
+
   async searchBookAutocomplete({ commit }, query) {
     await axios
       .get(`${apiUrl}/api/book/public-search?name=${query.name}`)
@@ -144,6 +149,19 @@ const actions = {
         commit("setSearchResultAuto", res.result.books);
       });
   },
+  async SEARCH_COUPON(_, query) {
+    await axios
+    .post(`${apiUrl}/api/coupon/check?code=${query}`)
+  },
+
+  async SEARCH_BOOK_NAME(context, query) {
+    await axios
+      .get(`${apiUrl}/api/book/public-search?name=${query}`)
+      .then((res) => {
+        context.state.serchBooks = res;
+      });
+  },
+
   async actionFindBook({ commit }, book) {
     await axios
       .post(`${apiUrl}/api/book/find`, book)

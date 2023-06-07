@@ -7,12 +7,14 @@
       >
         <div class="ml-1">
           <h2>Elektron kitobi tafsilotlari</h2>
-          <img src="../../../../srcs/assets/img/book/Yes-check-icon-transparent.png" alt="">
-   
+          <span v-show="step == 1"><img :src="img" alt="" /></span>
+          <span v-show="step > 1"
+            ><img :src="imgCheck" alt="" class="checkWidth"
+          /></span>
+
           <span>
-            
             {{
-              step == 1 ? "jarayonda" : step > 1 ? "Bajarildi" : "Boshlanmagan"
+              step == 1 ? "Jarayonda" : step > 1 ? "Bajarildi" : "Boshlanmagan"
             }}</span
           >
         </div>
@@ -22,8 +24,11 @@
         :class="[{ stepProcess: step === 2 }, { stepSuccessful: stepTwo }]"
       >
         <div class="ml-1">
-          <span>Elektron kitob mazmuni</span>
-          <br />
+          <h2>Elektron kitob mazmuni</h2>
+          <span v-show="step < 3"><img :src="img" alt="" /></span>
+          <span v-show="step > 2"
+            ><img :src="imgCheck" alt="" class="checkWidth"
+          /></span>
           <span>
             {{
               step == 2 ? "jarayonda" : step > 2 ? "Bajarildi" : "Boshlanmagan"
@@ -36,8 +41,8 @@
         :class="[{ stepProcess: step === 3 }, { stepSuccessful: stepThree }]"
       >
         <div class="ml-1">
-          <span>Elektron kitob narxi</span>
-          <br />
+          <h2>Elektron kitob narxi</h2>
+          <span><img :src="img" alt="" /></span>
           <span>
             {{
               step == 3 ? "jarayonda" : step > 3 ? "Bajarildi" : "Boshlanmagan"
@@ -49,19 +54,21 @@
     <div v-show="step == 1">
       <BookDetils @stepOne="stepstwo" />
     </div>
-    <div v-show="step == 2"><BookContent @stepOne="stepstwo" /></div>
-    <div v-show="step == 3"><Bookprice @stepOne="stepstwo" /></div>
+    <div v-show="step == 2">
+      <BookContent @stepOne="stepstwo" @stepValue="stepsValue1" />
+    </div>
+    <div v-show="step == 3">
+      <Bookprice @stepOne="stepstwo" @stepValue="stepsValue1" />
+    </div>
   </div>
 </template>
 <script>
-import { BButton } from "bootstrap-vue";
 import BookDetils from "./bookStepOne/BookDetails.vue";
 import BookContent from "./bookContent/Index.vue";
 import Bookprice from "./bookprice/Index.vue";
 
 export default {
   components: {
-    BButton,
     BookDetils,
     BookContent,
     Bookprice,
@@ -72,6 +79,8 @@ export default {
       stepOne: false,
       stepTwo: false,
       stepThree: false,
+      img: "../../../../srcs/assets/img/book/warning.svg",
+      imgCheck: "../../../../srcs/assets/img/book/check-mark-icon-free-png.png",
     };
   },
   methods: {
@@ -93,6 +102,16 @@ export default {
         this.stepTwo = true;
       }
     },
+    stepsValue1(e) {
+      console.log(e);
+      if (e == 1) {
+        this.step = e;
+        this.stepOne = false;
+      } else {
+        this.step = e;
+        this.stepTwo = false;
+      }
+    },
   },
 };
 </script>
@@ -108,7 +127,7 @@ export default {
   position: relative;
   width: 30%;
   height: 100px;
-  background: #f5f5f5;
+  background: #d0d8d0ff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -121,7 +140,7 @@ export default {
   height: 0;
   border-top: 50px solid transparent;
   border-bottom: 50px solid transparent;
-  border-left: 30px solid #ddd;
+  border-left: 30px solid #fff;
   position: absolute;
   top: 50%;
   margin-top: -50px;
@@ -137,7 +156,7 @@ export default {
   height: 0;
   border-top: 50px solid transparent;
   border-bottom: 50px solid transparent;
-  border-left: 30px solid #f5f5f5;
+  border-left: 30px solid #d0d8d0ff;
   position: absolute;
   top: 50%;
   margin-top: -50px;
@@ -194,5 +213,9 @@ export default {
   margin-top: -50px;
   left: 100%;
   z-index: 2;
+}
+.checkWidth {
+  width: 40px;
+  height: 40px;
 }
 </style>

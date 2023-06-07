@@ -15,11 +15,12 @@
               docx faylini yuklang. KDP-da qo'llab-quvvatlanadigan fayl turlari
               haqida ko'proq bilib oling .
             </p>
+
             <input
               type="file"
               ref="docsfile"
               class="d-none"
-              accept=".doc,.pdf"
+              :accept="getAcceptValue"
               @change="onFileChange"
             />
 
@@ -124,6 +125,7 @@
                   class="d-none"
                   @change="coverImgFile"
                 />
+
                 <b-button @click="$refs.coverfile.click()" variant="primary"
                   >Muqova faylingizni yuklang</b-button
                 ></b-col
@@ -280,7 +282,7 @@
               quyida qo'shishingiz bilan bir xil ketma-ketlikda paydo bo'ladi.
             </p>
             <p><b>Ishtirokchilar </b>(ixtiyoriy)</p>
-            <div class="col-md-6 mb-4">
+            <div class="col-md-6 mb-4 px-0">
               <label class="form-group has-float-label">
                 <v-select
                   multiple
@@ -381,6 +383,7 @@
                     v-model="book.category"
                     :multiple="true"
                     :style="{ border: errors[0] ? '1px solid #E28275FF' : '' }"
+                    style="font-size:15px !important ;"
                 /></b-col>
               </b-row>
               <br />
@@ -403,6 +406,7 @@
           </b-col>
         </b-row>
       </validation-observer>
+      
 
       <div class="d-flex justify-content-end mt-3">
         <b-button variant="success" class="ml-1" @click="BookDetails"
@@ -487,6 +491,7 @@ export default {
           participantLastname: null,
         },
       ],
+      success: false,
     };
   },
   methods: {
@@ -503,6 +508,7 @@ export default {
 
           this.$emit("stepOne", 2);
         } else {
+          this.success = true;
           console.log("xatooooooooooooooooooo");
         }
       });
@@ -576,6 +582,9 @@ export default {
   },
   computed: {
     ...mapGetters(["categoryListArray", "authorsListArray"]),
+    getAcceptValue() {
+      return this.$route.params.id == '2' ? '.3gp,.aa,.aac,.aax,.act,.aiff,.alac,.amr,.ape,.au,.awb,.dss,.dvf,.flac,.gsm,.iklax,.ivs,.m4a,.m4b,.m4p,.mmf,.mp3,.mpc' : '.doc,.pdf';
+    },
   },
   watch: {
     getUploadProgressNum(newCount, oldCount) {
@@ -652,4 +661,12 @@ export default {
 .jv_input_file_label i {
   cursor: pointer;
 }
+.forBordered {
+  border: 2px solid #ad3947ff;
+  border-radius: 10px;
+  border-left: 13px solid #ad3947ff;
+  padding: 10px;
+  margin: 10px 0;
+}
 </style>
+

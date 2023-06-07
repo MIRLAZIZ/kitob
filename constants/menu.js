@@ -252,6 +252,12 @@ const data = [
     subs: [
       {
         icon: "simple-icon-list",
+        label: "createBook.CreateOrder",
+        to: `${adminRoot}/order/create`,
+        meta: { con: 'PaymentController', action: 'index' },
+      },
+      {
+        icon: "simple-icon-list",
         label: "menu.list",
         to: `${adminRoot}/order/default`,
         meta: { con: 'PaymentController', action: 'index' },

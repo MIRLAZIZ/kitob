@@ -31,7 +31,7 @@ const mutations = {
 const actions = {
     async getCouponList({ commit }) {
         await axios
-            .get(`/api/coupon`)
+            .get(`${apiUrl}/api/coupon`)
             .then((r) => r.data)
             .then((res) => {
                 commit("setCoupon", res);
@@ -39,7 +39,7 @@ const actions = {
     },
     async getTheCoupon({ commit }, id) {
         await axios
-            .get(`/api/coupon/edit/${id}`)
+            .get(`${apiUrl}/api/coupon/edit/${id}`)
             .then((r) => r.data)
             .then((res) => {
                 commit("currentCoupon", res.result);
@@ -47,7 +47,7 @@ const actions = {
     },
     async addCoupon({ commit }, coupon) {
         await axios
-            .post(`/api/coupon/store`, coupon)
+            .post(`${apiUrl}/api/coupon/store`, coupon)
             .then((r) => r.data)
             .then((res) => {
                 commit("addNewCoupon", res);
@@ -55,7 +55,7 @@ const actions = {
     },
     async updateCoupon({ commit }, coupon) {
         await axios
-            .post(`/api/coupon/update/${coupon.id}`, coupon)
+            .post(`${apiUrl}/api/coupon/update/${coupon.id}`, coupon)
             .then((r) => r.data)
             .then((res) => {
                 commit("addNewCoupon", res);
@@ -63,7 +63,7 @@ const actions = {
     },
     async destroyCoupon({ commit }, id) {
         await axios
-            .delete(`/api/coupon/destroy/${id}`)
+            .delete(`${apiUrl}/api/coupon/destroy/${id}`)
             .then((r) => r.data)
             .then((res) => {
                 commit("addNewCoupon", res);

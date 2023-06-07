@@ -1,24 +1,22 @@
 <template>
   <div>
     <b-row>
-      <b-col cols="12">
-        <router-link to="bookshelf"> kitob jovoni</router-link>
-        <span class="ml-2">yangi yaratish ></span>
-      </b-col>
       <b-col cols="12" class="mt-2"><h1>Nima yaratmoqchisiz?</h1></b-col>
     </b-row>
 
     <b-row class="createFlex">
       <b-col
-      
         class="border createData mt-2 pt-2 ml-2"
         v-for="(createData, index) in crateType"
         :key="index"
       >
         <div class="d-flex justify-content-center imgHeight">
-          <img :src="createData.img"    :style="{
-                'width': createData.id === 2 ? '70px' : '80px',
-              }"/>
+          <img
+            :src="createData.img"
+            :style="{
+              width: createData.id === 2 ? '70px' : '80px',
+            }"
+          />
         </div>
         <div style="height: 100px" class="mb-5">
           <h4 class="mt-2 text-center">{{ createData.title }}</h4>
@@ -26,8 +24,8 @@
         </div>
 
         <div class="d-flex justify-content-center">
-          <b-button variant="primary" @click="$router.push(`booksteps/${createData.id}`)"
-            ><span >{{ createData.create }}</span></b-button
+          <b-button variant="primary" @click="createBook(createData.id)"
+            ><span>{{ createData.create }}</span></b-button
           >
         </div>
       </b-col></b-row
@@ -36,6 +34,8 @@
 </template>
 <script>
 // import { BRow, BCol, BImg, BButton } from "bootstrap-vue";
+import { adminRoot } from "../../../../constants/config";
+
 export default {
   components: {},
   data() {
@@ -48,7 +48,6 @@ export default {
             "Kindle va boshqa qo'l qurilmalarida raqamli nashr qiling . Komikslar va mangalarni o'z ichiga oladi.",
           create: "Elektron kitob yaratish",
           img: "../../../../srcs/assets/img/book/elektronKitob.png",
-          
         },
         {
           id: 2,
@@ -82,10 +81,13 @@ export default {
           create: "Tarjima kitob yaratish",
           img: "../../../../srcs/assets/img/book/3.png",
         },
-        
-        
       ],
     };
+  },
+  methods: {
+    createBook(id) {
+      this.$router.push(`${adminRoot}/booksteps/${id}`);
+    },
   },
 };
 </script>
@@ -103,4 +105,3 @@ export default {
   height: 70px;
 }
 </style>
-

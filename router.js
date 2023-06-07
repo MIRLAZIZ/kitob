@@ -660,6 +660,17 @@ const routes = [
                     )
             },
             {
+                path: "order/create",
+                meta: {
+                    action: "create",
+                    subject: "PaymentController"
+                },
+                component: () =>
+                    import(
+                        /* webpackChunkName: "Order" */ "./views/app/pages/order/CreateOrder.vue"
+                    )
+            },
+            {
                 path: "order/edit/:id",
                 meta: {
                     action: "edit",

@@ -46,7 +46,7 @@ const mutations = {
 const actions = {
     async getBooktypeList({ commit },query) {
         await axios
-            .get(`/api/booktype${query}`)
+            .get(`${apiUrl}/api/booktype${query}`)
             .then((r) => r.data)
             .then((res) => {
                 commit("setBooktype", res);
@@ -54,7 +54,7 @@ const actions = {
     },
     async getWarehouseList({ commit },query) {
         await axios
-            .get(`/api/booktype/warehouse${query}`)
+            .get(`${apiUrl}/api/booktype/warehouse${query}`)
             .then((r) => r.data)
             .then((res) => {
                 commit("setWarehouse", res);
@@ -62,7 +62,7 @@ const actions = {
     },
     async editTheWarehouse({ commit }, id) {
         await axios
-            .get(`/api/booktype/warehouse/edit/${id}`)
+            .get(`${apiUrl}/api/booktype/warehouse/edit/${id}`)
             .then((r) => r.data)
             .then((res) => {
                 commit("setCurrentWarehouse", res.result);
@@ -70,7 +70,7 @@ const actions = {
     },
     async getTheBooktype({ commit }, id) {
         await axios
-            .get(`/api/booktype/edit/${id}`)
+            .get(`${apiUrl}/api/booktype/edit/${id}`)
             .then((r) => r.data)
             .then((res) => {
                 commit("currentBooktype", res.result);
@@ -78,7 +78,7 @@ const actions = {
     },
     async addBooktype({ commit }, booktype) {
         await axios
-            .post(`/api/booktype/store`, booktype)
+            .post(`${apiUrl}/api/booktype/store`, booktype)
             .then((r) => r.data)
             .then((res) => {
                 commit("addNewBooktype", res);
@@ -86,7 +86,7 @@ const actions = {
     },
     async addBooktypeByArray({ commit }, items) {
         await axios
-            .post(`/api/booktype/store-by-array`, items)
+            .post(`${apiUrl}/api/booktype/store-by-array`, items)
             .then((r) => r.data)
             .then((res) => {
                 commit("addNewBooktype", res);
@@ -94,7 +94,7 @@ const actions = {
     },
     async updateBooktypeByArray({ commit }, items) {
         await axios
-            .post(`/api/booktype/update-by-array`, items)
+            .post(`${apiUrl}/api/booktype/update-by-array`, items)
             .then((r) => r.data)
             .then((res) => {
                 commit("addNewBooktype", res);
@@ -102,7 +102,7 @@ const actions = {
     },
     async updateBooktype({ commit }, booktype) {
         await axios
-            .post(`/api/booktype/update/${booktype.id}`, booktype)
+            .post(`${apiUrl}/api/booktype/update/${booktype.id}`, booktype)
             .then((r) => r.data)
             .then((res) => {
                 commit("addNewBooktype", res);
@@ -110,7 +110,7 @@ const actions = {
     },
     async destroyBooktype({ commit }, id) {
         await axios
-            .delete(`/api/booktype/destroy/${id}`)
+            .delete(`${apiUrl}/api/booktype/destroy/${id}`)
             .then((r) => r.data)
             .then((res) => {
                 commit("addNewBooktype", res);
@@ -118,7 +118,7 @@ const actions = {
     },
     async getBookByBarCode({ commit }, code) {
         await axios
-            .get(`/api/get-book-by-barcode?code=${code}`)
+            .get(`${apiUrl}/api/get-book-by-barcode?code=${code}`)
             .then((r) => r.data)
             .then((res) => {
                 commit("setTheBook", res);

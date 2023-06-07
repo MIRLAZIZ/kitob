@@ -31,7 +31,7 @@ const mutations = {
 const actions = {
     async getSeriesList({ commit }) {
         await axios
-            .get(`/api/series`)
+            .get(`${apiUrl}/api/series`)
             .then((r) => r.data)
             .then((res) => {
                 commit("setSery", res);
@@ -39,7 +39,7 @@ const actions = {
     },
     async ActiongetTheSeries({ commit }, id) {
         await axios
-            .get(`/api/series/edit/${id}`)
+            .get(`${apiUrl}/api/series/edit/${id}`)
             .then((r) => r.data)
             .then((res) => {
                 commit("currentSery", res.result);
@@ -55,7 +55,7 @@ const actions = {
     },
     async addSeriesBook({ commit }, payload) {
         await axios
-            .post(`/api/series/add-book`, payload)
+            .post(`${apiUrl}/api/series/add-book`, payload)
             .then((r) => r.data)
             .then((res) => {
                 commit("setSeriesMsg", res);
@@ -71,7 +71,7 @@ const actions = {
     },
     async destroySeries({ commit }, id) {
         await axios
-            .delete(`/api/series/destroy/${id}`)
+            .delete(`${apiUrl}/api/series/destroy/${id}`)
             .then((r) => r.data)
             .then((res) => {
                 commit("setSeriesMsg", res);
@@ -79,7 +79,7 @@ const actions = {
     },
     async addBookToCategory({ commit }, book_id) {
         await axios
-            .post(`/api/book-category/add-book`, book_id)
+            .post(`${apiUrl}/api/book-category/add-book`, book_id)
             .then((r) => r.data)
             .then((res) => {
                 commit("addNewCategory", res);

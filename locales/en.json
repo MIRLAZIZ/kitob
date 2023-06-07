@@ -766,7 +766,33 @@
     "twoCategories": "Choose up to two categories",
     "save": "Save",
     "requiredPrice": "Entering the book price is required!",
-    "requiredTheft": "Entering the book's weight is required!"
+    "requiredTheft": "Entering the book's weight is required!",
+    "requiredDiscription": "Description entry is required",
+    "CreateOrder": "Create an order",
+    "create": "Create an order",
+    "createUser": "Create a user",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "address": "Address",
+    "email": "email",
+    "telephone": "Phone number",
+    "additionalPhone": "Additional phone number",
+    "age": "Age",
+    "exstraNumer": "Add additional phone number",
+    "discount": "Discount",
+    "hardCover": "Hard cover",
+    "softCover": "Soft cover",
+    "telphoneRegistr": "This phone number is registered",
+    "information": "Please fill in the information.",
+    "numberMax": "The phone may not be greater than 12 characters."
+
+
+
+
+
+
+
+
 
 
 

@@ -42,13 +42,15 @@
             name="tafsif"
             rules="required"
           >
-            <small class="text-danger">{{ errors[0] }}</small>
+            <p class="text-danger">{{ errors[0] ? $t('createBook.requiredDiscription') : ''}}</p>
             <editor
+            :style="{ border: errors[0] ? '1px solid #E28275FF' : '' }"
               v-model="book.description"
               initialValue
               :init="{
                 height: 300,
                 menubar: false,
+                
               }"
             ></editor>
           </validation-provider>
@@ -103,7 +105,12 @@
         </b-col>
       </b-row>
     </validation-observer>
+
+
     <div class="d-flex justify-content-end mt-3">
+      <b-button variant="success" class="ml-1" @click="$emit('stepValue', 1)"
+        >back</b-button
+      >
       <b-button variant="success" class="ml-1" @click="bookContentSend"
         >next</b-button
       >
@@ -139,6 +146,7 @@ export default {
           keyword7: null,
         },
       },
+      success: false,
     };
   },
 
@@ -150,6 +158,7 @@ export default {
           this.$emit("stepOne", 3);
           console.log("success");
         } else {
+          this.success = true;
           console.log("xatooooooooooooooooooo");
         }
       });

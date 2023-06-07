@@ -176,7 +176,7 @@ export default {
             await this.addBook();
             if (this.getBookAlertMsg.success) {
                 this.$router.push(
-                    `${adminRoot}/book/edit/${this.getBookAlertMsg.result.id}`
+                    `${adminRoot}/createbook`
                 );
             }
         }
