@@ -33,8 +33,8 @@
         <!-- Epub file -->
 
         <b-row
+          v-show="$route.params.id !== '3'"
           class="bg-white mt-3 p-3 forFonts"
-          :class="{ 'mt-5': $route.params.id === '3' }"
         >
           <b-col cols="2" class="fontWeght">EPUB fayli</b-col>
           <b-col cols="10">
@@ -84,7 +84,9 @@
         </b-row>
 
         <!-- ----------------------------Kindle elektron kitob qopqog'i---------------------------- -->
-        <b-row class="bg-white mt-3 p-3 forFonts"
+        <b-row
+          class="bg-white mt-3 p-3 forFonts"
+          :class="{ 'mt-5': $route.params.id === '3' }"
           ><b-col cols="2"
             ><p class="fontWeght">Elektron kitob muqovasi</p></b-col
           >
@@ -383,7 +385,7 @@
                     v-model="book.category"
                     :multiple="true"
                     :style="{ border: errors[0] ? '1px solid #E28275FF' : '' }"
-                    style="font-size:15px !important ;"
+                    style="font-size: 15px !important "
                 /></b-col>
               </b-row>
               <br />
@@ -406,7 +408,6 @@
           </b-col>
         </b-row>
       </validation-observer>
-      
 
       <div class="d-flex justify-content-end mt-3">
         <b-button variant="success" class="ml-1" @click="BookDetails"
@@ -583,7 +584,9 @@ export default {
   computed: {
     ...mapGetters(["categoryListArray", "authorsListArray"]),
     getAcceptValue() {
-      return this.$route.params.id == '2' ? '.3gp,.aa,.aac,.aax,.act,.aiff,.alac,.amr,.ape,.au,.awb,.dss,.dvf,.flac,.gsm,.iklax,.ivs,.m4a,.m4b,.m4p,.mmf,.mp3,.mpc' : '.doc,.pdf';
+      return this.$route.params.id == "2"
+        ? ".3gp,.aa,.aac,.aax,.act,.aiff,.alac,.amr,.ape,.au,.awb,.dss,.dvf,.flac,.gsm,.iklax,.ivs,.m4a,.m4b,.m4p,.mmf,.mp3,.mpc"
+        : ".doc,.pdf";
     },
   },
   watch: {
@@ -669,4 +672,3 @@ export default {
   margin: 10px 0;
 }
 </style>
-

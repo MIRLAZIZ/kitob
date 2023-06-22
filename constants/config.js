@@ -3,6 +3,8 @@ export const adminRoot = "/app";
 export const searchPath = `${adminRoot}/pages/miscellaneous/search`;
 export const buyUrl = "https://1.envato.market/nEyZa";
 export const apiUrl =  "https://beta.kytab.uz";
+// export const apiUrl =  "http://192.168.88.41:8000";
+
 export const appUrl =
     process.env.NODE_ENV == "development"
         ? process.env.MIX_APP_URL

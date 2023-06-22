@@ -13,20 +13,17 @@
               <b-form-input v-model="search" />
             </b-input-group>
           </b-form-group>
-          <!-- <pre>
-          {{ GET_BOOKS_SEARCH }}
-</pre
-          > -->
+
           <span
             v-if="
               GET_BOOKS_SEARCH.result &&
-              GET_BOOKS_SEARCH.result.data &&
-              GET_BOOKS_SEARCH.result.data[0] &&
-              GET_BOOKS_SEARCH.result.data[0].name
+              GET_BOOKS_SEARCH.result.books &&
+              GET_BOOKS_SEARCH.result.books[0] &&
+              GET_BOOKS_SEARCH.result.books[0].name
             "
           >
             <b-row
-              v-for="(book, index) in GET_BOOKS_SEARCH.result.data"
+              v-for="(book, index) in GET_BOOKS_SEARCH.result.books"
               :key="index"
             >
               <b-col class="bookHover" cols="12" @click="bookSelect(book.id)"
@@ -37,56 +34,59 @@
 
           <h3
             v-show="
-              GET_BOOKS_SEARCH.result && GET_BOOKS_SEARCH.result.from == null
+              GET_BOOKS_SEARCH.result &&
+              GET_BOOKS_SEARCH.result.books &&
+              !GET_BOOKS_SEARCH.result.books[0] &&
+              showBookData
             "
             class="text-danger"
           >
             Siz qidirgan kitob ombordan topilmadi
           </h3>
         </b-col>
-       
 
-        <b-col cols="12"  >
-          <b-row>
-            <b-col cols="5" class="">
+        <b-col cols="12" v-if="bookData.length">
+          <b-row
+            v-for="(book, index) in bookData"
+            :key="index"
+            class="border mt-2 pt-3 pr-3"
+          >
+            <b-col cols="5">
               <label for="">{{ $t("forms.book") }}</label>
               <h6 class="text-dark mb-0">
-                <span v-if="bookData && bookData.name">{{
-                  bookData.name
-                }}</span>
+                <span v-if="book && book.name">{{ book.name }}</span>
               </h6>
               <p class="text-muted text-small mb-0">
-                <span
-                  v-if="
-                    bookData && bookData.author[0] && bookData.author[0].fio
-                  "
-                  @change="bookChange(bookData.id)"
-                  >({{ bookData.author[0].fio }})
+                <span v-if="book && book.author && book.author"
+                  >({{ book.author }})
                 </span>
               </p>
             </b-col>
             <b-col cols="7" class="">
               <b-row>
                 <!-- ------------------------kitob muqovasi------------------------ -->
-                <b-col cols="3" class="p-0"
+
+                <b-col cols="3" class="p-0" v-if="book && book.cover"
                   ><label for="">{{ $t("book.cover") + ":" }}</label>
-                  <b-form-select
+                  <!-- <b-form-select
                     class=""
                     v-model="cover"
                     @change="bookChange"
-                    :options="options"
+                    :options="bookData.cover"
                   ></b-form-select
-                ></b-col>
+                > -->
+                  <p class="border bookData">{{ book.cover }}</p>
+                </b-col>
                 <!-- ------------------ombordagi kitoblar soni------------------ -->
                 <b-col cols="3" class="p-0">
                   <label for="">obmordagi kitob soni:</label>
-                  <p class="border bookData">10</p>
+                  <p class="border bookData">{{ book.quantity }}</p>
                   <!-- <b-form-input disabled type="number" class="" /> -->
                 </b-col>
                 <!-- ------------------------kitob narxi------------------------ -->
                 <b-col cols="3" class="p-0">
                   <label for="">{{ $t("forms.price") + ":" }}</label>
-                  <p class="border bookData">50000</p>
+                  <p class="border bookData">{{ book.price }} so'm</p>
                 </b-col>
                 <!-- ------------------kitob soni------------------ -->
 
@@ -94,18 +94,17 @@
                   <label for="">{{ $t("forms.quantity") + ":" }}</label>
                   <ValidationObserver ref="bookOrder">
                     <ValidationProvider
-                    #default="{errors}"
-                    rules="required"
-                    name="narxi"
-                    
+                      #default="{ errors }"
+                      rules="required"
+                      name="narxi"
                     >
                       <b-form-input
                         class="bookData"
                         type="number"
-                        v-model="bookQuantity"
-                        @change="bookChange"
+                        v-model="book.bookQuantity"
+                        @change="bookChange(book.id, book.bookQuantity)"
                       />
-                      <p class="text-danger"> {{ errors[0] }}</p>
+                      <p class="text-danger">{{ errors[0] }}</p>
                     </ValidationProvider>
                   </ValidationObserver>
                 </b-col>
@@ -116,6 +115,7 @@
       </b-row>
     </div>
     <div class="card mt-3 p-4">
+      <!-- --------------------------coupon serch-------------------------- -->
       <b-row>
         <b-col cols="10">
           <b-form-group label="kupon izlash">
@@ -127,8 +127,45 @@
         <b-col cols="2" class="d-flex align-items-center pt-2"
           ><b-button @click="couponSearch">izlash</b-button></b-col
         >
+        <b-col cols="12" v-if="loading" class="text-center"
+          ><b-spinner variant="primary" label="Spinning"></b-spinner
+        ></b-col>
+
+        <b-col cols="12">
+          <p
+            v-if="Get_COUPON_DATA && Get_COUPON_DATA.error"
+            class="text-danger"
+          >
+            {{
+              Get_COUPON_DATA.message == "Coupon not found"
+                ? $t("createBook.couponNot")
+                : $t("createBook.CouponExpired")
+            }}
+          </p>
+          <div
+            class="list-group"
+            v-if="Get_COUPON_DATA && Get_COUPON_DATA.success"
+          >
+            <div class="list-group-item">
+              <span
+                >{{ $t("forms.type") }} :
+                {{
+                  Get_COUPON_DATA.result.type == "fixed" ? $t("nav.active") : ""
+                }}
+              </span>
+            </div>
+
+            <div class="list-group-item">
+              <span
+                >{{ $t("createBook.discount") }} :
+                {{ Get_COUPON_DATA.result.amount }}
+              </span>
+            </div>
+          </div>
+        </b-col>
       </b-row>
     </div>
+    <!-- {{ bookData }} -->
   </div>
 </template>
 <script>
@@ -151,7 +188,6 @@ export default {
         bookname: [],
         amout: 1,
       },
-      bookPrice: 100000,
       bookQuantity: null,
       cover: null,
       options: [
@@ -159,25 +195,43 @@ export default {
         { value: "yumshoq", text: this.$t("createBook.softCover") },
       ],
       search: null,
-      bookData: null,
+      bookData: [],
       coupon: null,
+      loading: false,
+      showBookData: true,
     };
   },
   methods: {
     ...mapActions(["SEARCH_BOOK_NAME", "SEARCH_COUPON"]),
-    couponSearch() {
-      this.SEARCH_COUPON(this.coupon);
+    async couponSearch() {
+      this.loading = true;
+      await this.SEARCH_COUPON(this.coupon);
+      this.loading = false;
+      if (!this.Get_COUPON_DATA.error) {
+        this.$emit("emitCoupon", this.coupon);
+      }
     },
     bookSelect(id) {
-      let selectedBook = this.GET_BOOKS_SEARCH.result.data.find(
+      let selectedBook = this.GET_BOOKS_SEARCH.result.books.find(
         (book) => book.id === id
       );
-      this.$emit("selectBook", selectedBook);
-      this.bookData = selectedBook;
-      this.GET_BOOKS_SEARCH.result.data = [];
+      if (this.bookData.length) {
+        this.bookData.forEach((item) => {
+          if (item.id !== id) {
+            this.bookData.push(selectedBook);
+          }
+        });
+      } else {
+        this.bookData.push(selectedBook)
+      }
+
+      // this.bookData.push(selectedBook)
+      this.GET_BOOKS_SEARCH.result.books = [];
+      this.showBookData = false;
+      this.$emit("selectBook", this.bookData);
     },
-    bookChange() {
-      this.$emit("bookFunction", this.bookPrice, this.bookQuantity, this.cover);
+    bookChange(id, quantity) {
+      this.$emit("bookFunction", id, quantity);
     },
 
     validateForm() {
@@ -185,12 +239,16 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["GET_BOOKS_SEARCH"]),
+    ...mapGetters(["GET_BOOKS_SEARCH", "Get_COUPON_DATA"]),
   },
   watch: {
     search(newValue, oldValue) {
       if (newValue.length > 3) {
         this.SEARCH_BOOK_NAME(newValue);
+        this.showBookData = true;
+      }
+      if (newValue.length == 0) {
+        this.showBookData = false;
       }
     },
   },

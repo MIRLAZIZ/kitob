@@ -784,7 +784,13 @@
     "softCover": "Soft cover",
     "telphoneRegistr": "This phone number is registered",
     "information": "Please fill in the information.",
-    "numberMax": "The phone may not be greater than 12 characters."
+    "numberMax": "The phone may not be greater than 12 characters.",
+    "couponNot": "Coupon not found",
+    "CouponExpired": "Coupon expired",
+    "warning": "Enter user or book information"
+
+
+
 
 
 

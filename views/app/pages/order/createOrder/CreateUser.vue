@@ -11,7 +11,7 @@
         @ok.prevent="createUser"
         @show="cancelModal"
       >
-        <ValidationObserver ref="createUser">
+        <ValidationObserver ref="createUser" >
           <BRow>
             <!-- -----------------------firstName----------------------- -->
 
@@ -31,7 +31,7 @@
                     size="lg"
                 /></b-form-group>
 
-                <small class="text-danger"> {{ errors[0] }}</small>
+                <small class="text-danger"> {{ errors[0]}}</small>
               </ValidationProvider>
             </BCol>
             <!-- -----------------------lasttName----------------------- -->
@@ -204,7 +204,7 @@ export default {
   data() {
     return {
       required,
-      
+
       userData: {
         name: null,
         adress: null,
@@ -225,7 +225,7 @@ export default {
         { text: "Active", value: "active" },
         { text: "Inactive", value: "inactive" },
       ],
-      phonenumber: null
+      phonenumber: null,
     };
   },
   computed: {
@@ -256,15 +256,21 @@ export default {
             this.userData.extraPhone = [];
             this.$bvModal.hide("createuser");
           } else {
-            if (this.getUserAlertMsg.message.phone[0] =="The phone has already been taken.") {
-              this.phonenumber = this.$t('createBook.telphoneRegistr')
-            } 
-            if (this.getUserAlertMsg.message.phone[0] == "The phone may not be greater than 12 characters.") {
-              this.phonenumber = this.$t('createBook.numberMax')
+            if (
+              this.getUserAlertMsg.message.phone[0] ==
+              "The phone has already been taken."
+            ) {
+              this.phonenumber = this.$t("createBook.telphoneRegistr")
+            }
+            if (
+              this.getUserAlertMsg.message.phone[0] ==
+              "The phone may not be greater than 12 characters."
+            ) {
+              this.phonenumber = this.$t("createBook.numberMax");
             }
           }
         } else {
-          this.errorToast(this.$t('createBook.information'))
+          this.errorToast(this.$t("createBook.information"));
         }
       });
     },

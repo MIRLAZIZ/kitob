@@ -21,6 +21,7 @@ const state = {
   serchBooks: {
     result: [],
   },
+  coponData:[]
 };
 
 const getters = {
@@ -35,6 +36,7 @@ const getters = {
   getMsgTableOfContent: (state) => state.msgTableOfContent,
   getGallery: (state) => state.gallery,
   GET_BOOKS_SEARCH: (state) => state.serchBooks,
+  Get_COUPON_DATA: (state) => state.coponData
 };
 
 const mutations = {
@@ -149,16 +151,17 @@ const actions = {
         commit("setSearchResultAuto", res.result.books);
       });
   },
-  async SEARCH_COUPON(_, query) {
-    await axios
-    .post(`${apiUrl}/api/coupon/check?code=${query}`)
+  async SEARCH_COUPON(context, query) {
+    await axios.post(`${apiUrl}/api/coupon/check?code=${query}`).then((res) => {
+      context.state.coponData = res.data;
+    });
   },
 
   async SEARCH_BOOK_NAME(context, query) {
     await axios
       .get(`${apiUrl}/api/book/public-search?name=${query}`)
       .then((res) => {
-        context.state.serchBooks = res;
+        context.state.serchBooks = res.data;
       });
   },
 
@@ -284,6 +287,9 @@ const actions = {
       .then((res) => {
         commit("addNewBook", res);
       });
+  },
+  async CREATE_ORDER_BOOK(_, data) {
+    await axios.post(`${apiUrl}/api/order/create`, data);
   },
 };
 

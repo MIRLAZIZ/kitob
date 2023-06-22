@@ -13,6 +13,7 @@
     "@glidejs/glide": "^3.4.1",
     "@riophae/vue-treeselect": "^0.4.0",
     "@tinymce/tinymce-vue": "^3.2.8",
+    "@vee-validate/i18n": "^4.9.6",
     "bootstrap-vue": "^2.21.2",
     "chart.js": "2.9.3",
     "colorette": "^1.2.2",

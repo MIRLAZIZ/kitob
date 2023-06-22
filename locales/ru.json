@@ -689,7 +689,7 @@
   },
   "nav": {
     "basic": "Nav Basic",
-    "active": "Active",
+    "active": "Активный",
     "disabled": "Disabled",
     "disabled-link": "Disabled Link",
     "link": "Link",
@@ -783,7 +783,12 @@
     "hardCover": "Твердая обложка",
     "softCover": "Мягкая обложка",
     "telphoneRegistr": "Этот номер телефона зарегистрирован",
-    "information": "Пожалуйста, заполните информацию."
+    "information": "Пожалуйста, заполните информацию.",
+    "couponNot": "Купон не найден",
+    "CouponExpired": "Срок действия купона истек",
+    "warning": "Введите информацию о пользователе или книге"
+
+
 
 
 

@@ -1,6 +1,8 @@
 <template>
   <div>
     <h1>{{ $t("createBook.CreateOrder") }}</h1>
+    <!-- <pre> {{ orderBook }}</pre> -->
+
     <b-row>
       <b-col cols="12" class="card p-4">
         <b-row>
@@ -56,7 +58,7 @@
         ><OrderBook
           @bookFunction="bookData"
           @selectBook="selectBook"
-        
+          @emitCoupon="couponData"
       /></b-col>
       <b-col cols="12"
         ><PaymentType @paymentDelivery="sendData" ref="childForm"
@@ -91,10 +93,19 @@ export default {
       telNumber: null,
       showCreateUsser: false,
       lading: false,
+      orderBook: {
+        userId: null,
+        bookData: [],
+
+        couponCode: null,
+        paymentMethod: null,
+        deliveryMethod: null,
+        deliveryAddress: null,
+      },
     };
   },
   methods: {
-    ...mapActions(["FETCH_UCER_DATA"]),
+    ...mapActions(["FETCH_UCER_DATA", "CREATE_ORDER_BOOK"]),
 
     async searchPhone() {
       if (
@@ -115,6 +126,7 @@ export default {
         ) {
           this.showCreateUsser = true;
         } else {
+          this.orderBook.userId = this.GET_UCER_DATA.result.data[0].id;
           this.showCreateUsser = false;
         }
       }
@@ -130,6 +142,9 @@ export default {
 
     // to'lov turi va yetgazib berish  turlari emit orqli bola companentadan olib kelindi
     sendData(payment, delivery, deliveryAddress) {
+      this.orderBook.paymentMethod = payment;
+      this.orderBook.deliveryMethod = delivery;
+      this.orderBook.deliveryAddress = deliveryAddress;
       console.log(
         payment,
         "to'lov turi",
@@ -141,29 +156,39 @@ export default {
     },
     // kitob haqidagi input malumotlari  bola companentadan olib kelindi
 
-    bookData(bookPrice, bookQuantity, cover) {
-      console.log(
-        bookPrice,
-        "kitob narxi",
-        bookQuantity,
-        "kitob soni",
-        cover,
-        "muqova turi"
-      );
+    bookData(id, quantity) {
+      this.orderBook.bookData.forEach((items) => {
+        if (items.id == id) {
+          return (items.bookQuantity = quantity);
+        }
+      });
     },
     // kitob datalarini emit qilib bola companentada olib kelindi
     selectBook(item) {
-      console.log(item, "book data");
+      console.log(item, 'bukdata');
+      item.forEach((e) => {
+        this.orderBook.bookData.push(e);
+      });
+    },
+
+    couponData(coupon) {
+      this.orderBook.couponCode = coupon;
+      console.log(coupon, "coupon data");
     },
     saveBookData() {
-      this.$refs.childForm.$refs.payment.validate().then((success) => {
-        if (success) {
-          // Bekendga post zaprosh yuborish uchun
-          console.log("Bekendga so'rov yuborildi");
-        } else {
-          this.$notify("error", "kitob maydonini to'ldiring");
-        }
-      });
+      if (this.orderBook.userId !== null && this.orderBook.bookId !== null) {
+        this.$refs.childForm.$refs.payment.validate().then((success) => {
+          if (success) {
+            // Bekendga post zaprosh yuborish uchun
+            this.CREATE_ORDER_BOOK(this.orderBook);
+            console.log(this.orderBook, "Bekendga so'rov yuborildi");
+          } else {
+            this.$notify("error", "kitob maydonini to'ldiring");
+          }
+        });
+      } else {
+        this.$notify("error", this.$t("createBook.warning"));
+      }
     },
   },
   computed: {

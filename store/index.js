@@ -130,7 +130,7 @@ export default new Vuex.Store({
           })
           .catch((err) => {
             reject(err);
-            console.log(err, "bu errrror");
+            console.log(err.response , "bu errrrorrrrrrrrrrrrrrrrrrr");
           });
       });
     },

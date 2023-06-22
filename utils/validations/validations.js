@@ -15,6 +15,11 @@ import {
 } from 'vee-validate/dist/rules'
 import ar from 'vee-validate/dist/locale/ar.json'
 import en from 'vee-validate/dist/locale/en.json'
+//import { localize } from '@vee-validate/i18n';
+// import { setLocale } from '@vee-validate/i18n';
+
+// setLocale('ar');
+
 
 // eslint-disable-next-line object-curly-newline
 import { validatorPositive, validatorUrlValidator, validatorPassword, validatorCreditCard } from './validators'

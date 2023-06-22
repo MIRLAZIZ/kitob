@@ -40,12 +40,7 @@ export default {
   },
   data() {
     return {
-      user: {
-        name: "Mirg'iyos",
-        email: "mirgiyos@gmail.com",
-        phone: "+998936284882",
-        address: "Parkent",
-      },
+ 
     };
   },
 };

@@ -533,7 +533,7 @@
     "action": "Xarakat",
     "book": "Kitob",
     "booktype": "Kitob turi",
-    "type": "Tur",
+    "type": "Turi",
     "user-group": "Foydalanuvchilar guruhi",
     "price": "Narx",
     "quantity": "Soni",
@@ -693,7 +693,7 @@
   },
   "nav": {
     "basic": "Nav Basic",
-    "active": "Active",
+    "active": "Faol",
     "disabled": "Disabled",
     "disabled-link": "Disabled Link",
     "link": "Link",
@@ -788,7 +788,11 @@
     "softCover": "Yumshoq muqovali",
     "telphoneRegistr": "Bu telefon raqami ro'yxatdan o'tgan",
     "information": "Iltimos, ma'lumotlarni to'ldiring.",
-    "numberMax": "Telefon 12 ta belgidan oshmasligi kerak."
+    "numberMax": "Telefon 12 ta belgidan oshmasligi kerak.",
+    "couponNot": "Kupon topilmadi",
+    "CouponExpired": "Kupon muddati tugagan",
+    "warning": "Foydalanuvchi yoki  kitob ma'lumotlarini kiriting"
+    
 
 
   
