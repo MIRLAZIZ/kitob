@@ -1,26 +1,27 @@
 <template>
   <div>
+ 
     <b-row class="card p-4 mt-3">
-      <h2>Buyurtma qabul qiluvchi:</h2>
+      <h2>{{ $t('createBook.OrderTaker') }}</h2>
       <b-col cols="12">
         <div class="col-md-6 mt-3">
           <div class="list-group">
             <div class="list-group-item">
-              Name:
+              <span>{{ $t('createBook.Name') + ": " }}</span>
               <span class="text-primary" v-if="userData[0]">{{
                 userData[0].name
               }}</span>
             </div>
             <div class="list-group-item">
-              Email:
+              <span>{{ $t('createBook.email')+ ": " }}</span>
               <span v-if="userData[0]"> {{ userData[0].email }}</span>
             </div>
             <div class="list-group-item">
-              Phone:
+              <span>{{ $t('createBook.telephone')+ ": " }}</span>
               <span v-if="userData[0]"> {{ userData[0].phone }}</span>
             </div>
             <div class="list-group-item">
-              Address:
+              <span>{{ $t('createBook.address')+ ": " }}</span>
               <span v-if="userData[0]">{{ userData[0].address }}</span>
             </div>
           </div>

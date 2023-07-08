@@ -13,8 +13,9 @@ import {
   alpha_num as rule_alpha_num,
   length as rule_length,
 } from 'vee-validate/dist/rules'
-import ar from 'vee-validate/dist/locale/ar.json'
 import en from 'vee-validate/dist/locale/en.json'
+import ru from 'vee-validate/dist/locale/ru.json'
+import uz from 'vee-validate/dist/locale/uz.json'
 //import { localize } from '@vee-validate/i18n';
 // import { setLocale } from '@vee-validate/i18n';
 
@@ -72,33 +73,57 @@ export const url = extend('url', {
   message: 'URL is invalid',
 })
 
-// Install English and Arabic localizations.
+// Install English, Uzbek and Russia localizations.
 localize({
-  en: {
-    messages: en.messages,
-    names: {
-      email: 'Email',
-      password: 'Password',
+
+  oz: {
+    messages: {
+      ...uz.messages,
     },
-    fields: {
+    names: {
+      email: 'Электронная почта',
+      password: 'Пароль',
+    },
+    fields: {  
       password: {
-        min: '{_field_} is too short, you want to get hacked?',
+        min: '{_field_} слишком короткий, вы хотите, чтобы вас взломали?',
       },
     },
   },
-  ar: {
-    messages: ar.messages,
-    names: {
-      email: 'البريد الإلكتروني',
-      password: 'كلمة السر',
+
+
+en: {
+  messages: {
+    ...en.messages,
+  },
+  names: {
+    email: 'Электронная почта',
+    password: 'Пароль',
+  },
+  fields: {  
+    password: {
+      min: '{_field_} слишком короткий, вы хотите, чтобы вас взломали?',
     },
-    fields: {
+  },
+},
+
+
+  
+  ru: {
+    messages: {
+      ...ru.messages,
+    },
+    names: {
+      email: 'Электронная почта',
+      password: 'Пароль',
+    },
+    fields: {  
       password: {
-        min: 'كلمة السر قصيرة جداً سيتم اختراقك',
+        min: '{_field_} слишком короткий, вы хотите, чтобы вас взломали?',
       },
     },
   },
-})
+});
 // ////////////////////////////////////////////////////////
 // NOTE:
 // Quasar validation for reference only
@@ -108,7 +133,7 @@ localize({
 
 // export const required = (val) => {
 //   return (val && val.length > 0) || '*Field is required'
-// }
+//}
 
 // export const required_obj = (obj) => {
 //   if (obj === null || obj === undefined) return '*Field is required'

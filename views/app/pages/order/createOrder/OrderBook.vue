@@ -3,7 +3,7 @@
     <div class="card mt-3">
       <b-row class="p-4">
         <b-col>
-          <b-form-group label="kitob nomi bilan izlash">
+          <b-form-group :label="$t('createBook.bookSearch')">
             <b-input-group>
               <!-- <template #append>
                 <b-input-group-text
@@ -41,7 +41,7 @@
             "
             class="text-danger"
           >
-            Siz qidirgan kitob ombordan topilmadi
+            {{ $t('createBook.bookNot') }}
           </h3>
         </b-col>
 
@@ -79,7 +79,7 @@
                 </b-col>
                 <!-- ------------------ombordagi kitoblar soni------------------ -->
                 <b-col cols="3" class="p-0">
-                  <label for="">obmordagi kitob soni:</label>
+                  <label for="">{{ $t('createBook.bookSroge') }}</label>
                   <p class="border bookData">{{ book.quantity }}</p>
                   <!-- <b-form-input disabled type="number" class="" /> -->
                 </b-col>
@@ -96,7 +96,7 @@
                     <ValidationProvider
                       #default="{ errors }"
                       rules="required"
-                      name="narxi"
+                      :name="$t('forms.quantity')"
                     >
                       <b-form-input
                         class="bookData"
@@ -118,14 +118,15 @@
       <!-- --------------------------coupon serch-------------------------- -->
       <b-row>
         <b-col cols="10">
-          <b-form-group label="kupon izlash">
+          <b-form-group :label="$t('createBook.couponSearch')">
             <b-form-input
+            @keyup.enter="couponSearch"
               placeholer="kupon nomi"
               v-model="coupon"
             /> </b-form-group
         ></b-col>
         <b-col cols="2" class="d-flex align-items-center pt-2"
-          ><b-button @click="couponSearch">izlash</b-button></b-col
+          ><b-button @click="couponSearch">{{ $t('menu.search') }}</b-button></b-col
         >
         <b-col cols="12" v-if="loading" class="text-center"
           ><b-spinner variant="primary" label="Spinning"></b-spinner

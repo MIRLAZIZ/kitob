@@ -11,7 +11,7 @@
         @ok.prevent="createUser"
         @show="cancelModal"
       >
-        <ValidationObserver ref="createUser" >
+        <ValidationObserver ref="createUser">
           <BRow>
             <!-- -----------------------firstName----------------------- -->
 
@@ -19,19 +19,19 @@
               <ValidationProvider
                 #default="{ errors }"
                 rules="required|min:3"
-                :name="$t('createBook.firstName')"
+                :name="$t('createBook.Name')"
               >
                 <b-form-group
                   label-size="sm"
-                  :label="$t('createBook.firstName')"
+                  :label="$t('createBook.Name')"
                   ><BFormInput
                     v-model="userData.name"
-                    :placeholder="$t('createBook.firstName')"
+                    :placeholder="$t('createBook.Name')"
                     :state="errors.length > 0 ? false : null"
                     size="lg"
                 /></b-form-group>
 
-                <small class="text-danger"> {{ errors[0]}}</small>
+                <small class="text-danger"> {{ errors[0] }}</small>
               </ValidationProvider>
             </BCol>
             <!-- -----------------------lasttName----------------------- -->
@@ -187,6 +187,7 @@
             </BCol>
           </BRow>
         </ValidationObserver>
+     
       </b-modal>
     </div>
   </div>
@@ -197,6 +198,11 @@ import { required } from "../../../../../utils/validations/validations.js";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
+  // props: {
+  //   telNumber: {
+  //     type: String,
+  //   },
+  // },
   components: {
     ValidationObserver,
     ValidationProvider,
@@ -210,7 +216,7 @@ export default {
         adress: null,
         gender: null,
         age: null,
-        phone: null,
+        phone:null,
         email: null,
         extraPhone: [],
         password: "",
@@ -260,7 +266,7 @@ export default {
               this.getUserAlertMsg.message.phone[0] ==
               "The phone has already been taken."
             ) {
-              this.phonenumber = this.$t("createBook.telphoneRegistr")
+              this.phonenumber = this.$t("createBook.telphoneRegistr");
             }
             if (
               this.getUserAlertMsg.message.phone[0] ==

@@ -47,6 +47,7 @@ import storage from "./storage";
 import  bookshelf from './modules/bookshelf'
 Vue.use(Vuex);
 export const ability = appAbility;
+
 export default new Vuex.Store({
   state: {
     currentUser: isAuthActive ? currentUser : getCurrentUser(),

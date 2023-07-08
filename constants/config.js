@@ -3,7 +3,7 @@ export const adminRoot = "/app";
 export const searchPath = `${adminRoot}/pages/miscellaneous/search`;
 export const buyUrl = "https://1.envato.market/nEyZa";
 export const apiUrl =  "https://beta.kytab.uz";
-// export const apiUrl =  "http://192.168.88.41:8000";
+// export const apiUrl =  "http://kytab";
 
 export const appUrl =
     process.env.NODE_ENV == "development"
@@ -21,15 +21,15 @@ export const localeOptions = [
     { id: "ru", name: "Russkiy", direction: "ltr" },
 ];
 
-export const firebaseConfig = {
-    apiKey: "AIzaSyDe94G7L-3soXVSpVbsYlB5DfYH2L91aTU",
-    authDomain: "piaf-vue-login.firebaseapp.com",
-    databaseURL: "https://piaf-vue-login.firebaseio.com",
-    projectId: "piaf-vue-login",
-    storageBucket: "piaf-vue-login.appspot.com",
-    messagingSenderId: "557576321564",
-    appId: "1:557576321564:web:bc2ce73477aff5c2197dd9",
-};
+// export const firebaseConfig = {
+//     apiKey: "AIzaSyDe94G7L-3soXVSpVbsYlB5DfYH2L91aTU",
+//     authDomain: "piaf-vue-login.firebaseapp.com",
+//     databaseURL: "https://piaf-vue-login.firebaseio.com",
+//     projectId: "piaf-vue-login",
+//     storageBucket: "piaf-vue-login.appspot.com",
+//     messagingSenderId: "557576321564",
+//     appId: "1:557576321564:web:bc2ce73477aff5c2197dd9",
+// };
 
 export const currentUser = {
     id: 1,

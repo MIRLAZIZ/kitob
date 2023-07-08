@@ -771,7 +771,7 @@
     "CreateOrder": "Create an order",
     "create": "Create an order",
     "createUser": "Create a user",
-    "firstName": "First name",
+    "Name": "Name Surname",
     "lastName": "Last name",
     "address": "Address",
     "email": "email",
@@ -787,7 +787,23 @@
     "numberMax": "The phone may not be greater than 12 characters.",
     "couponNot": "Coupon not found",
     "CouponExpired": "Coupon expired",
-    "warning": "Enter user or book information"
+    "warning": "Enter user or book information",
+    "bookNot": "The book you were looking for was not found in the repository",
+    "userNot": "The user you are looking for was not found in the database",
+    "bookSearch": "Search by book title",
+    "bookSroge": "Quantity in storage:",
+    "couponSearch": "Search for coupon",
+    "payment": "Payment type",
+    "cash": "Cash",
+    "card": "Karta",
+    "delivery": "Delivery",
+    "bts": "BTS",
+    "yandex": "Yandex Taxi",
+    "self": "Self",
+    "diliveryAdress": "Enter the exact delivery address",
+    "OrderTaker":"Order taker:" 
+
+
 
 
 

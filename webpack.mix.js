@@ -33,3 +33,22 @@ if (mix.inProduction()) {
 // mix.browserSync({
 //     proxy: 'kitab'
 // });
+
+
+
+// module.exports = {
+//     devServer: {
+//       proxy: {
+//         '/api': {
+//           target: 'http://kytab', // Backend server manzili
+//           changeOrigin: true,
+//           pathRewrite: {
+//             '^/api': '', // So'rovlarni to'g'rilash
+//           },
+//         },
+//       },
+//     },
+//   };
+
+  
+  

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Application from './Application'
+import Application from './Application.vue'
 
 // BootstrapVue add
 import BootstrapVue from 'bootstrap-vue'
@@ -11,6 +11,7 @@ import en from './locales/en.json'
 import ru from './locales/ru.json'
 import oz from './locales/oz.json'
 import VueI18n from 'vue-i18n'
+
 import { firebaseConfig } from './constants/config'
 // Notification Component Add
 import Notifications from './components/Common/Notification'
@@ -81,3 +82,4 @@ export default new Vue({
   axiosIns,
   render: h => h(Application)
 }).$mount('#app')
+ 

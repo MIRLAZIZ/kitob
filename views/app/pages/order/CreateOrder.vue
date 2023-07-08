@@ -1,7 +1,7 @@
 <template>
   <div>
+ 
     <h1>{{ $t("createBook.CreateOrder") }}</h1>
-    <!-- <pre> {{ orderBook }}</pre> -->
 
     <b-row>
       <b-col cols="12" class="card p-4">
@@ -29,13 +29,13 @@
             cols="2"
             v-if="showCreateUsser"
             class="d-flex align-items-center pt-2"
-            ><b-button v-b-modal.createuser @click="telNumber = null"
+            ><b-button v-b-modal.createuser 
               ><i class="simple-icon-plus" /></b-button
           ></b-col>
         </b-row>
 
         <p class="text-danger" v-show="showCreateUsser">
-          Siz qidirga foydalanuvchi bazadan topilmadi
+          {{ $t('createBook.userNot') }}
         </p>
       </b-col>
 
@@ -51,7 +51,7 @@
           GET_UCER_DATA.result.data &&
           GET_UCER_DATA.result.data[0]
         "
-        ><DataUser :userData="GET_UCER_DATA.result.data"
+        >  <DataUser :userData="GET_UCER_DATA.result.data"
       /></b-col>
 
       <b-col cols="12" class="pl-0"
@@ -64,10 +64,10 @@
         ><PaymentType @paymentDelivery="sendData" ref="childForm"
       /></b-col>
       <b-col cols="12" class="d-flex justify-content-end mt-4"
-        ><b-button @click="saveBookData">saqlash</b-button></b-col
+        ><b-button @click="saveBookData">{{ $t('survey.save') }}</b-button></b-col
       >
     </b-row>
-    <CreateUser @searchUser="telNumberEmit" />
+    <CreateUser @searchUser="telNumberEmit" :telNumber="telNumber"/>
   </div>
 </template>
 <script>
@@ -78,6 +78,7 @@ import CreateUser from "./createOrder/CreateUser.vue";
 import OrderBook from "./createOrder/OrderBook.vue";
 import PaymentType from "./createOrder/PaymentType.vue";
 import { mapActions, mapGetters } from "vuex";
+import { adminRoot } from '../../../../constants/config';
 export default {
   components: {
     DataUser,
@@ -96,7 +97,6 @@ export default {
       orderBook: {
         userId: null,
         bookData: [],
-
         couponCode: null,
         paymentMethod: null,
         deliveryMethod: null,
@@ -175,20 +175,21 @@ export default {
       this.orderBook.couponCode = coupon;
       console.log(coupon, "coupon data");
     },
+    // Bekendga post zaprosh yuborish uchun
     saveBookData() {
-      if (this.orderBook.userId !== null && this.orderBook.bookId !== null) {
-        this.$refs.childForm.$refs.payment.validate().then((success) => {
-          if (success) {
-            // Bekendga post zaprosh yuborish uchun
-            this.CREATE_ORDER_BOOK(this.orderBook);
-            console.log(this.orderBook, "Bekendga so'rov yuborildi");
-          } else {
-            this.$notify("error", "kitob maydonini to'ldiring");
-          }
-        });
-      } else {
-        this.$notify("error", this.$t("createBook.warning"));
-      }
+      this.$router.push(`${adminRoot}/orderdata`)
+      // if (this.orderBook.userId !== null && this.orderBook.bookId !== null) {
+      //   this.$refs.childForm.$refs.payment.validate().then((success) => {
+      //     if (success) {
+      //       this.CREATE_ORDER_BOOK(this.orderBook);
+      //       this.$notify('success', 'Muovfiqyatli yukladi')
+      //     } else {
+      //       this.$notify("error", "kitob maydonini to'ldiring");
+      //     }
+      //   });
+      // } else {
+      //   this.$notify("error", this.$t("createBook.warning"));
+      // }
     },
   },
   computed: {

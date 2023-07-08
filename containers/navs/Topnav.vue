@@ -56,7 +56,7 @@
                 <b-dropdown
                     id="langddm"
                     class="ml-2"
-                    variant="light"
+                    variant="light"   
                     size="sm"
                     toggle-class="language-button"
                 >
@@ -194,6 +194,8 @@ import {
     setThemeColor
 } from "../../utils";
 import axios from "axios";
+import { localize } from 'vee-validate'
+
 export default {
     components: {
         "menu-icon": MenuIcon,
@@ -253,8 +255,9 @@ export default {
             if (direction !== currentDirection) {
                 setDirection(direction);
             }
-            // localStorage.setItem('currentLanguage', locale)
+            localStorage.setItem('currentLanguage', locale)
             this.setLang(locale);
+            localize(locale)
         },
         logout() {
             //if admin is logged in as some user
@@ -333,7 +336,14 @@ export default {
         const color = getThemeColor();
         this.isDarkActive = color.indexOf("dark") > -1;
     },
-    mounted() {},
+    mounted() {
+        //======================================================
+        // Bu validatsiyani messageni keraklik tilga o'zgartirib beradi
+        if(localStorage.getItem('currentLanguage')){
+            localize(localStorage.getItem('currentLanguage')) 
+        }
+        //======================================================
+    },
     watch: {
         "$i18n.locale"(to, from) {
             if (from !== to) {

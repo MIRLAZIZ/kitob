@@ -775,7 +775,7 @@
     "CreateOrder": "Buyurtma yaratish",
     "create": "Buyrtma yaratish",
     "createUser": "Foydalanuvchi yaratish",
-    "firstName": "Ism",
+    "Name": "Ism familiya",
     "lastName": "Familiya",
     "address": "Manzil",
     "email": "Elektron pochta",
@@ -791,13 +791,21 @@
     "numberMax": "Telefon 12 ta belgidan oshmasligi kerak.",
     "couponNot": "Kupon topilmadi",
     "CouponExpired": "Kupon muddati tugagan",
-    "warning": "Foydalanuvchi yoki  kitob ma'lumotlarini kiriting"
-    
-
-
-  
-
-
+    "warning": "Foydalanuvchi yoki  kitob ma'lumotlarini kiriting",
+    "bookNot": "Siz qidirgan kitob ombordan topilmadi",
+    "userNot": "Siz qidirga foydalanuvchi bazadan topilmadi",
+    "bookSearch": "Kitob nomi bo'yicha qidirish",
+    "bookSroge": "Obmordagi soni:",
+    "couponSearch": "Kuponni qidiring",
+    "payment": "To'lov turi",
+    "cash": "Naqd",
+    "card": "Card",
+    "delivery": "Yetgazib berish",
+    "bts": "BTS",
+    "yandex": "Yandex taksi",
+    "self": "O'zim",
+    "diliveryAdress": "Yetgazib berish manzilini aniqroq kiriting",
+    "OrderTaker":"Buyurtma qabul qiluvchi:" 
 
 
 

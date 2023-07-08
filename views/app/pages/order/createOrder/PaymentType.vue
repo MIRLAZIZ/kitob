@@ -3,24 +3,24 @@
     <!-- ----------------------------to'lov turi---------------------------- -->
     <ValidationObserver ref="payment">
       <b-row class="card p-4 mt-3"
-        ><h2>To'lov turi</h2>
+        ><h2>{{ $t('createBook.payment') }}</h2>
         <b-col cols="12">
           <ValidationProvider
             #default="{ errors }"
             rules="required"
-            name="to'lov turi"
+            :name="$t('createBook.payment')"
           >
             <b-form-radio
               v-model="selected"
               @change="paymentDelivery"
               value="cash"
-              >Naqd</b-form-radio
+              >{{ $t('createBook.cash') }}</b-form-radio
             >
             <b-form-radio
               v-model="selected"
               @change="paymentDelivery"
               value="card"
-              >karta</b-form-radio
+              >{{ $t('createBook.card') }}</b-form-radio
             >
             <p class="text-danger">{{ errors[0] }}</p>
           </ValidationProvider>
@@ -35,41 +35,42 @@
         <ValidationProvider
           #default="{ errors }"
           rules="required"
-          name="yetgzib berish"
+          :name="$t('createBook.delivery')"
+      
         >
           <b-form-radio
             @change="paymentDelivery"
             v-model="todeliver"
             value="bts"
-            >BTS
+            >{{ $t('createBook.bts') }}
           </b-form-radio>
           <b-form-radio
             @change="paymentDelivery"
             v-model="todeliver"
             value="yandex"
-            >Yandex.Taxi</b-form-radio
+            >{{ $t('createBook.yandex') }}</b-form-radio
           >
           <b-form-radio
             @change="paymentDelivery"
             v-model="todeliver"
             value="self "
-            >Self
+            >{{ $t('createBook.self') }}
           </b-form-radio>
           <p class="text-danger">{{ errors[0] }}</p>
         </ValidationProvider>
-
         <ValidationProvider
         #default="{errors}"
         rules="required"
-        name="yetgazib berish manzili"
+        :name="$t('createBook.diliveryAdress')"
         >
           <b-form-group
             class="mt-3"
-            label="yetgazib berish manzilini aniqroq kiriting"
+            :label="$t('createBook.diliveryAdress')"
+
           >
             <b-form-input @change="paymentDelivery" v-model="deliveryAddress"
           /></b-form-group>
-          <p class="text-danger">{{ errors[0] }}</p>
+          <p class="text-danger">{{errors[0] }}</p>
         </ValidationProvider>
       </b-col>
     </b-row>
@@ -79,6 +80,8 @@
 <script>
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import { required } from "../../../../../utils/validations/validations";
+import ar from 'vee-validate/dist/locale/ar.json';
+import en from 'vee-validate/dist/locale/en.json';
 export default {
   components: {
     ValidationObserver,
