@@ -177,19 +177,19 @@ export default {
     },
     // Bekendga post zaprosh yuborish uchun
     saveBookData() {
-      this.$router.push(`${adminRoot}/orderdata`)
-      // if (this.orderBook.userId !== null && this.orderBook.bookId !== null) {
-      //   this.$refs.childForm.$refs.payment.validate().then((success) => {
-      //     if (success) {
-      //       this.CREATE_ORDER_BOOK(this.orderBook);
-      //       this.$notify('success', 'Muovfiqyatli yukladi')
-      //     } else {
-      //       this.$notify("error", "kitob maydonini to'ldiring");
-      //     }
-      //   });
-      // } else {
-      //   this.$notify("error", this.$t("createBook.warning"));
-      // }
+      // this.$router.push(`${adminRoot}/orderdata`)
+      if (this.orderBook.userId !== null && this.orderBook.bookId !== null) {
+        this.$refs.childForm.$refs.payment.validate().then((success) => {
+          if (success) {
+            this.CREATE_ORDER_BOOK(this.orderBook);
+            this.$notify('success', 'Muovfiqyatli yukladi')
+          } else {
+            this.$notify("error", "kitob maydonini to'ldiring");
+          }
+        });
+      } else {
+        this.$notify("error", this.$t("createBook.warning"));
+      }
     },
   },
   computed: {
