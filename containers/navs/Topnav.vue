@@ -215,7 +215,7 @@ export default {
             localeOptions,
             buyUrl,
             notifications,
-            isDarkActive: false
+            isDarkActive: false 
         };
     },
     methods: {
