@@ -11,6 +11,11 @@
         @ok.prevent="createUser"
         @show="cancelModal"
       >
+
+
+
+      
+      {{ userData.name }}
         <ValidationObserver ref="createUser">
           <BRow>
             <!-- -----------------------firstName----------------------- -->
@@ -34,25 +39,7 @@
                 <small class="text-danger"> {{ errors[0] }}</small>
               </ValidationProvider>
             </BCol>
-            <!-- -----------------------lasttName----------------------- -->
-
-            <!-- <BCol md="6">
-              <ValidationProvider
-                #default="{ errors }"
-                rules="required|min:3"
-                :name="$t('createBook.lastName')"
-              >
-                <b-form-group label-size="sm" :label="$t('createBook.lastName')"
-                  ><BFormInput
-                    v-model="userData.lastName"
-                    :placeholder="$t('createBook.lastName')"
-                    :state="errors.length > 0 ? false : null"
-                    size="lg"
-                /></b-form-group>
-
-                <small class="text-danger"> {{ errors[0] }}</small>
-              </ValidationProvider>
-            </BCol> -->
+         
             <!-- -----------------------adress----------------------- -->
 
             <BCol md="6" class="">
@@ -63,7 +50,7 @@
               >
                 <b-form-group label-size="sm" :label="$t('createBook.address')">
                   <BFormInput
-                    v-model="userData.adress"
+                    v-model="userData.address"
                     :placeholder="$t('createBook.address')"
                     :state="errors.length > 0 ? false : null"
                     size="lg"
@@ -107,7 +94,7 @@
             <BCol md="6" class="">
               <ValidationProvider
                 #default="{ errors }"
-                rules="required|min:12"
+                rules="required|min:9"
                 :name="$t('createBook.telephone')"
               >
                 <b-form-group
@@ -116,7 +103,8 @@
                 >
                   <BFormInput
                     type="number"
-                    v-model="userData.phone"
+                    v-model="telNumber"
+                    :disabled="telNumber === 9"
                     :placeholder="$t('createBook.telephone')"
                     :state="errors.length > 0 ? false : null"
                     size="lg"
@@ -187,6 +175,8 @@
             </BCol>
           </BRow>
         </ValidationObserver>
+        {{userData.status }}
+        
      
       </b-modal>
     </div>
@@ -198,11 +188,11 @@ import { required } from "../../../../../utils/validations/validations.js";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-  // props: {
-  //   telNumber: {
-  //     type: String,
-  //   },
-  // },
+  props: {
+    telNumber: {
+      type: String,
+    },
+  },
   components: {
     ValidationObserver,
     ValidationProvider,
@@ -213,7 +203,7 @@ export default {
 
       userData: {
         name: null,
-        adress: null,
+        address: null,
         gender: null,
         age: null,
         phone:null,
@@ -248,6 +238,10 @@ export default {
     //   },
 
     async createUser() {
+      console.log(this.telNumber, 'fdsfafsf');
+      
+      this.userData.phone = '998' + this.telNumber
+      
       this.$refs.createUser.validate().then(async (success) => {
         if (success) {
           await this.addUser(this.userData);
@@ -282,7 +276,7 @@ export default {
     },
     cancelModal() {
       this.userData.name = null;
-      this.userData.adress = null;
+      this.userData.address = null;
       this.userData.email = null;
       this.userData.age = null;
       this.userData.gender = null;
@@ -308,6 +302,7 @@ export default {
     const password = currentDate.getTime().toString().slice(-6);
     this.userData.password = password;
     this.userData.confirm_password = password;
+    
   },
 };
 </script>

@@ -1,5 +1,6 @@
 <template>
   <div>
+   
     <div class="card mt-3">
       <b-row class="p-4">
         <b-col>
@@ -26,8 +27,37 @@
               v-for="(book, index) in GET_BOOKS_SEARCH.result.books"
               :key="index"
             >
-              <b-col class="bookHover" cols="12" @click="bookSelect(book.id)"
-                ><span>{{ book.name }}</span>
+              <b-col class="bookHover border mb-2" cols="12" @click="bookSelect(book.id)"
+                >
+               
+                  <b-col cols="3">
+                    <span>{{ book.name }}</span>
+
+                  </b-col>
+
+
+                  <b-col cols="3">
+                    
+                    <span>{{ $t("book.cover") + ":" }} {{ book.cover }}</span>
+
+                  </b-col>
+
+
+                  <b-col cols="3">
+                    
+                    <span>{{ $t("createBook.bookSroge") }} {{ book.quantity }}</span>
+
+                  </b-col>
+
+                  <b-col cols="3">
+                    
+                    <span>{{ $t("forms.price") + ":" }} {{ book.price }} so'm</span>
+
+                  </b-col>
+
+                
+                
+                
               </b-col>
             </b-row>
           </span>
@@ -41,7 +71,7 @@
             "
             class="text-danger"
           >
-            {{ $t('createBook.bookNot') }}
+            {{ $t("createBook.bookNot") }}
           </h3>
         </b-col>
 
@@ -68,18 +98,11 @@
 
                 <b-col cols="3" class="p-0" v-if="book && book.cover"
                   ><label for="">{{ $t("book.cover") + ":" }}</label>
-                  <!-- <b-form-select
-                    class=""
-                    v-model="cover"
-                    @change="bookChange"
-                    :options="bookData.cover"
-                  ></b-form-select
-                > -->
                   <p class="border bookData">{{ book.cover }}</p>
                 </b-col>
                 <!-- ------------------ombordagi kitoblar soni------------------ -->
                 <b-col cols="3" class="p-0">
-                  <label for="">{{ $t('createBook.bookSroge') }}</label>
+                  <label for="">{{ $t("createBook.bookSroge") }}</label>
                   <p class="border bookData">{{ book.quantity }}</p>
                   <!-- <b-form-input disabled type="number" class="" /> -->
                 </b-col>
@@ -101,8 +124,8 @@
                       <b-form-input
                         class="bookData"
                         type="number"
-                        v-model="book.bookQuantity"
-                        @change="bookChange(book.id, book.bookQuantity)"
+                        v-model="book.orderQuantity"
+                        @change="bookChange(book.id, book.orderQuantity)"
                       />
                       <p class="text-danger">{{ errors[0] }}</p>
                     </ValidationProvider>
@@ -120,13 +143,15 @@
         <b-col cols="10">
           <b-form-group :label="$t('createBook.couponSearch')">
             <b-form-input
-            @keyup.enter="couponSearch"
+              @keyup.enter="couponSearch"
               placeholer="kupon nomi"
               v-model="coupon"
             /> </b-form-group
         ></b-col>
         <b-col cols="2" class="d-flex align-items-center pt-2"
-          ><b-button @click="couponSearch">{{ $t('menu.search') }}</b-button></b-col
+          ><b-button @click="couponSearch">{{
+            $t("menu.search")
+          }}</b-button></b-col
         >
         <b-col cols="12" v-if="loading" class="text-center"
           ><b-spinner variant="primary" label="Spinning"></b-spinner
@@ -189,7 +214,7 @@ export default {
         bookname: [],
         amout: 1,
       },
-      bookQuantity: null,
+      orderQuantity: null,
       cover: null,
       options: [
         { value: "Qattiq", text: this.$t("createBook.hardCover") },
@@ -213,24 +238,27 @@ export default {
       }
     },
     bookSelect(id) {
-      let selectedBook = this.GET_BOOKS_SEARCH.result.books.find(
-        (book) => book.id === id
-      );
-      if (this.bookData.length) {
-        this.bookData.forEach((item) => {
-          if (item.id !== id) {
-            this.bookData.push(selectedBook);
-          }
-        });
-      } else {
-        this.bookData.push(selectedBook)
-      }
 
-      // this.bookData.push(selectedBook)
-      this.GET_BOOKS_SEARCH.result.books = [];
-      this.showBookData = false;
-      this.$emit("selectBook", this.bookData);
-    },
+  let selectedBook = this.GET_BOOKS_SEARCH.result.books.find(
+    (book) => book.id === id
+  );
+  selectedBook.orderQuantity = this.orderQuantity;
+
+  if (!this.bookData.length) {
+    this.bookData.push(selectedBook);
+  } else {
+    const bookExists = this.bookData.some((item) => item.id === id);
+    if (!bookExists) {
+      this.bookData.push(selectedBook);
+    }
+  }
+
+  this.GET_BOOKS_SEARCH.result.books = [];
+  this.showBookData = false;
+  this.$emit("selectBook", this.bookData[this.bookData.length-1]);
+  // console.log(this.bookData[0], 'buuuuuu', this.bookData.length-1);
+},
+
     bookChange(id, quantity) {
       this.$emit("bookFunction", id, quantity);
     },

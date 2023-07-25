@@ -795,13 +795,15 @@
     "couponSearch": "Search for coupon",
     "payment": "Payment type",
     "cash": "Cash",
-    "card": "Karta",
+    "card": "Card",
     "delivery": "Delivery",
     "bts": "BTS",
     "yandex": "Yandex Taxi",
     "self": "Self",
     "diliveryAdress": "Enter the exact delivery address",
-    "OrderTaker":"Order taker:" 
+    "OrderTaker":"Order taker:",
+    "bookRequrid": "Fill in the book field",
+    "customer": "Customer"
 
 
 

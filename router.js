@@ -671,7 +671,8 @@ const routes = [
                     )
             },
             {
-                path: "orderdata",
+                path: "orderdata/:id",
+                name: 'orderdata',
                 meta: {
                     action: "create",
                     subject: "PaymentController"

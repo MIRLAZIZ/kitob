@@ -1,6 +1,17 @@
 <template>
   <div>
- 
+    <pre> {{ orderBook.bookData }}</pre>
+
+    <span
+      v-if="
+        orderBook.bookData &&
+        orderBook.bookData[0] &&
+        orderBook.bookData[0].bookQuantity
+      "
+    >
+      {{ orderBook.bookData[0].orderQuantity }}</span
+    >
+
     <h1>{{ $t("createBook.CreateOrder") }}</h1>
 
     <b-row>
@@ -29,13 +40,13 @@
             cols="2"
             v-if="showCreateUsser"
             class="d-flex align-items-center pt-2"
-            ><b-button v-b-modal.createuser 
+            ><b-button v-b-modal.createuser
               ><i class="simple-icon-plus" /></b-button
           ></b-col>
         </b-row>
 
         <p class="text-danger" v-show="showCreateUsser">
-          {{ $t('createBook.userNot') }}
+          {{ $t("createBook.userNot") }}
         </p>
       </b-col>
 
@@ -51,7 +62,8 @@
           GET_UCER_DATA.result.data &&
           GET_UCER_DATA.result.data[0]
         "
-        >  <DataUser :userData="GET_UCER_DATA.result.data"
+      >
+        <DataUser :userData="GET_UCER_DATA.result.data"
       /></b-col>
 
       <b-col cols="12" class="pl-0"
@@ -59,15 +71,18 @@
           @bookFunction="bookData"
           @selectBook="selectBook"
           @emitCoupon="couponData"
+          ref="bookQuantityValidate"
       /></b-col>
       <b-col cols="12"
         ><PaymentType @paymentDelivery="sendData" ref="childForm"
       /></b-col>
       <b-col cols="12" class="d-flex justify-content-end mt-4"
-        ><b-button @click="saveBookData">{{ $t('survey.save') }}</b-button></b-col
+        ><b-button @click="saveBookData">{{
+          $t("survey.save")
+        }}</b-button></b-col
       >
     </b-row>
-    <CreateUser @searchUser="telNumberEmit" :telNumber="telNumber"/>
+    <CreateUser @searchUser="telNumberEmit" :telNumber="telNumber" />
   </div>
 </template>
 <script>
@@ -78,7 +93,8 @@ import CreateUser from "./createOrder/CreateUser.vue";
 import OrderBook from "./createOrder/OrderBook.vue";
 import PaymentType from "./createOrder/PaymentType.vue";
 import { mapActions, mapGetters } from "vuex";
-import { adminRoot } from '../../../../constants/config';
+import { adminRoot } from "../../../../constants/config";
+
 export default {
   components: {
     DataUser,
@@ -95,7 +111,7 @@ export default {
       showCreateUsser: false,
       lading: false,
       orderBook: {
-        userId: null,
+        user_id: null,
         bookData: [],
         couponCode: null,
         paymentMethod: null,
@@ -126,7 +142,7 @@ export default {
         ) {
           this.showCreateUsser = true;
         } else {
-          this.orderBook.userId = this.GET_UCER_DATA.result.data[0].id;
+          this.orderBook.user_id = this.GET_UCER_DATA.result.data[0].id;
           this.showCreateUsser = false;
         }
       }
@@ -145,46 +161,62 @@ export default {
       this.orderBook.paymentMethod = payment;
       this.orderBook.deliveryMethod = delivery;
       this.orderBook.deliveryAddress = deliveryAddress;
-      console.log(
-        payment,
-        "to'lov turi",
-        delivery,
-        "yatgazib berish",
-        deliveryAddress,
-        " yetgazib berish Manzili"
-      );
     },
     // kitob haqidagi input malumotlari  bola companentadan olib kelindi
 
     bookData(id, quantity) {
-      this.orderBook.bookData.forEach((items) => {
+      this.orderBook.bookData = this.orderBook.bookData.map((items) => {
         if (items.id == id) {
-          return (items.bookQuantity = quantity);
+          return { ...items, orderQuantity: quantity };
         }
+        return items;
       });
     },
+
     // kitob datalarini emit qilib bola companentada olib kelindi
     selectBook(item) {
-      console.log(item, 'bukdata');
-      item.forEach((e) => {
-        this.orderBook.bookData.push(e);
-      });
+      const bookExists = this.orderBook.bookData.some((e) => e.id === item.id);
+      if (!bookExists) {
+        this.orderBook.bookData.push(item);
+      }
     },
 
     couponData(coupon) {
       this.orderBook.couponCode = coupon;
-      console.log(coupon, "coupon data");
     },
-    // Bekendga post zaprosh yuborish uchun
+
     saveBookData() {
-      // this.$router.push(`${adminRoot}/orderdata`)
-      if (this.orderBook.userId !== null && this.orderBook.bookId !== null) {
-        this.$refs.childForm.$refs.payment.validate().then((success) => {
-          if (success) {
-            this.CREATE_ORDER_BOOK(this.orderBook);
-            this.$notify('success', 'Muovfiqyatli yukladi')
+      if (this.orderBook.user_id !== null && this.orderBook.bookId !== null) {
+        const validationPromises =
+          this.$refs.bookQuantityValidate.$refs.bookOrder.map((bookOrder) => {
+            return bookOrder.validate();
+          });
+
+        Promise.all(validationPromises).then((results) => {
+          const allValid = results.every((val) => val);
+          if (allValid) {
+            this.$refs.childForm.$refs.payment.validate().then((success) => {
+              if (success) {
+                this.CREATE_ORDER_BOOK(this.orderBook).then((res) => {
+                  if (res.data.message == "Success") {
+                    this.$notify(
+                      "success",
+                      this.$t("categoryaFile.successful")
+                    );
+                    console.log(res.data.result);
+                    this.$router.push(`${adminRoot}/orderdata/${res.data.result}`);
+                    // this.$router.push({
+                    //   path: `${adminRoot}/orderdata`,
+                    //   query: { orderData: res.data },
+                    // });
+                  }
+                });
+              } else {
+                this.$notify("error", this.$t("createBook.bookRequrid"));
+              }
+            });
           } else {
-            this.$notify("error", "kitob maydonini to'ldiring");
+            this.$notify("error", this.$t("createBook.bookRequrid"));
           }
         });
       } else {

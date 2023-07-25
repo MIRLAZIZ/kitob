@@ -156,6 +156,9 @@ const actions = {
                 commit("addNewUzcard", res);
             });
     },
+    async UPDATE_STATUS(_, data) {
+        await axios.post(`${apiUrl}/api/payment/change-status`, data)
+    }
 };
 
 export default {

@@ -799,13 +799,18 @@
     "couponSearch": "Kuponni qidiring",
     "payment": "To'lov turi",
     "cash": "Naqd",
-    "card": "Card",
+    "card": "Karta",
     "delivery": "Yetgazib berish",
     "bts": "BTS",
     "yandex": "Yandex taksi",
     "self": "O'zim",
     "diliveryAdress": "Yetgazib berish manzilini aniqroq kiriting",
-    "OrderTaker":"Buyurtma qabul qiluvchi:" 
+    "OrderTaker":"Buyurtma qabul qiluvchi:",
+    "bookRequrid": "Kitob maydonini to'ldiring",
+    "customer": "Buyurtmachi"
+
+ 
+
 
 
 

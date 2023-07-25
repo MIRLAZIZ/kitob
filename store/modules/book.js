@@ -289,7 +289,7 @@ const actions = {
       });
   },
   async CREATE_ORDER_BOOK(_, data) {
-    await axios.post(`${apiUrl}/api/order/create`, data);
+   return await axios.post(`${apiUrl}/api/order/create/book`, data);
   },
 };
 

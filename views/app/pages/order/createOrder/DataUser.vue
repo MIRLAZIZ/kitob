@@ -36,7 +36,7 @@ export default {
     userData: {
       type: Array,
       required: true,
-      // required
+    
     },
   },
   data() {

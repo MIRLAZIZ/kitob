@@ -22,6 +22,10 @@
                         </div>
                     </div>
                     <div class="col-md-6">
+                        <b-button @click="fetchStatus('in_progress')">in progress</b-button>
+                        <b-button @click="fetchStatus('delivered')">delivered</b-button>
+                        <b-button @click="fetchStatus('completed')">completed</b-button>
+                        <b-button @click="fetchStatus('canceled')">canceled</b-button>
                         <div class="list-group text-right">
                             <div class=""><h3 class="text-primary text-uppercase">{{invoiceFrom.status}}</h3></div>
                             <div class="">
@@ -332,7 +336,7 @@ export default {
         ...mapGetters(["getUzcardAlertMsg","getCurrentOrder"]),
     },
     methods: {
-        ...mapActions(['updateCoupon','getTheOrder','cancelOrderOfFargo','createFargoOrder','getFargoOrderStatus']),
+        ...mapActions(['updateCoupon','getTheOrder','cancelOrderOfFargo','createFargoOrder','getFargoOrderStatus', 'UPDATE_STATUS']),
         async onFromSubmit(event) {
             event.preventDefault();
         },
@@ -388,6 +392,11 @@ export default {
             this.orderData = order_data
             console.log(this.orderData);
             this.$refs['order-data-modal'].show();
+        },
+        fetchStatus(status) {
+          
+            this.UPDATE_STATUS({id: this.$route.params.id, status: status})
+            console.log(status, 'bu status');
         }
     },
     async mounted(){
@@ -397,3 +406,4 @@ export default {
     },
 };
 </script>
+
