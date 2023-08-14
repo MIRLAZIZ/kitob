@@ -1,4 +1,4 @@
-import { extend, localize } from 'vee-validate'
+import { extend, localize } from "vee-validate";
 import {
   required as rule_required,
   email as rule_email,
@@ -12,114 +12,143 @@ import {
   alpha_dash as rule_alpha_dash,
   alpha_num as rule_alpha_num,
   length as rule_length,
-} from 'vee-validate/dist/rules'
-import en from 'vee-validate/dist/locale/en.json'
-import ru from 'vee-validate/dist/locale/ru.json'
-import uz from 'vee-validate/dist/locale/uz.json'
+} from "vee-validate/dist/rules";
+import en from "vee-validate/dist/locale/en.json";
+import ru from "vee-validate/dist/locale/ru.json";
 //import { localize } from '@vee-validate/i18n';
 // import { setLocale } from '@vee-validate/i18n';
 
 // setLocale('ar');
 
-
 // eslint-disable-next-line object-curly-newline
-import { validatorPositive, validatorUrlValidator, validatorPassword, validatorCreditCard } from './validators'
+import {
+  validatorPositive,
+  validatorUrlValidator,
+  validatorPassword,
+  validatorCreditCard,
+} from "./validators";
 
 // ////////////////////////////////////////////////////////
 // General
 // ////////////////////////////////////////////////////////
 
-export const required = extend('required', rule_required)
+export const required = extend("required", rule_required);
 
-export const email = extend('email', rule_email)
+export const email = extend("email", rule_email);
 
-export const min = extend('min', rule_min)
+export const min = extend("min", rule_min);
 
-export const confirmed = extend('confirmed', rule_confirmed)
+export const confirmed = extend("confirmed", rule_confirmed);
 
-export const regex = extend('regex', rule_regex)
+export const regex = extend("regex", rule_regex);
 
-export const between = extend('between', rule_between)
+export const between = extend("between", rule_between);
 
-export const alpha = extend('alpha', rule_alpha)
+export const alpha = extend("alpha", rule_alpha);
 
-export const integer = extend('integer', rule_integer)
+export const integer = extend("integer", rule_integer);
 
-export const digits = extend('digits', rule_digits)
+export const digits = extend("digits", rule_digits);
 
-export const alphaDash = extend('alpha-dash', rule_alpha_dash)
+export const alphaDash = extend("alpha-dash", rule_alpha_dash);
 
-export const alphaNum = extend('alpha-num', rule_alpha_num)
+export const alphaNum = extend("alpha-num", rule_alpha_num);
 
-export const length = extend('length', rule_length)
+export const length = extend("length", rule_length);
 
-export const positive = extend('positive', {
+export const positive = extend("positive", {
   validate: validatorPositive,
-  message: 'Please enter positive number!',
-})
+  message: "Please enter positive number!",
+});
 
-export const credit = extend('credit-card', {
+export const credit = extend("credit-card", {
   validate: validatorCreditCard,
-  message: 'It is not valid credit card!',
-})
+  message: "It is not valid credit card!",
+});
 
-export const password = extend('password', {
+export const password = extend("password", {
   validate: validatorPassword,
-  message: 'Your {_field_} must contain at least one uppercase, one lowercase, one special character and one digit',
-})
+  message:
+    "Your {_field_} must contain at least one uppercase, one lowercase, one special character and one digit",
+});
 
-export const url = extend('url', {
+export const url = extend("url", {
   validate: validatorUrlValidator,
-  message: 'URL is invalid',
-})
+  message: "URL is invalid",
+});
 
 // Install English, Uzbek and Russia localizations.
 localize({
-
   oz: {
     messages: {
-      ...uz.messages,
+      alpha: "{_field_} maydon faqat harflardan iborat bo'lishi mumkin",
+      alpha_dash:
+        "{_field_} maydon faqat harflardan, raqamlardan va defisdan iborat bo'lishi mumkin",
+      alpha_num:
+        "{_field_} maydon harflardan va raqamlardan iborat bo'lishi mumkin",
+      alpha_spaces:
+        "{_field_}  maydon harflardan va probeldan iborat bo'lishi mumkin",
+      between: "{_field_} maydon {min} va {max} orasida bo'lishi kerak",
+      confirmed: "{_field_} maydon {target} bilan to'g'ri kelmayabdi",
+      digits: "{_field_} maydon {length} uzunligida va son bo'lishi kerak",
+      dimensions:
+        "{_field_} maydon {width} pikselga {height} piksel bo'lishi kerak",
+      email: "{_field_} maydon yaroqli elektron pochta bo'lishi kerak",
+      excluded: "{_field_} maydon haqiqiy qiymat bo'lishi kerak",
+      ext: "{_field_} maydon haqiqiy fayl bo'lishi kerak. ({args})",
+      image: "{_field_} maydon rasm bo'lishi kerak",
+      oneOf: "{_field_} maydon yaroqli qiymat bo'lishi kerak.",
+      integer: "{_field_} maydon butun son bo'lishi kerak",
+      length: " {_field_} maydon uzunligi {length} bo'lishi kerak",
+      max: "{_field_} maydon {length} belgidan oshmasligi kerak",
+      max_value: "{_field_} maydon {max} dan yoki undan kam bo'lishi kerak",
+      mimes: "{_field_} maydon yaroqli fayl turi bo'lishi kerak. ({args})",
+      min: "{_field_} maydon {length} belgidan kam bo'lmasligi kerak",
+      min_value: "{_field_} maydon {min} dan yoki undan katta bo'lishi kerak",
+      numeric: "{_field_} maydon son bo'lishi kerak",
+      regex: "{_field_} maydon xato formatda",
+      required: "{_field_} maydon to'ldirilishi shart",
+      required_if: "{_field_} maydon to'ldirilishi shart",
+      size: "{_field_} maydon {size}KB dan kam bo'lmasligi kerak",
+      double: "{_field_} maydon yaroqli o'n xonali son bo'lishi kerak",
     },
     names: {
-      email: 'Электронная почта',
-      password: 'Пароль',
+      email: "Электронная почта",
+      password: "Пароль",
     },
-    fields: {  
+    fields: {
       password: {
-        min: '{_field_} слишком короткий, вы хотите, чтобы вас взломали?',
+        min: "{_field_} слишком короткий, вы хотите, чтобы вас взломали?",
       },
     },
   },
 
-
-en: {
-  messages: {
-    ...en.messages,
-  },
-  names: {
-    email: 'Электронная почта',
-    password: 'Пароль',
-  },
-  fields: {  
-    password: {
-      min: '{_field_} слишком короткий, вы хотите, чтобы вас взломали?',
+  en: {
+    messages: {
+      ...en.messages,
+    },
+    names: {
+      email: "Электронная почта",
+      password: "Пароль",
+    },
+    fields: {
+      password: {
+        min: "{_field_} слишком короткий, вы хотите, чтобы вас взломали?",
+      },
     },
   },
-},
 
-
-  
   ru: {
     messages: {
       ...ru.messages,
     },
     names: {
-      email: 'Электронная почта',
-      password: 'Пароль',
+      email: "Электронная почта",
+      password: "Пароль",
     },
-    fields: {  
+    fields: {
       password: {
-        min: '{_field_} слишком короткий, вы хотите, чтобы вас взломали?',
+        min: "{_field_} слишком короткий, вы хотите, чтобы вас взломали?",
       },
     },
   },
