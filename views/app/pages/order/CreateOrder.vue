@@ -1,7 +1,5 @@
 <template>
   <div>
-    <pre> {{ orderBook.bookData }}</pre>
-
     <span
       v-if="
         orderBook.bookData &&
@@ -27,6 +25,7 @@
                   <b-input-group class="border-radius" prepend="+998">
                     <b-form-input
                       type="number"
+                     
                       v-model="telNumber"
                       @keydown.enter="searchPhone"
                     />
@@ -83,8 +82,10 @@
       >
     </b-row>
     <CreateUser @searchUser="telNumberEmit" :telNumber="telNumber" />
+   
   </div>
 </template>
+
 <script>
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import { required } from "../../../../utils/validations/validations.js";
@@ -115,8 +116,9 @@ export default {
         bookData: [],
         couponCode: null,
         paymentMethod: null,
-        deliveryMethod: null,
+        deliveryMethod: null, 
         deliveryAddress: null,
+        token: localStorage.getItem('access_token')
       },
     };
   },
@@ -197,20 +199,23 @@ export default {
           if (allValid) {
             this.$refs.childForm.$refs.payment.validate().then((success) => {
               if (success) {
-                this.CREATE_ORDER_BOOK(this.orderBook).then((res) => {
-                  if (res.data.message == "Success") {
-                    this.$notify(
-                      "success",
-                      this.$t("categoryaFile.successful")
-                    );
-                    console.log(res.data.result);
-                    this.$router.push(`${adminRoot}/orderdata/${res.data.result}`);
-                    // this.$router.push({
-                    //   path: `${adminRoot}/orderdata`,
-                    //   query: { orderData: res.data },
-                    // });
-                  }
-                });
+                this.CREATE_ORDER_BOOK(this.orderBook)
+                  .then((res) => {
+                    if (res.data.message == "Success") {
+                      this.$notify(
+                        "success",
+                        this.$t("categoryaFile.successful")
+                      );
+                      this.GET_UCER_DATA.result.data = []
+
+                      this.$router.push(
+                        `${adminRoot}/orderdata/${res.data.result}`
+                      );
+                    } 
+                  })
+                  .catch((error) => {
+                    this.$notify("error", "Server Error: " + error.message);
+                  });
               } else {
                 this.$notify("error", this.$t("createBook.bookRequrid"));
               }
@@ -227,6 +232,11 @@ export default {
   computed: {
     ...mapGetters(["GET_UCER_DATA"]),
   },
+mounted() {
+  
+   
+  },
 };
 </script>
-<style></style>
+<style>
+</style>

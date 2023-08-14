@@ -11,11 +11,6 @@
         @ok.prevent="createUser"
         @show="cancelModal"
       >
-
-
-
-      
-      {{ userData.name }}
         <ValidationObserver ref="createUser">
           <BRow>
             <!-- -----------------------firstName----------------------- -->
@@ -26,9 +21,7 @@
                 rules="required|min:3"
                 :name="$t('createBook.Name')"
               >
-                <b-form-group
-                  label-size="sm"
-                  :label="$t('createBook.Name')"
+                <b-form-group label-size="sm" :label="$t('createBook.Name')"
                   ><BFormInput
                     v-model="userData.name"
                     :placeholder="$t('createBook.Name')"
@@ -39,7 +32,7 @@
                 <small class="text-danger"> {{ errors[0] }}</small>
               </ValidationProvider>
             </BCol>
-         
+
             <!-- -----------------------adress----------------------- -->
 
             <BCol md="6" class="">
@@ -65,7 +58,7 @@
             <BCol md="6" class="">
               <ValidationProvider
                 #default="{ errors }"
-                rules="required|email"
+                rules="email"
                 :name="$t('user.email')"
               >
                 <b-form-group label-size="sm" :label="$t('user.email')">
@@ -77,6 +70,7 @@
                   />
                 </b-form-group>
                 <small class="text-danger"> {{ errors[0] }}</small>
+                <p class="text-danger">{{ emailEerror }}</p>
               </ValidationProvider>
             </BCol>
 
@@ -104,7 +98,6 @@
                   <BFormInput
                     type="number"
                     v-model="telNumber"
-                    :disabled="telNumber === 9"
                     :placeholder="$t('createBook.telephone')"
                     :state="errors.length > 0 ? false : null"
                     size="lg"
@@ -175,9 +168,6 @@
             </BCol>
           </BRow>
         </ValidationObserver>
-        {{userData.status }}
-        
-     
       </b-modal>
     </div>
   </div>
@@ -200,13 +190,14 @@ export default {
   data() {
     return {
       required,
+      
 
       userData: {
         name: null,
         address: null,
         gender: null,
         age: null,
-        phone:null,
+        phone: null,
         email: null,
         extraPhone: [],
         password: "",
@@ -222,6 +213,7 @@ export default {
         { text: "Inactive", value: "inactive" },
       ],
       phonenumber: null,
+      emailEerror: null,
     };
   },
   computed: {
@@ -238,41 +230,60 @@ export default {
     //   },
 
     async createUser() {
-      console.log(this.telNumber, 'fdsfafsf');
-      
-      this.userData.phone = '998' + this.telNumber
-      
-      this.$refs.createUser.validate().then(async (success) => {
-        if (success) {
-          await this.addUser(this.userData);
-          if (!this.getUserAlertMsg.error) {
-            this.$emit("searchUser", this.userData.phone);
-            this.userData.name = null;
-            this.userData.adress = null;
-            this.userData.email = null;
-            this.userData.age = null;
-            this.userData.gender = null;
-            this.userData.phone = null;
-            this.userData.extraPhone = [];
-            this.$bvModal.hide("createuser");
+      this.userData.phone = "998" + this.telNumber;
+
+      this.$refs.createUser
+        .validate()
+        .then(async (success) => {
+          if (success) {
+            await this.addUser(this.userData);
+            if (!this.getUserAlertMsg.error) {
+              this.$emit("searchUser", this.userData.phone);
+              this.userData.name = null;
+              this.userData.address = null;
+              this.userData.email = null;
+              this.userData.age = null;
+              this.userData.gender = null;
+              this.userData.phone = null;
+              this.userData.extraPhone = [];
+              this.emailEerror = null;
+              this.phonenumber = null;
+              this.$bvModal.hide("createuser");
+            } else {
+              if (
+                this.getUserAlertMsg.message &&
+                this.getUserAlertMsg.message.email[0] ==
+                  "The email has already been taken."
+              ) {
+                this.emailEerror = this.$t("createBook.emailRegistr");
+              } else {
+                this.emailEerror = null
+              }
+              if (
+                this.getUserAlertMsg.message.phone[0] ==
+                "The phone has already been taken."
+              ) {
+                this.phonenumber = this.$t("createBook.telphoneRegistr");
+              } else{
+                this.phonenumber = null
+              }
+              if (
+                this.getUserAlertMsg.message.phone[0] ==
+                "The phone may not be greater than 12 characters."
+              ) {
+                this.phonenumber = this.$t("createBook.numberMax");
+              } else{
+                this.phonenumber = null
+
+              }
+            }
           } else {
-            if (
-              this.getUserAlertMsg.message.phone[0] ==
-              "The phone has already been taken."
-            ) {
-              this.phonenumber = this.$t("createBook.telphoneRegistr");
-            }
-            if (
-              this.getUserAlertMsg.message.phone[0] ==
-              "The phone may not be greater than 12 characters."
-            ) {
-              this.phonenumber = this.$t("createBook.numberMax");
-            }
+            this.errorToast(this.$t("createBook.information"));
           }
-        } else {
-          this.errorToast(this.$t("createBook.information"));
-        }
-      });
+        })
+        .catch((error) => {
+          this.$notify("error", "Server Error: " + error.message);
+        });
     },
     cancelModal() {
       this.userData.name = null;
@@ -282,6 +293,8 @@ export default {
       this.userData.gender = null;
       this.userData.phone = null;
       this.userData.extraPhone = [];
+      this.emailEerror = null;
+      this.phonenumber = null;
     },
     addPhoneNumber() {
       let phoneNumber = {
@@ -302,7 +315,7 @@ export default {
     const password = currentDate.getTime().toString().slice(-6);
     this.userData.password = password;
     this.userData.confirm_password = password;
-    
+   
   },
 };
 </script>

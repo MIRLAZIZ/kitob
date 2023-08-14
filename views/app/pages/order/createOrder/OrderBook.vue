@@ -6,11 +6,6 @@
         <b-col>
           <b-form-group :label="$t('createBook.bookSearch')">
             <b-input-group>
-              <!-- <template #append>
-                <b-input-group-text
-                  ><i class="simple-icon-magnifier"
-                /></b-input-group-text>
-              </template> -->
               <b-form-input v-model="search" />
             </b-input-group>
           </b-form-group>
@@ -224,7 +219,7 @@ export default {
       bookData: [],
       coupon: null,
       loading: false,
-      showBookData: true,
+      showBookData: false,
     };
   },
   methods: {

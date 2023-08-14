@@ -1,5 +1,6 @@
 <template>
   <b-row>
+   
     <b-colxx xxs="12">
       <h1>{{ title }}</h1>
       <piaf-breadcrumb />

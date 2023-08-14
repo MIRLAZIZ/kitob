@@ -801,9 +801,18 @@
     "yandex": "Yandex Taxi",
     "self": "Self",
     "diliveryAdress": "Enter the exact delivery address",
-    "OrderTaker":"Order taker:",
+    "OrderTaker":"Customer:",
     "bookRequrid": "Fill in the book field",
-    "customer": "Customer"
+    "customer": "Customer",
+    "total_amount": "Total amount",
+    "inprocess": "inprocess",
+    "delivered": "delivered",
+    "completed": "completed",
+    "canceled": "canceled",
+    "draft":"draft",
+    "pending":"pending",
+    "emailRegistr": "This emailis registered"
+
 
 
 

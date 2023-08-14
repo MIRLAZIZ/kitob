@@ -20,14 +20,30 @@
         </div>
         <div class="w-15 w-sm-100">
           <b-badge pill v-if="data.status == 'pending'" variant="warning">
-            {{ upppercase(data.status) }}
+            {{$t('createBook.pending') }}
           </b-badge>
           <b-badge pill v-if="data.status == 'canceled'" variant="danger">
-            {{ upppercase(data.status) }}
+            {{ $t('createBook.canceled') }}
           </b-badge>
-          <b-badge pill v-if="data.status == 'success'" variant="success">
-            {{ upppercase(data.status) }}
+          <b-badge pill v-if="data.status == 'completed'" variant="success">
+            {{ $t('createBook.completed') }}
           </b-badge>
+
+          <b-badge pill v-if="data.status == 'draft'" variant="secondary">
+            {{ $t('createBook.draft') }}
+          </b-badge>
+
+          <b-badge pill v-if="data.status == 'inprocess'" variant="primary">
+            {{ $t('createBook.inprocess')}}
+          </b-badge>
+
+          <b-badge pill v-if="data.status == 'delivered'" variant="primary">
+            {{ $t('createBook.delivered') }}
+          </b-badge>
+
+
+
+
         </div>
         <div class="w-25 w-sm-100">
           <p class="list-item-heading mb-0 truncate">
@@ -49,7 +65,7 @@
           </button>
           <b-tooltip :target="'edit_btn'" :title="'Edit'"> </b-tooltip>
 
-          <b-button variant="success"><i class="simple-icon-arrow-right" /></b-button>
+          <b-button variant="success" @click="(routData(data.id))"><i class="simple-icon-arrow-right" /></b-button>
         </div>
       </div>
     </div>
@@ -78,6 +94,11 @@ export default {
       });
       return formatter.format(number);
     },
+
+    routData(id) {
+      console.log(id, 'gggggggggggg');
+      this.$router.push(`${adminRoot}/orderdata/${id}`)
+    }
   },
 };
 </script>

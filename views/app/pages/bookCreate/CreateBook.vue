@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-row>
+    <b-row class="">
       <b-col cols="12" class="mt-2"><h1>Nima yaratmoqchisiz?</h1></b-col>
     </b-row>
 
@@ -24,7 +24,10 @@
         </div>
 
         <div class="d-flex justify-content-center">
-          <b-button variant="primary" @click="createBook(createData.id)"
+          <b-button
+            :disabled="createData.id === 4"
+            variant="primary"
+            @click="createBook(createData.type)"
             ><span>{{ createData.create }}</span></b-button
           >
         </div>
@@ -33,8 +36,8 @@
   </div>
 </template>
 <script>
-// import { BRow, BCol, BImg, BButton } from "bootstrap-vue";
 import { adminRoot } from "../../../../constants/config";
+import { mapActions } from "vuex";
 
 export default {
   components: {},
@@ -43,52 +46,67 @@ export default {
       crateType: [
         {
           id: 1,
+          type: "ebook",
           title: "Elektron kitob",
           description:
-            "Kindle va boshqa qo'l qurilmalarida raqamli nashr qiling . Komikslar va mangalarni o'z ichiga oladi.",
+            "Elektron kitoblaringizni EPUB formatida joylashtiring va biz bilan soting.  ",
           create: "Elektron kitob yaratish",
-          img: "../../../../srcs/assets/img/book/elektronKitob.png",
+          img: "../../../../assets/img/book/elektronKitob.png",
         },
         {
           id: 2,
+          type: "audiobook",
           title: "Audio kitob",
           description:
-            "Sarlavhangizni chop etishda mavjud qiling va butun dunyo bo'ylab jo'natiladi.",
+            " Audio kitoblar qo'shing va mijozlaringiz  sonini va sotuv samaradorligini  oshiring",
           create: "Audiokitob yaratish",
-          img: "../../../../srcs/assets/img/book/big-audio-book.png",
+          img: "../../../../assets/img/book/big-audio-book.png",
         },
         {
           id: 3,
+          type: "paper",
           title: "Qog'oz muqovali",
           description:
             "Sarlavhangizni chop etishda mavjud qiling va butun dunyo bo'ylab jo'natiladi.",
           create: "Qog'oz kitob yaratish",
-          img: "../../../../srcs/assets/img/book/qogoz_muqova.png",
+          img: "../../../../assets/img/book/qogoz_muqova.png",
         },
         {
           id: 4,
+          type: "ebook",
           title: "Seriya sahifasi",
           description:
             "Kitoblaringizni birgalikda to'plang va bitta Amazon Series sahifasini yarating .",
           create: "Seriya yaratish",
-          img: "../../../../srcs/assets/img/book/seriya.png",
+          img: "../../../../assets/img/book/seriya.png",
         },
-        {
-          id: 5,
-          title: "Tarjima kitoblar",
-          description:
-            "Kitoblaringizni birgalikda to'plang va bitta Amazon Series sahifasini yarating .",
-          create: "Tarjima kitob yaratish",
-          img: "../../../../srcs/assets/img/book/3.png",
-        },
+        // {
+        //   id: 5,
+        //   title: "Tarjima kitoblar",
+        //   description:
+        //     "Kitoblaringizni birgalikda to'plang va bitta Amazon Series sahifasini yarating .",
+        //   create: "Tarjima kitob yaratish",
+        //   img: "../../../../srcs/assets/img/book/3.png",
+        // },
       ],
     };
   },
   methods: {
-    createBook(id) {
-      this.$router.push(`${adminRoot}/booksteps/${id}`);
+    ...mapActions(["CREATE_BOOK"]),
+    async createBook(type) {
+      let user = JSON.parse(localStorage.getItem("user"));
+      let userId = user.id;
+      let bookType = { book_type: type, user_id: userId, step: 1 };
+      await this.CREATE_BOOK(bookType).then((res) => {
+        if (res.data.message == "Success") {
+          this.$router.push(
+            `${adminRoot}/bookDetils/${res.data.result.book_id}`
+          );
+        }
+      });
     },
   },
+  mounted() {},
 };
 </script>
 <style>

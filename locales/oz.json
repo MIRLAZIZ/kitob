@@ -805,9 +805,21 @@
     "yandex": "Yandex taksi",
     "self": "O'zim",
     "diliveryAdress": "Yetgazib berish manzilini aniqroq kiriting",
-    "OrderTaker":"Buyurtma qabul qiluvchi:",
+    "OrderTaker":"Buyurtmachi:",
     "bookRequrid": "Kitob maydonini to'ldiring",
-    "customer": "Buyurtmachi"
+    "customer": "Buyurtmachi",
+    "total_amount": "Umumiy qiymati",
+    "inprocess": "jarayonda",
+    "delivered": "yetkazib berildi",
+    "completed": "yakunlandi",
+    "canceled": "bekor qilingan",
+    "draft":"qoralama",
+    "pending":"kutilmoqda",
+    "emailRegistr": "Bu email ro'yxatdan o'tgan"
+
+
+
+
 
  
 

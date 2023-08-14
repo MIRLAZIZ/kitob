@@ -21,6 +21,7 @@
                 {{ successMsg }}
               </div>
             </div>
+
             <div class="row">
               <!-- Cover imaage -->
               <div class="col-sm-4 mb-4">
@@ -41,7 +42,7 @@
                 <div class="p-4 border mt-4">
                   <div class="cover_image">
                     <img
-                      :src="apiUrl + formdata.image"
+                      :src="apiUrl + '/' + formdata.image"
                       alt=""
                       class="img-fluid"
                     />
@@ -61,6 +62,7 @@
                   </div>
                 </div>
               </div>
+
               <!-- Epub file -->
               <div class="col-sm-4 mb-4">
                 <div
@@ -102,17 +104,21 @@
               <div class="col-sm-4 mb-4">
                 <div class="p-4 border mt-4">
                   <div class="audio_wrap" v-if="hasAudio">
+                    {{ formdata.audio }}
                     <template v-for="(mp3, index) in formdata.audio">
                       <div class="card p-3 shadow mb-2" :key="index">
                         <h5 class="text-primary">
-                          {{ mp3.song }} /
+                          {{ mp3.song }} 
                           <small class="text-secondary">
                             {{ mp3.artist }}
                           </small>
                         </h5>
                         <div class="d-flex align-items-center">
                           <audio id="audio" controls class="w-100">
-                            <source :src="mp3.audio" type="audio/mpeg" />
+                            <source
+                              :src="apiUrl + '/' + mp3.audio"
+                              type="audio/mpeg"
+                            />
                             Your browser does not support the audio element.
                           </audio>
                           <button
@@ -534,7 +540,7 @@ import AddAuthor from "../author/AddAuthor";
 import { VueTreeList, Tree, TreeNode } from "vue-tree-list";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
-// import { apiUrl } from "../../../../constants/config";
+import { apiUrl } from "../../../../constants/config";
 
 export default {
   components: {
@@ -548,8 +554,7 @@ export default {
   },
   data() {
     return {
-      apiUrl:"https://beta.kytab.uz/",
-
+      apiUrl,
       direction: getDirection().direction,
       addBookForm: {
         name: "",
@@ -765,7 +770,8 @@ export default {
       //     this.formdata.image = this.optionsImg.path;
       // }
       this.coordinates.image = file;
-      this.optionsImg =URL.createObjectURL(file);
+      this.optionsImg = URL.createObjectURL(file);
+      console.log(URL, "bu urel");
       console.log(event.target.files[0]);
     },
     async setAudioFile(event) {
@@ -808,6 +814,7 @@ export default {
     async setEpubFile(event, key) {
       let epub = new FormData();
       epub.append("ebook", event.target.files[0]);
+      epub.append("book_id",)
       await this.storeEpub(epub);
       this.epubfile = event.target.files[0];
       this.formdata.author = this.getEpubContent.creator;
@@ -829,6 +836,7 @@ export default {
       await this.makeSelectedLang();
       // await this.makeSelectedAuthor();
     },
+
     async deleteEpub() {
       this.isLoad = true;
       await this.destroyEpub(this.getEpubContent.file_path);
@@ -911,7 +919,6 @@ export default {
     },
     async cropImg(itemKey, refOption) {
       const { coordinates, canvas } = this.$refs[refOption].getResult();
-      console.log(coordinates, canvas);
       this.croppedImage = canvas.toDataURL();
       let image = new FormData();
       image.append("image", this.coordinates.image);
@@ -1007,7 +1014,6 @@ export default {
     await this.makeSelectedLang();
     await this.getGalleryList(this.$route.params.id);
     this.galleries = this.getGallery;
-    console.log(process.env.API_URL, 'jjjjjjjjjjjjjjjjjjjjjjjjjj');
   },
 };
 </script>

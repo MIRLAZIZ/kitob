@@ -9,12 +9,14 @@ const state = {
     epubContent: [],
     cropFile: [],
     uploadProgressNum: 0,
+    fragmntUploaded: 0,
 };
 
 const getters = {
     filesList: (state) => state.files,
     cropfileList: (state) => state.cropFile,
     getEpubContent: (state) => state.epubContent,
+    GER_FRAGMENT_UPLODED: state => state.fragmntUploaded,
     getUploadProgressNum: (state) => state.uploadProgressNum,
 };
 
@@ -66,6 +68,16 @@ const actions = {
                 }
             });
     },
+async FRAGMENT_CREATE(context, data) {
+    return await axios.post(`${apiUrl}/api/book/epub`, data, {
+        onUploadProgress: progressEvent => {
+            const percentageCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+            context.state.fragmntUploaded = percentageCompleted
+        }
+    });
+},
+
+
     async storeCropImage({ commit }, file) {
         await axios
             .post(`${apiUrl}/api/file/cropped`, file)

@@ -51,7 +51,7 @@
           <div class="mb-3">
             <b-button @click="toggleCategoty" class="ml-0" variant="success">
               <b-img
-                src="../../../../srcs/assets/img/login/rightIcon.png"
+                src="../../../../assets/img/login/rightIcon.png"
                 style="width: 10px"
                 :style="[toggle ? { transform: 'rotate(90deg)' } : '']"
               />
@@ -77,7 +77,7 @@
                   <div class="fileIcon">
                     <span v-show="category.items && category.items.length > 0"
                       ><b-img
-                        src="../../../../srcs/assets/img/login/rightIcon.png"
+                        src="../../../../assets/img/login/rightIcon.png"
                         style="width: 10px"
                         :style="[
                           toggle || toggleOne == category.id
@@ -87,7 +87,7 @@
                     /></span>
                     <span>
                       <b-img
-                        src="../../../../srcs/assets/img/login/icons8-file-folder-25.png"
+                        src="../../../../assets/img/login/icons8-file-folder-25.png"
                         :style="[
                           category.items && category.items.length > 0
                             ? { 'margin-left': '0' }
@@ -125,17 +125,17 @@
                   <div class="crudIcon">
                     <span @click="addChildFile(category.id)">
                       <b-img
-                        src="../../../../srcs/assets/img/login/icons8-add-25.png"
+                        src="../../../../assets/img/login/icons8-add-25.png"
                         style="width: 25px; margin-left: 20px"
                     /></span>
                     <span class="mx-1" @click="toggleInput(category)">
                       <b-img
-                        src="../../../../srcs/assets/img/login/icons8-pencil-30.png"
+                        src="../../../../assets/img/login/icons8-pencil-30.png"
                         style="width: 25px"
                     /></span>
                     <span @click="deleteFile(category.id)">
                       <b-img
-                        src="../../../../srcs/assets/img/login/icons8-remove-30.png"
+                        src="../../../../assets/img/login/icons8-remove-30.png"
                         style="width: 25px"
                     /></span>
                   </div>
@@ -156,7 +156,7 @@
                               !toggle && item.items && item.items.length > 0
                             "
                             ><b-img
-                              src="../../../../srcs/assets/img/login/rightIcon.png"
+                              src="../../../../assets/img/login/rightIcon.png"
                               style="width: 10px"
                           /></span> -->
                           <!-- <span
@@ -164,12 +164,12 @@
                               toggle && item.items && item.items.length > 0
                             "
                             ><b-img
-                              src="../../../../srcs/assets/img/login/rightIcon.png"
+                              src="../../../../assets/img/login/rightIcon.png"
                               style="width: 10px; transform: rotate(90deg)"
                           /></span> -->
                           <span>
                             <b-img
-                              src="../../../../srcs/assets/img/login/icons8-file-folder-25.png"
+                              src="../../../../assets/img/login/icons8-file-folder-25.png"
                               alt=""
                           /></span>
                         </span>
@@ -206,12 +206,12 @@
                         /></span> -->
                         <span class="mx-1 ml-5" @click="toggleInput(item)">
                           <b-img
-                            src="../../../../srcs/assets/img/login/icons8-pencil-30.png"
+                            src="../../../../assets/img/login/icons8-pencil-30.png"
                             style="width: 25px"
                         /></span>
                         <span @click="deleteFile(item.id)">
                           <b-img
-                            src="../../../../srcs/assets/img/login/icons8-remove-30.png"
+                            src="../../../../assets/img/login/icons8-remove-30.png"
                             style="width: 25px"
                         /></span>
                       </div>
@@ -236,7 +236,7 @@
                                   subItem.items.length > 0
                                 "
                                 ><b-img
-                                  src="../../../../srcs/assets/img/login/rightIcon.png"
+                                  src="../../../../assets/img/login/rightIcon.png"
                                   style="width: 10px"
                               /></span>
                               <span
@@ -246,12 +246,12 @@
                                   subItem.items.length > 0
                                 "
                                 ><b-img
-                                  src="../../../../srcs/assets/img/login/rightIcon.png"
+                                  src="../../../../assets/img/login/rightIcon.png"
                                   style="width: 10px; transform: rotate(90deg)"
                               /></span>
                               <span>
                                 <b-img
-                                  src="../../../../srcs/assets/img/login/icons8-file-folder-25.png"
+                                  src="../../../../assets/img/login/icons8-file-folder-25.png"
                                   alt=""
                                   :style="[
                                     item.items && item.items.length > 0
@@ -291,17 +291,17 @@
                             <div class="crudIcon">
                               <span @click="addChildFile(subItem.id)">
                                 <b-img
-                                  src="../../../../srcs/assets/img/login/icons8-add-25.png"
+                                  src="../../../../assets/img/login/icons8-add-25.png"
                                   style="width: 25px; margin-left: 20px"
                               /></span>
                               <span class="mx-1" @click="toggleInput(subItem)">
                                 <b-img
-                                  src="../../../../srcs/assets/img/login/icons8-pencil-30.png"
+                                  src="../../../../assets/img/login/icons8-pencil-30.png"
                                   style="width: 25px"
                               /></span>
                               <span @click="deleteFile(subItem.id)">
                                 <b-img
-                                  src="../../../../srcs/assets/img/login/icons8-remove-30.png"
+                                  src="../../../../assets/img/login/icons8-remove-30.png"
                                   style="width: 25px"
                               /></span>
                             </div>
@@ -325,7 +325,7 @@
                                   <div class="fileIcon">
                                     <span>
                                       <b-img
-                                        src="../../../../srcs/assets/img/login/icons8-file-folder-25.png"
+                                        src="../../../../assets/img/login/icons8-file-folder-25.png"
                                         alt=""
                                     /></span>
                                   </div>
@@ -361,12 +361,12 @@
                                       @click="toggleInput(subItem1)"
                                     >
                                       <b-img
-                                        src="../../../../srcs/assets/img/login/icons8-pencil-30.png"
+                                        src="../../../../assets/img/login/icons8-pencil-30.png"
                                         style="width: 25px"
                                     /></span>
                                     <span @click="deleteFile(subItem1.id)">
                                       <b-img
-                                        src="../../../../srcs/assets/img/login/icons8-remove-30.png"
+                                        src="../../../../assets/img/login/icons8-remove-30.png"
                                         style="width: 25px"
                                     /></span>
                                   </div>
@@ -385,10 +385,7 @@
         </div>
       </div>
     </div>
-    <!-- <pre>{{ filterclient }}</pre>
-    __________________________________________________________________________
-
-    <pre>{{ GET_CATEGORY_LIST }}</pre> -->
+   
   </div>
 </template>
 

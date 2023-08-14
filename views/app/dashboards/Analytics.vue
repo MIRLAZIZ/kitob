@@ -6,7 +6,7 @@
         <div class="separator mb-5"></div>
       </b-colxx>
     </b-row>
-    <b-row>
+    <b-row class="mb-5">
       <b-col cols="12"> <CreateBook /></b-col
     ></b-row>
     <b-row>

@@ -800,9 +800,21 @@
     "yandex": "Яндекс Такси",
     "self": "Себя",
     "diliveryAdress": "Введите точный адрес доставки",
-    "OrderTaker":"Приемщик заказов:",
+    "OrderTaker":"Клиент:",
     "bookRequrid": "Заполните поле книги",
-    "customer": "Клиент"
+    "customer": "Клиент",
+    "total_amount": "Общая сумма",
+    "inprocess": "в процессе",
+    "delivered": "доставленный",
+    "completed": "завершенный",
+    "canceled": "отменен",
+    "draft":"черновик",
+    "pending":"в ожидании",
+    "emailRegistr": "Этот электронная почта зарегистрирован"
+
+    
+
+
 
 
 

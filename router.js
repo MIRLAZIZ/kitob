@@ -29,7 +29,7 @@ const routes = [
                 },
                 component: () =>
                     import(
-                        /* webpackChunkName: "dashboards" */ "./views/app/dashboards/Analytics"
+                        /* webpackChunkName: "dashboards" */ "./views/app/dashboards/Analytics.vue"
                     )
             },
             {
@@ -403,7 +403,7 @@ const routes = [
                 },
                 component: () =>
                     import(
-                        /* webpackChunkName: "EditBook" */ "./views/app/pages/book/EditBook"
+                        /* webpackChunkName: "EditBook" */ "./views/app/pages/book/EditBook.vue"
                     )
             },
             {
@@ -821,7 +821,43 @@ const routes = [
                         /* webpackChunkName: "EditTCategory" */ "./views/app/pages/bookCreate/BookSteps.vue"
                     )
             },
+            // -----------------------------------------------------------------------
             
+
+            {
+                path: "bookDetils/:id",
+                meta: {
+                    action: "bookDetils",
+                    subject: "bookDetils"
+                },
+                component: () =>
+                    import(
+                        /* webpackChunkName: "EditTCategory" */ "./views/app/pages/bookCreate/bookStepOne/BookDetails.vue"
+                    )
+            },
+            {
+                path: "bookContent/:id",
+                meta: {
+                    action: "bookContent",
+                    subject: "bookContent"
+                },
+                component: () =>
+                    import(
+                        /* webpackChunkName: "EditTCategory" */ "./views/app/pages/bookCreate/bookContent/Index.vue"
+                    )
+            },
+            {
+                path: "bookPrice/:id",
+                meta: {
+                    action: "bookPrice",
+                    subject: "bookPrice"
+                },
+                component: () =>
+                    import(
+                        /* webpackChunkName: "EditTCategory" */ "./views/app/pages/bookCreate/bookprice/Index.vue"
+                    )
+            },
+            // ___________________________________________________________________________
 
             
 

@@ -1,84 +1,90 @@
 <template>
   <div>
+    {{ bookData }}
     <div class="formSteps">
       <div
         class="steps"
-        :class="[{ stepProcess: step === 1 }, { stepSuccessful: stepOne }]"
+        :class="[
+          { stepProcess: bookData?.step === 1 },
+          { stepSuccessful: bookData?.step > 1 },
+        ]"
       >
         <div class="ml-1">
           <h2>Elektron kitobi tafsilotlari</h2>
-          <span v-show="step == 1"><img :src="img" alt="" /></span>
-          <span v-show="step > 1"
+          <span v-show="bookData?.step == 1"><img :src="img" alt="" /></span>
+          <span v-show="bookData?.step > 1"
             ><img :src="imgCheck" alt="" class="checkWidth"
           /></span>
 
           <span>
             {{
-              step == 1 ? "Jarayonda" : step > 1 ? "Bajarildi" : "Boshlanmagan"
+              bookData?.step == 1
+                ? "Jarayonda"
+                : bookData?.step > 1
+                ? "Bajarildi"
+                : "Boshlanmagan"
             }}</span
           >
         </div>
       </div>
+
       <div
         class="steps"
-        :class="[{ stepProcess: step === 2 }, { stepSuccessful: stepTwo }]"
+        :class="[
+          { stepProcess: bookData?.step === 2 },
+          { stepSuccessful: bookData?.step > 2 },
+        ]"
       >
         <div class="ml-1">
           <h2>Elektron kitob mazmuni</h2>
-          <span v-show="step < 3"><img :src="img" alt="" /></span>
-          <span v-show="step > 2"
+          <span v-show="bookData?.step < 3"><img :src="img" alt="" /></span>
+          <span v-show="bookData?.step > 2"
             ><img :src="imgCheck" alt="" class="checkWidth"
           /></span>
           <span>
             {{
-              step == 2 ? "jarayonda" : step > 2 ? "Bajarildi" : "Boshlanmagan"
+              bookData?.step == 2
+                ? "jarayonda"
+                : bookData?.step > 2
+                ? "Bajarildi"
+                : "Boshlanmagan"
             }}</span
           >
         </div>
       </div>
       <div
         class="steps"
-        :class="[{ stepProcess: step === 3 }, { stepSuccessful: stepThree }]"
+        :class="[
+          { stepProcess: bookData?.step === 3 },
+          { stepSuccessful: bookData?.step > 3 },
+        ]"
       >
         <div class="ml-1">
           <h2>Elektron kitob narxi</h2>
           <span><img :src="img" alt="" /></span>
           <span>
             {{
-              step == 3 ? "jarayonda" : step > 3 ? "Bajarildi" : "Boshlanmagan"
+              bookData?.step == 3
+                ? "jarayonda"
+                : bookData?.step > 3
+                ? "Bajarildi"
+                : "Boshlanmagan"
             }}</span
           >
         </div>
       </div>
     </div>
-    <div v-show="step == 1">
-      <BookDetils @stepOne="stepstwo" />
-    </div>
-    <div v-show="step == 2">
-      <BookContent @stepOne="stepstwo" @stepValue="stepsValue1" />
-    </div>
-    <div v-show="step == 3">
-      <Bookprice @stepOne="stepstwo" @stepValue="stepsValue1" />
-    </div>
   </div>
 </template>
 <script>
-import BookDetils from "./bookStepOne/BookDetails.vue";
-import BookContent from "./bookContent/Index.vue";
-import Bookprice from "./bookprice/Index.vue";
-
 export default {
-  components: {
-    BookDetils,
-    BookContent,
-    Bookprice,
+  props: {
+    bookData: {
+      typeof: Object,
+    },
   },
   data() {
     return {
-      step: 1,
-      stepOne: false,
-      stepTwo: false,
-      stepThree: false,
       img: "../../../../srcs/assets/img/book/warning.svg",
       imgCheck: "../../../../srcs/assets/img/book/check-mark-icon-free-png.png",
     };
@@ -92,26 +98,6 @@ export default {
     //     }
     //   });
     // },
-    stepstwo(a) {
-      if (a > 1) {
-        this.step = a;
-        this.stepOne = true;
-      }
-      if (a > 2) {
-        this.step = a;
-        this.stepTwo = true;
-      }
-    },
-    stepsValue1(e) {
-      console.log(e);
-      if (e == 1) {
-        this.step = e;
-        this.stepOne = false;
-      } else {
-        this.step = e;
-        this.stepTwo = false;
-      }
-    },
   },
 };
 </script>

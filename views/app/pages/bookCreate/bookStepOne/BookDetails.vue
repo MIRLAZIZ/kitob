@@ -1,13 +1,109 @@
 <template>
   <div>
+    <pre>{{ GET_BOOK.result }}</pre>
+
+    <BookSteps :bookData="bookData" />
     <div class="px-3">
       <validation-observer ref="templateRef">
-        <!-- --------------------------------------Qo'lyozma-------------------------------------- -->
+        <!-- Epub file -->
+
         <b-row
+          v-show="
+            GET_BOOK && GET_BOOK.result && GET_BOOK.result.book_type !== 'paper'
+          "
           class="bg-white mt-5 p-3 forFonts"
-          v-show="$route.params.id !== '3'"
         >
-          <b-col cols="2"><p class="fontWeght">Qo'lyozma</p></b-col>
+          <b-col cols="2" class="fontWeght"
+            ><span>{{
+              GET_BOOK.result?.book_type == "ebook"
+                ? "EPUB fayli"
+                : "Audio fayli"
+            }}</span></b-col
+          >
+          <b-col cols="10">
+            <p>
+              EPUB raqamli kitoblar uchun eng mashhur fayl formati EPUB fayl
+              formati ( elektron nashr uchun qisqartirilgan ) kengaytmasi
+              bo'lgan elektron pochtasi formatidir .pub. Siz EPUB fayllarini
+              yuklab olishingiz va smartfonlaringiz, planshetlaringiz, elektron
+              o'quvchilaringiz yoki kompyuteringizdan ularni o'qishingiz mumkin.
+              Ushbu erkin foydalanish mumkin bo'lgan elektron kitob standarti
+              boshqa har qanday fayl formatidan ko'ra ko'proq qo'shimcha
+              qurilmalar uchun elektron kitoblarni o'qiydi.
+            </p>
+            <div>
+              <div style="position: relative" class="mb-5">
+                <ValidationProvider
+                  #default="{ errors }"
+                  name="name"
+                  rules="required"
+                >
+                  <input
+                    ref="epub"
+                    type="file"
+                    class="d-none"
+                    :accept="getAcceptValue"
+                    @change="setEpubFile($event, 'ebook')"
+                  />
+
+                  <small class="text-danger">{{
+                    errors[0]
+                  }}</small></ValidationProvider
+                >
+
+                <b-button
+                  @click="$refs.epub.click()"
+                  variant="primary"
+                  :disabled="epubfile !== null"
+                >
+                  yuklab oling</b-button
+                >
+                <b-button
+                  variant="danger"
+                  @click="deleteEpub(false)"
+                  v-if="epubfile"
+                >
+                  o'chirish</b-button
+                >
+                <span class="ml-5" v-if="epubfile">
+                  {{ epubfile }} <i></i
+                ></span>
+
+                <!-- <div class="d-flex align-items-center">
+                          <audio id="audio" controls class="w-100">
+                            <source
+                              :src="apiUrl + '/' + mp3.audio"
+                              type="audio/mpeg"
+                            />
+                            Your browser does not support the audio element.
+                          </audio>
+                          <button
+                            class="btn btn-transparent"
+                            type="button"
+                            @click="removeAudio(mp3)"
+                          >
+                            <i class="iconsminds-close text-danger h5 ml-2"></i>
+                          </button>
+                        </div> -->
+              </div>
+              <b-col cols="8">
+                <b-progress
+                  v-if="progBarCount > 0"
+                  :value="progBarCount"
+                  max="100"
+                  animated
+                ></b-progress>
+              </b-col>
+            </div>
+          </b-col>
+        </b-row>
+
+        <!-- --------------------------------------fragment-------------------------------------- -->
+        <b-row
+          class="bg-white mt-3 p-3 forFonts"
+          :class="{ 'mt-5': GET_BOOK.result?.book_type == 'paper' }"
+        >
+          <b-col cols="2"><p class="fontWeght">Parcha</p></b-col>
           <b-col cols="10">
             <p>
               KDP kontenti bo'yicha ko'rsatmalarimizni o'qing elektron
@@ -24,69 +120,36 @@
               @change="onFileChange"
             />
 
-            <b-button @click="$refs.docsfile.click()" variant="primary"
-              >Elektron kitob qo'lyozmasini yuklash</b-button
-            >'
-          </b-col>
-        </b-row>
-
-        <!-- Epub file -->
-
-        <b-row
-          v-show="$route.params.id !== '3'"
-          class="bg-white mt-3 p-3 forFonts"
-        >
-          <b-col cols="2" class="fontWeght">EPUB fayli</b-col>
-          <b-col cols="10">
-            <p>
-              EPUB raqamli kitoblar uchun eng mashhur fayl formati EPUB fayl
-              formati ( elektron nashr uchun qisqartirilgan ) kengaytmasi
-              bo'lgan elektron pochtasi formatidir .pub. Siz EPUB fayllarini
-              yuklab olishingiz va smartfonlaringiz, planshetlaringiz, elektron
-              o'quvchilaringiz yoki kompyuteringizdan ularni o'qishingiz mumkin.
-              Ushbu erkin foydalanish mumkin bo'lgan elektron kitob standarti
-              boshqa har qanday fayl formatidan ko'ra ko'proq qo'shimcha
-              qurilmalar uchun elektron kitoblarni o'qiydi.
-            </p>
-            <div>
-              <div style="position: relative" v-if="!book.epubfile">
-                <input
-                  ref="epub"
-                  type="file"
-                  class="d-none"
-                  accept=".epub"
-                  @change="setEpubFile($event, 'ebook')"
-                />
-                <b-button @click="$refs.epub.click()" variant="primary">
-                  <i class="simple-icon-notebook"></i>
-                  Epub file yuklang</b-button
-                >
-
-                <!-- <span>{{ $t("book.ebook") }}</span> -->
-                <!-- <b-progress
-                  v-if="progBarCount > 0"
-                  :value="progBarCount"
-                  max="100"
-                  animated
-                ></b-progress> -->
-              </div>
-              <div class="p-4 mt-3" style="position: relative" v-else>
-                <label
-                  class="form-group has-float-label jv_input_file_label jv_error_btn"
-                  @click="deleteEpub"
-                >
-                  <i class="simple-icon-close"></i>
-                </label>
-                <span>{{ book.epubfile.name }}</span>
-              </div>
-            </div>
+            <b-button
+              @click="$refs.docsfile.click()"
+              variant="primary"
+              :disabled="book.fragment !== null"
+              >yuklab oling</b-button
+            >
+            <b-button
+              variant="danger"
+              @click="deleteEpub(true)"
+              v-if="book.fragment"
+              >o'chrish</b-button
+            >
+            <span> {{ book.fragment ? "fayl yuklandi" : "" }}</span>
+            <b-col
+              cols="8"
+              class="mt-5"
+              :class="{ 'd-none': GER_FRAGMENT_UPLODED == 100 }"
+            >
+              <b-progress
+                v-if="GER_FRAGMENT_UPLODED > 0"
+                :value="GER_FRAGMENT_UPLODED"
+                max="100"
+                animated
+              ></b-progress>
+            </b-col>
           </b-col>
         </b-row>
 
         <!-- ----------------------------Kindle elektron kitob qopqog'i---------------------------- -->
-        <b-row
-          class="bg-white mt-3 p-3 forFonts"
-          :class="{ 'mt-5': $route.params.id === '3' }"
+        <b-row class="bg-white mt-3 p-3 forFonts"
           ><b-col cols="2"
             ><p class="fontWeght">Elektron kitob muqovasi</p></b-col
           >
@@ -102,24 +165,35 @@
 
             <b-row>
               <b-col cols="3">
-                <div
-                  class="card mb-4 text-white crop_block"
-                  v-if="params.coverImg !== null"
-                >
+                <div class="card mb-4 text-white crop_block" v-if="optionsImg">
                   <cropper
                     class="cropper"
-                    :src="params.coverImg"
+                    :src="optionsImg"
                     ref="cropperImgoptions"
                   ></cropper>
-                  <button type="button" @click="cropImg('cropperImgoptions')">
-                    <i class="simple-icon-crop"></i>
-                  </button>
+                  <b-button
+                    type="button"
+                    @click="cropImg('options', 'cropperImgoptions')"
+                  >
+                    saqlash
+                  </b-button>
+                </div>
+                <div
+                  v-if="optionsImg == null && book.coverImg == null"
+                  class="borderDashed"
+                >
+                  <small>Muqova yuklanmagan</small>
                 </div>
 
-                <div v-else class="borderDashed">
-                  <small>Muqova yuklanmagan</small>
-                </div></b-col
-              >
+                <div v-if="book.coverImg" class="w-75 border mt-4">
+                  <img
+                    :src="apiUrl + '/' + book.coverImg"
+                    alt="bu yerda kitob muqova rasmi"
+                    class="img-fluid"
+                  />
+                </div>
+              </b-col>
+
               <b-col cols="9">
                 <input
                   type="file"
@@ -129,7 +203,7 @@
                 />
 
                 <b-button @click="$refs.coverfile.click()" variant="primary"
-                  >Muqova faylingizni yuklang</b-button
+                  >yuklab oling</b-button
                 ></b-col
               >
             </b-row>
@@ -211,6 +285,17 @@
               </span>
             </p>
 
+            <validation-provider
+              #default="{ errors }"
+              name="publisher"
+              rules="required"
+            >
+              <b-form-group label="Nashriyotchi">
+                <b-form-input v-model="book.publisher" />
+              </b-form-group>
+              <p class="text-danger">{{ errors[0] }}</p>
+            </validation-provider>
+
             <b-form-group label="Nashr raqami (ixtiyoriy">
               <b-form-input
                 v-model="book.editionNumber"
@@ -234,21 +319,21 @@
               <b-col cols="6"
                 ><validation-provider
                   #default="{ errors }"
-                  name="muallifism"
+                  name="Muallif ismi va familiyasi"
                   rules="required"
                 >
                   <b-form-group
                     :style="{ border: errors[0] ? '1px solid #E28275FF' : '' }"
                   >
                     <b-form-input
-                      v-model="book.autorFirstName"
-                      placeholder="ism"
+                      v-model="book.authorFullName"
+                      placeholder="ismi familiyasi"
                     />
                   </b-form-group>
                   <p class="text-danger">{{ errors[0] }}</p>
                 </validation-provider></b-col
               >
-              <b-col cols="6">
+              <!-- <b-col cols="6">
                 <validation-provider
                   #default="{ errors }"
                   name="mualliffamiliya"
@@ -264,7 +349,7 @@
 
                   <p class="text-danger">{{ errors[0] }}</p>
                 </validation-provider></b-col
-              >
+              > -->
             </b-row>
           </b-col>
         </b-row>
@@ -289,7 +374,7 @@
                 <v-select
                   multiple
                   :options="authorsListArray"
-                  v-model="book.autor"
+                  v-model="book.author"
                   :reduce="(option) => option.id"
                   label="fio"
                 />
@@ -385,7 +470,7 @@
                     v-model="book.category"
                     :multiple="true"
                     :style="{ border: errors[0] ? '1px solid #E28275FF' : '' }"
-                    style="font-size: 15px !important "
+                    style="font-size: 15px !important"
                 /></b-col>
               </b-row>
               <br />
@@ -393,11 +478,9 @@
             </validation-provider>
           </b-col>
         </b-row>
-        <!-- ---------------------------------Yosh va daraja oralig'i--------------------------------- -->
+        <!-- ---------------------------------Yosh--------------------------------- -->
         <b-row class="bg-white mt-3 p-3 forFonts">
-          <b-col cols="2">
-            <p class="fontWeght">Yosh va daraja oralig'i</p></b-col
-          >
+          <b-col cols="2"> <p class="fontWeght">Yosh</p></b-col>
           <b-col cols="10"
             ><p>
               <b>Bolalar kitobi yosh oralig'i </b>(ixtiyoriy)<br />
@@ -428,6 +511,9 @@ import { mapActions, mapGetters } from "vuex";
 import { VueTreeList, Tree, TreeNode } from "vue-tree-list";
 import { Cropper } from "vue-advanced-cropper";
 import AddAuthor from "../../author/AddAuthor";
+import BookSteps from "../BookSteps.vue";
+import { adminRoot } from "../../../../../constants/config";
+import { apiUrl } from "../../../../../constants/config";
 
 export default {
   components: {
@@ -438,13 +524,17 @@ export default {
     Treeselect,
     VueTreeList,
     AddAuthor,
+    BookSteps,
   },
   data() {
     return {
+      test: null,
+      optionsImg: null,
+      progBarCount: 0,
       required,
+      apiUrl,
       params: {
         fileDocx: null,
-        coverImg: null,
       },
       coordinates: {
         width: 0,
@@ -453,21 +543,31 @@ export default {
         top: 0,
         image: null,
       },
+      epubfile: null,
+      fragment: null,
       book: {
+        coverImg: null,
         langueSelect: "Uzbek",
         editionNumber: null,
         subTitle: null,
         bookTitle: null,
-        autorFirstName: null,
-        autorLastName: null,
+        authorFullName: null,
         age: null,
         copyright: null,
-        category: null,
+        category: [],
         order: "now",
         description: null,
-        autor: null,
+        author: [],
         epubfile: null,
+        publisher: null,
+        book_id: null,
+        user_id: null,
+        fragment: null,
+        step: 2,
+        audiobook: null,
+        type: null
       },
+      bookData: {},
       langueData: [
         { id: 1, name: "Uzbek" },
         { id: 2, name: "Russia" },
@@ -501,45 +601,110 @@ export default {
       "CREATE_BOOK",
       "getAuthorsListArray",
       "storeEpub",
+      "GET_BOOK_DATA",
+      "CREATE_STEP_ONE",
+      "storeCropImage",
+      "FRAGMENT_CREATE",
+      "CREATE_AUDIOBOOK",
+      "DELETE_EPUB",
     ]),
+    async refresh() {
+      await this.GET_BOOK_DATA(this.$route.params.id);
+    },
     BookDetails() {
-      this.$refs.templateRef.validate().then((success) => {
-        if (success) {
-          this.CREATE_BOOK(this.book);
-
-          this.$emit("stepOne", 2);
-        } else {
-          this.success = true;
-          console.log("xatooooooooooooooooooo");
-        }
-      });
-    },
-    addParticipant() {
-      let participant = {
-        id: this.participants.length + 1,
-        participantRol: "muallif",
-        participantName: null,
-        participantsLastname: null,
-      };
-      this.participants.push(participant);
-    },
-    deletPraticipandts(id) {
-      if (this.participants.length > 1) {
-        this.participants = this.participants.filter((c) => c.id !== id);
+      console.log(this.fileRequired(), "require");
+      if (this.fileRequired()) {
+        this.$refs.templateRef.validate().then((success) => {
+          if (success) {
+            this.CREATE_STEP_ONE(this.book)
+              .then((res) => {
+                console.log(res);
+                if (res.data.success) {
+                  this.$notify("success", this.$t("categoryaFile.successful"));
+                  this.$router.push(
+                    `${adminRoot}/bookContent/${this.$route.params.id}`
+                  );
+                }
+              })
+              .catch((error) => {
+                this.$notify("error", "Server Error: " + error.message);
+              });
+          } else {
+            this.success = true;
+            this.$notify("error", "kitob maydonini to'ldiring");
+          }
+        });
       } else {
-        this.participants[0].participantRol = "muallif";
-        this.participants[0].participantName = null;
-        this.participants[0].participantLastname = null;
+        this.$notify("error", " Kitob faylini yuklang");
       }
     },
 
-    // docx file yuklash function
-    onFileChange(event) {
-      const file = event.target.files[0];
-      const formData = new FormData();
-      formData.append("file", file);
+    fileRequired() {
+      let file = false;
+      if (
+        this.GET_BOOK.result.book_type == "ebook" &&
+        this.book.epubfile != null
+      ) {
+        file = true;
+      }
+      if (
+        this.GET_BOOK.result.book_type == "audiobook" &&
+        this.book.audiobook != null
+      ) {
+        file = true;
+      }
+      if (
+        this.GET_BOOK.result.book_type == "paper" &&
+        this.book.epubfile == null
+      ) {
+        file = true;
+      }
+      return file;
     },
-    cropImg(refOption) {
+    // O'CHIRILMASIN KELAJAKDA FOYDALANILADI
+    // addParticipant() {
+    //   let participant = {
+    //     id: this.participants.length + 1,
+    //     participantRol: "muallif",
+    //     participantName: null,
+    //     participantsLastname: null,
+    //   };
+    //   this.participants.push(participant);
+    // },
+
+    // deletPraticipandts(id) {
+    //   if (this.participants.length > 1) {
+    //     this.participants = this.participants.filter((c) => c.id !== id);
+    //   } else {
+    //     this.participants[0].participantRol = "muallif";
+    //     this.participants[0].participantName = null;
+    //     this.participants[0].participantLastname = null;
+    //   }
+    // },
+
+    // docx file yuklash function
+
+    // FRAGMENT
+    async onFileChange(event) {
+      const file = event.target.files[0];
+      let formData = new FormData();
+
+      if (this.GET_BOOK.result?.book_type == "ebook") {
+        formData.append("ebook", file);
+        formData.append("book_id", this.GET_BOOK.result.book_id);
+        formData.append("is_fragment", true);
+        await this.FRAGMENT_CREATE(formData);
+        await this.refresh();
+      }
+      if (this.GET_BOOK.result?.book_type == "audiobook") {
+        formData.append("audio", file);
+        formData.append("book_id", this.$route.params.id);
+        this.CREATE_AUDIOBOOK(formData);
+      }
+    },
+
+    // bu kitob muqovasi yuklash uchun funksiya
+    async cropImg(a, refOption) {
       const { coordinates, canvas } = this.$refs[refOption].getResult();
       this.croppedImage = canvas.toDataURL();
       let image = new FormData();
@@ -548,45 +713,57 @@ export default {
       image.append("height", coordinates.height);
       image.append("x", coordinates.left);
       image.append("y", coordinates.top);
-      console.log(image);
+      image.append("book_id", this.$route.params.id);
+      await this.storeCropImage(image);
+      this.book.coverImg = this.cropfileList[0].path;
+      this.optionsImg = null;
+      this.refresh();
     },
+
     //cover
     coverImgFile(e) {
+      this.optionsImg = null;
       const cover = e.target.files[0];
       this.coordinates.image = cover;
-      this.params.coverImg = URL.createObjectURL(cover);
+      this.optionsImg = URL.createObjectURL(cover);
     },
-    async setEpubFile(event, key) {
+
+    //  EPUB FILE
+    async setEpubFile(event) {
+      this.test = event;
       let epub = new FormData();
-      epub.append("ebook", event.target.files[0]);
-      await this.storeEpub(epub);
-      // this.epubfile = event.target.files[0];
-      // this.formdata.author = this.getEpubContent.creator;
-      // this.formdata.ebook = this.getEpubContent.file_path;
-      // this.formdata.name = this.getEpubContent.title;
-      // this.formdata.publishing_house = this.getEpubContent.publisher;
-      // this.formdata.uuid = this.getEpubContent.identifier.replace(
-      //   "urn:uuid:",
-      //   ""
-      // );
-      // this.formdata.content = "";
-      // this.getEpubContent.chapters.map((e) => {
-      //   this.formdata.content += e.title + "\r\n";
-      // });
-      // // this.formdata.content = this.getEpubContent.chapters;
-      // this.formdata.description = this.getEpubContent.description;
-      // this.formdata.image = this.getEpubContent.content["cover"];
-      // this.formdata.lang = this.getEpubContent.language;
-      // await this.makeSelectedLang();
-      // // await this.makeSelectedAuthor();
+      if (this.GET_BOOK.result?.book_type == "ebook") {
+        epub.append("book_id", this.$route.params.id);
+        epub.append("ebook", event.target.files[0]);
+        epub.append("is_fragment", false);
+        await this.storeEpub(epub);
+        await this.refresh();
+      } else {
+        epub.append("audio", event.target.files[0]);
+        epub.append("book_id", this.$route.params.id);
+        await this.CREATE_AUDIOBOOK(epub).then((res) => {});
+      }
+    },
+    deleteEpub(boolean) {
+      let delate = confirm("Epub faylingiz o'chirilsinmi");
+      if (delate) {
+        this.DELETE_EPUB({ id: this.$route.params.id, is_fragment: boolean });
+        this.refresh();
+      }
     },
   },
   computed: {
-    ...mapGetters(["categoryListArray", "authorsListArray"]),
+    ...mapGetters([
+      "categoryListArray",
+      "authorsListArray",
+      "getEpubContent",
+      "getUploadProgressNum",
+      "cropfileList",
+      "GET_BOOK",
+      "GER_FRAGMENT_UPLODED",
+    ]),
     getAcceptValue() {
-      return this.$route.params.id == "2"
-        ? ".3gp,.aa,.aac,.aax,.act,.aiff,.alac,.amr,.ape,.au,.awb,.dss,.dvf,.flac,.gsm,.iklax,.ivs,.m4a,.m4b,.m4p,.mmf,.mp3,.mpc"
-        : ".doc,.pdf";
+      return this.GET_BOOK.result?.book_type == "ebook" ? ".epub" : ".mp3";
     },
   },
   watch: {
@@ -599,9 +776,35 @@ export default {
       }
     },
   },
-  mounted() {
-    this.getCategoryListArray();
-    this.getAuthorsListArray();
+  async mounted() {
+    await this.refresh().then(() => {
+      let book_data = {
+        book_type: this.GET_BOOK.result.book_type,
+        step: this.GET_BOOK.result.step,
+      };
+      this.book.epubfile = this.GET_BOOK.result.ebook_path;
+      this.book.subTitle = this.GET_BOOK.result.subtitle
+      this.book.editionNumber = this.GET_BOOK.result.edition
+      this.book.age = this.GET_BOOK.result.age_access
+      this.book.category = this.GET_BOOK.result.category_id
+      this.book.type = this.GET_BOOK.result.book_type
+      this.bookData = book_data;
+    });
+
+    await this.getCategoryListArray();
+    await this.getAuthorsListArray();
+  },
+  updated() {
+    this.GET_BOOK;
+    this.epubfile = this.GET_BOOK.result.title;
+    this.book.bookTitle = this.GET_BOOK.result.title;
+    this.book.publisher = this.GET_BOOK.result.publisher;
+    this.book.coverImg = this.GET_BOOK.result.cover;
+    this.book.book_id = this.GET_BOOK.result?.book_id;
+    this.book.user_id = this.GET_BOOK.result?.user_id;
+    this.book.authorFullName = this.GET_BOOK.result.creator;
+    this.book.fragment = this.GET_BOOK.result.fragment;
+    this.book.epubfile = this.GET_BOOK.result.ebook_path;
   },
 };
 </script>
@@ -637,14 +840,7 @@ export default {
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
 }
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 500ms;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
+
 .btn_add_select {
   position: absolute;
   right: 1px;
@@ -670,5 +866,21 @@ export default {
   border-left: 13px solid #ad3947ff;
   padding: 10px;
   margin: 10px 0;
+}
+.borderDashed {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 130px;
+  border: 3px dashed #c8c8c8ff;
+  text-align: center;
+}
+.cropper {
+  height: 250px;
+  background: #ddd;
+}
+.cover_image {
+  height: 250px;
 }
 </style>
