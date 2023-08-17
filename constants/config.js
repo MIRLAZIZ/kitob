@@ -2,8 +2,8 @@ export const defaultMenuType = "menu-default"; // 'menu-default', 'menu-sub-hidd
 export const adminRoot = "/app";
 export const searchPath = `${adminRoot}/pages/miscellaneous/search`;
 export const buyUrl = "https://1.envato.market/nEyZa";
-export const apiUrl =  "https://beta.kytab.uz";
-// export const apiUrl =  "http://alilmkytab";
+// export const apiUrl =  "https://beta.kytab.uz";
+export const apiUrl =  "http://alilmkytab";
 
 export const appUrl =
     process.env.NODE_ENV == "development"

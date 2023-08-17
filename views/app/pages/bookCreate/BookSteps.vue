@@ -85,8 +85,8 @@ export default {
   },
   data() {
     return {
-      img: "../../../../srcs/assets/img/book/warning.svg",
-      imgCheck: "../../../../srcs/assets/img/book/check-mark-icon-free-png.png",
+      img: "../../../../assets/img/book/warning.svg",
+      imgCheck: "../../../../assets/img/book/check-mark-icon-free-png.png",
     };
   },
   methods: {

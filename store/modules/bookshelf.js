@@ -1,5 +1,5 @@
 import axios from "axios";
-import { apiUrl } from "../../constants/config";
+import { apiUrl, appUrl } from "../../constants/config";
 const token = localStorage.getItem("access_token");
 axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
 import instance from "../instance";
@@ -7,10 +7,14 @@ instance();
 const state = {
   step1: [],
   bookData: {},
+  audoProgress: 0,
+  audoFrgmentProgress:0
 };
 
 const getters = {
   GET_BOOK: (state) => state.bookData,
+  AUDIO_PROGRESS: state => state.audoProgress,
+  AUDIO_FRAGENT: state => state.audoFrgmentProgress
 };
 
 const mutations = {};
@@ -35,12 +39,34 @@ const actions = {
   async CREATE_STEP_THIRD(_, data) {
     return await axios.post(`${apiUrl}/api/book/step/update/third`, data);
   },
-  async CREATE_AUDIOBOOK(_, data) {
-    return await axios.post(`${apiUrl}/api/book/audio`, data);
+  async CREATE_AUDIOBOOK(context, data) {
+    return await axios.post(`${apiUrl}/api/book/audio`, data, {
+      onUploadProgress: (progressEvent) => {
+        const audoUploud = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+        context.state.audoProgress = audoUploud;
+      },
+    });
   },
   async DELETE_EPUB(_, data) {
-     await axios.post(`${apiUrl}/api/book/epub/destroy`,data);
+    await axios.post(`${apiUrl}/api/book/epub/destroy`, data);
   },
+
+  async CREATE_AUDIO_FRAGMENT(context, data) {
+    return await axios.post(`${apiUrl}/api/book/audio`, data, {
+      onUploadProgress: (progressEvent) => {
+        const audoUploud = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+        context.state.audoFrgmentProgress = audoUploud;
+      },
+    });
+  },
+  async DELETE_AUDIO(_, id) {
+    return await axios.delete(`${apiUrl}/api/book/audio/remove/${id}`)
+  }
+  
 };
 
 export default {

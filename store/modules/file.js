@@ -16,7 +16,7 @@ const getters = {
     filesList: (state) => state.files,
     cropfileList: (state) => state.cropFile,
     getEpubContent: (state) => state.epubContent,
-    GER_FRAGMENT_UPLODED: state => state.fragmntUploaded,
+    GET_FRAGMENT_UPLODED: state => state.fragmntUploaded,
     getUploadProgressNum: (state) => state.uploadProgressNum,
 };
 

@@ -1,8 +1,7 @@
 <template>
   <div>
-    <pre>{{ GET_BOOK.result }}</pre>
-
     <BookSteps :bookData="bookData" />
+
     <div class="px-3">
       <validation-observer ref="templateRef">
         <!-- Epub file -->
@@ -69,6 +68,53 @@
                   {{ epubfile }} <i></i
                 ></span>
 
+                <div
+                  class="scrollDiv"
+                  v-if="
+                    GET_BOOK &&
+                    GET_BOOK.result &&
+                    GET_BOOK.result.audios &&
+                    GET_BOOK.result.audios.length > 0
+                  "
+                >
+                  <draggable
+                    :move="checkMove"
+                    v-model="GET_BOOK.result.audios"
+                    class="list-group list-group-flush cursor-move"
+                    tag="ul"
+                  >
+                    <transition-group type="transition" name="flip-list">
+                      <b-list-group-item
+                        v-for="(mp3, index) in GET_BOOK.result.audios"
+                        :key="index"
+                        tag="li"
+                      >
+                        <b-row>
+                          <b-col cols="10">
+                            <audio id="audio" controls class="w-100">
+                              <source
+                                :src="apiUrl + '/' + mp3.audio"
+                                type="audio/mpeg"
+                              />
+                            </audio>
+                          </b-col>
+                          <b-col cols="2"
+                            ><b-button
+                              class=""
+                              size="sm"
+                              variant="danger"
+                              @click="deleteAudio(mp3.id)"
+                              >O'chirish</b-button
+                            ></b-col
+                          >
+                        </b-row>
+
+                        <!-- <i class="simple-icon-magnifier-remove"></i> -->
+                      </b-list-group-item>
+                    </transition-group>
+                  </draggable>
+                </div>
+
                 <!-- <div class="d-flex align-items-center">
                           <audio id="audio" controls class="w-100">
                             <source
@@ -133,14 +179,10 @@
               >o'chrish</b-button
             >
             <span> {{ book.fragment ? "fayl yuklandi" : "" }}</span>
-            <b-col
-              cols="8"
-              class="mt-5"
-              :class="{ 'd-none': GER_FRAGMENT_UPLODED == 100 }"
-            >
+            <b-col cols="8" class="mt-5">
               <b-progress
-                v-if="GER_FRAGMENT_UPLODED > 0"
-                :value="GER_FRAGMENT_UPLODED"
+                v-if="progresFragment > 0"
+                :value="progresFragment"
                 max="100"
                 animated
               ></b-progress>
@@ -514,6 +556,7 @@ import AddAuthor from "../../author/AddAuthor";
 import BookSteps from "../BookSteps.vue";
 import { adminRoot } from "../../../../../constants/config";
 import { apiUrl } from "../../../../../constants/config";
+import draggable from "vuedraggable";
 
 export default {
   components: {
@@ -525,9 +568,11 @@ export default {
     VueTreeList,
     AddAuthor,
     BookSteps,
+    draggable,
   },
   data() {
     return {
+      audio: [],
       test: null,
       optionsImg: null,
       progBarCount: 0,
@@ -565,7 +610,7 @@ export default {
         fragment: null,
         step: 2,
         audiobook: null,
-        type: null
+        type: null,
       },
       bookData: {},
       langueData: [
@@ -574,6 +619,7 @@ export default {
         { id: 3, name: "Engilish" },
       ],
       progBarCount: 0,
+      progresFragment: 0,
       rol: [
         "Mualif",
         "Muharrir",
@@ -607,6 +653,8 @@ export default {
       "FRAGMENT_CREATE",
       "CREATE_AUDIOBOOK",
       "DELETE_EPUB",
+      "CREATE_AUDIO_FRAGMENT",
+      "DELETE_AUDIO",
     ]),
     async refresh() {
       await this.GET_BOOK_DATA(this.$route.params.id);
@@ -648,8 +696,8 @@ export default {
         file = true;
       }
       if (
-        this.GET_BOOK.result.book_type == "audiobook" &&
-        this.book.audiobook != null
+        this.GET_BOOK.result.book_type == "audio" &&
+        this.book.audio != null
       ) {
         file = true;
       }
@@ -696,10 +744,11 @@ export default {
         await this.FRAGMENT_CREATE(formData);
         await this.refresh();
       }
-      if (this.GET_BOOK.result?.book_type == "audiobook") {
+      if (this.GET_BOOK.result?.book_type == "audio") {
         formData.append("audio", file);
         formData.append("book_id", this.$route.params.id);
-        this.CREATE_AUDIOBOOK(formData);
+        this.CREATE_AUDIO_FRAGMENT(formData);
+        this.refresh();
       }
     },
 
@@ -741,7 +790,9 @@ export default {
       } else {
         epub.append("audio", event.target.files[0]);
         epub.append("book_id", this.$route.params.id);
-        await this.CREATE_AUDIOBOOK(epub).then((res) => {});
+        await this.CREATE_AUDIOBOOK(epub).then(() => {
+          this.refresh();
+        });
       }
     },
     deleteEpub(boolean) {
@@ -749,6 +800,17 @@ export default {
       if (delate) {
         this.DELETE_EPUB({ id: this.$route.params.id, is_fragment: boolean });
         this.refresh();
+      }
+    },
+    checkMove(e) {
+      console.log(e);
+    },
+    deleteAudio(e) {
+      let a = confirm("audio fayl O'chirilsinmi");
+      if (a) {
+        this.DELETE_AUDIO(e).then(() => {
+          this.refresh();
+        });
       }
     },
   },
@@ -760,7 +822,9 @@ export default {
       "getUploadProgressNum",
       "cropfileList",
       "GET_BOOK",
-      "GER_FRAGMENT_UPLODED",
+      "GET_FRAGMENT_UPLODED",
+      "AUDIO_PROGRESS",
+      "AUDIO_FRAGENT",
     ]),
     getAcceptValue() {
       return this.GET_BOOK.result?.book_type == "ebook" ? ".epub" : ".mp3";
@@ -775,6 +839,32 @@ export default {
         }, 1500);
       }
     },
+    AUDIO_PROGRESS(newCount, oldCount) {
+      this.progBarCount = newCount;
+      if (newCount == 100) {
+        setTimeout(() => {
+          this.progBarCount = 0;
+        }, 1500);
+      }
+    },
+    //FRAAGMENT
+    GET_FRAGMENT_UPLODED(newCount, oldCount) {
+      this.progresFragment = newCount;
+      if (newCount == 100) {
+        setTimeout(() => {
+          this.progresFragment = 0;
+        }, 1500);
+      }
+    },
+
+    AUDIO_FRAGENT(newCount, oldCount) {
+      this.progresFragment = newCount;
+      if (newCount == 100) {
+        setTimeout(() => {
+          this.progresFragment = 0;
+        }, 1500);
+      }
+    },
   },
   async mounted() {
     await this.refresh().then(() => {
@@ -783,11 +873,11 @@ export default {
         step: this.GET_BOOK.result.step,
       };
       this.book.epubfile = this.GET_BOOK.result.ebook_path;
-      this.book.subTitle = this.GET_BOOK.result.subtitle
-      this.book.editionNumber = this.GET_BOOK.result.edition
-      this.book.age = this.GET_BOOK.result.age_access
-      this.book.category = this.GET_BOOK.result.category_id
-      this.book.type = this.GET_BOOK.result.book_type
+      this.book.subTitle = this.GET_BOOK.result.subtitle;
+      this.book.editionNumber = this.GET_BOOK.result.edition;
+      this.book.age = this.GET_BOOK.result.age_access;
+      this.book.category = this.GET_BOOK.result.category_id;
+      this.book.type = this.GET_BOOK.result.book_type;
       this.bookData = book_data;
     });
 
@@ -804,7 +894,7 @@ export default {
     this.book.user_id = this.GET_BOOK.result?.user_id;
     this.book.authorFullName = this.GET_BOOK.result.creator;
     this.book.fragment = this.GET_BOOK.result.fragment;
-    this.book.epubfile = this.GET_BOOK.result.ebook_path;
+    this.book.epubfile = this.GET_BOOK.result.ebook_file;
   },
 };
 </script>
@@ -882,5 +972,30 @@ export default {
 }
 .cover_image {
   height: 250px;
+}
+
+.dropdown-toggle {
+  padding: 10px 0 10px 10px !important;
+}
+.list-group-item {
+  transition: all 0.2s;
+  border: 1px solid green !important;
+  margin: 5px 0;
+  border-radius: 6px !important;
+}
+.cursor-move {
+  cursor: s-resize;
+}
+.scrollDiv {
+  width: 75%;
+  height: 200px;
+  border: 1px solid green;
+  padding: 15px;
+  margin-top: 50px;
+  border-radius: 5px;
+  overflow-y: scroll;
+}
+.scrollDiv::-webkit-scrollbar {
+  display: none;
 }
 </style>

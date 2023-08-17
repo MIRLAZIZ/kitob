@@ -55,7 +55,7 @@ export default {
         },
         {
           id: 2,
-          type: "audiobook",
+          type: "audio",
           title: "Audio kitob",
           description:
             " Audio kitoblar qo'shing va mijozlaringiz  sonini va sotuv samaradorligini  oshiring",
@@ -103,7 +103,10 @@ export default {
             `${adminRoot}/bookDetils/${res.data.result.book_id}`
           );
         }
-      });
+      })
+      .catch(error=> {
+        this.$notify("error", error.message);
+      })
     },
   },
   mounted() {},
