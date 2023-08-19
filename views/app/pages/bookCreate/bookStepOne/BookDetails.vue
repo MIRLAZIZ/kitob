@@ -1,5 +1,10 @@
 <template>
   <div>
+    <pre v-if="GET_BOOK.result && GET_BOOK.result.audios">
+      {{GET_BOOK.result }}
+
+    </pre>
+
     <BookSteps :bookData="bookData" />
 
     <div class="px-3">
@@ -86,11 +91,14 @@
                     <transition-group type="transition" name="flip-list">
                       <b-list-group-item
                         v-for="(mp3, index) in GET_BOOK.result.audios"
-                        :key="index"
+                        :key="mp3.id"
                         tag="li"
                       >
                         <b-row>
-                          <b-col cols="10">
+                          <b-col cols="12">
+                            <p>{{ mp3.song }}</p></b-col
+                          >
+                          <b-col cols="8">
                             <audio id="audio" controls class="w-100">
                               <source
                                 :src="apiUrl + '/' + mp3.audio"
@@ -98,7 +106,7 @@
                               />
                             </audio>
                           </b-col>
-                          <b-col cols="2"
+                          <b-col cols="4" class="d-flex align-items-center"
                             ><b-button
                               class=""
                               size="sm"
@@ -108,29 +116,10 @@
                             ></b-col
                           >
                         </b-row>
-
-                        <!-- <i class="simple-icon-magnifier-remove"></i> -->
                       </b-list-group-item>
                     </transition-group>
                   </draggable>
                 </div>
-
-                <!-- <div class="d-flex align-items-center">
-                          <audio id="audio" controls class="w-100">
-                            <source
-                              :src="apiUrl + '/' + mp3.audio"
-                              type="audio/mpeg"
-                            />
-                            Your browser does not support the audio element.
-                          </audio>
-                          <button
-                            class="btn btn-transparent"
-                            type="button"
-                            @click="removeAudio(mp3)"
-                          >
-                            <i class="iconsminds-close text-danger h5 ml-2"></i>
-                          </button>
-                        </div> -->
               </div>
               <b-col cols="8">
                 <b-progress
@@ -271,6 +260,7 @@
                     v-model="book.langueSelect"
                     label="name"
                     :options="langueData"
+                    :reduce="option => option.value"
                 /></b-col>
               </b-row>
 
@@ -609,7 +599,7 @@ export default {
         user_id: null,
         fragment: null,
         step: 2,
-        audiobook: null,
+        // audiobook: null,
         type: null,
       },
       bookData: {},
@@ -638,6 +628,7 @@ export default {
           participantLastname: null,
         },
       ],
+      bookSort: [],
       success: false,
     };
   },
@@ -655,6 +646,7 @@ export default {
       "DELETE_EPUB",
       "CREATE_AUDIO_FRAGMENT",
       "DELETE_AUDIO",
+      "AUDIO_SORT",
     ]),
     async refresh() {
       await this.GET_BOOK_DATA(this.$route.params.id);
@@ -697,7 +689,8 @@ export default {
       }
       if (
         this.GET_BOOK.result.book_type == "audio" &&
-        this.book.audio != null
+        this.GET_BOOK.result.audios &&
+        this.GET_BOOK.result.audios.length > 0
       ) {
         file = true;
       }
@@ -736,19 +729,21 @@ export default {
     async onFileChange(event) {
       const file = event.target.files[0];
       let formData = new FormData();
+      formData.append("is_fragment", true);
 
-      if (this.GET_BOOK.result?.book_type == "ebook") {
-        formData.append("ebook", file);
-        formData.append("book_id", this.GET_BOOK.result.book_id);
-        formData.append("is_fragment", true);
-        await this.FRAGMENT_CREATE(formData);
-        await this.refresh();
-      }
+      
       if (this.GET_BOOK.result?.book_type == "audio") {
         formData.append("audio", file);
         formData.append("book_id", this.$route.params.id);
-        this.CREATE_AUDIO_FRAGMENT(formData);
-        this.refresh();
+        this.CREATE_AUDIO_FRAGMENT(formData).then(() => {
+          this.refresh();
+        });
+      }
+      else{
+        formData.append("ebook", file);
+        formData.append("book_id", this.GET_BOOK.result.book_id);
+        await this.FRAGMENT_CREATE(formData);
+        await this.refresh();
       }
     },
 
@@ -781,15 +776,16 @@ export default {
     async setEpubFile(event) {
       this.test = event;
       let epub = new FormData();
+      epub.append("is_fragment", false);
       if (this.GET_BOOK.result?.book_type == "ebook") {
         epub.append("book_id", this.$route.params.id);
         epub.append("ebook", event.target.files[0]);
-        epub.append("is_fragment", false);
         await this.storeEpub(epub);
         await this.refresh();
       } else {
         epub.append("audio", event.target.files[0]);
         epub.append("book_id", this.$route.params.id);
+        epub.append("sort", this.GET_BOOK.result?.audios.length + 1);
         await this.CREATE_AUDIOBOOK(epub).then(() => {
           this.refresh();
         });
@@ -803,7 +799,23 @@ export default {
       }
     },
     checkMove(e) {
-      console.log(e);
+      let sort = [];
+      setTimeout(() => {
+        this.GET_BOOK.result.audios.forEach((element, index) => {
+          let item = {
+            audio_id: element.id,
+            sort: index + 1,
+          };
+          sort.push(item);
+        });
+        this.AUDIO_SORT({audios: sort}).then(() => {
+          // this.refresh();
+        });
+      }, 1000);
+
+      // this.AUDIO_SORT(sortData).then(() => {
+      //   this.refresh();
+      // });
     },
     deleteAudio(e) {
       let a = confirm("audio fayl O'chirilsinmi");
@@ -827,7 +839,7 @@ export default {
       "AUDIO_FRAGENT",
     ]),
     getAcceptValue() {
-      return this.GET_BOOK.result?.book_type == "ebook" ? ".epub" : ".mp3";
+      return this.GET_BOOK.result?.book_type == "audio" ? ".mp3" : ".epub";
     },
   },
   watch: {
@@ -886,13 +898,16 @@ export default {
   },
   updated() {
     this.GET_BOOK;
+    if (this.GET_BOOK.result.book_type == 'ebook') {
+
+      this.book.bookTitle = this.GET_BOOK.result.title;
+      this.book.publisher = this.GET_BOOK.result.publisher;
+      this.book.coverImg = this.GET_BOOK.result.cover;
+      this.book.authorFullName = this.GET_BOOK.result.creator;
+    }
     this.epubfile = this.GET_BOOK.result.title;
-    this.book.bookTitle = this.GET_BOOK.result.title;
-    this.book.publisher = this.GET_BOOK.result.publisher;
-    this.book.coverImg = this.GET_BOOK.result.cover;
     this.book.book_id = this.GET_BOOK.result?.book_id;
     this.book.user_id = this.GET_BOOK.result?.user_id;
-    this.book.authorFullName = this.GET_BOOK.result.creator;
     this.book.fragment = this.GET_BOOK.result.fragment;
     this.book.epubfile = this.GET_BOOK.result.ebook_file;
   },
@@ -982,18 +997,19 @@ export default {
   border: 1px solid green !important;
   margin: 5px 0;
   border-radius: 6px !important;
+  padding: 10px 0 10px 10px !important;
 }
 .cursor-move {
-  cursor: s-resize;
+  cursor: all-scroll;
 }
 .scrollDiv {
-  width: 75%;
-  height: 200px;
+  width: 50%;
+  /* height: 200px; */
   border: 1px solid green;
   padding: 15px;
   margin-top: 50px;
   border-radius: 5px;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 .scrollDiv::-webkit-scrollbar {
   display: none;

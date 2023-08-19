@@ -176,7 +176,7 @@
             </p>
 
             <b-form-input type="number" v-model="book.numb_pages" />
-            ></b-col
+            </b-col
           >
         </b-row></ValidationObserver
       >
@@ -229,14 +229,14 @@ export default {
         bookData: [
           {
             id: 1,
-            cover: "Qattiq muqovali",
+            cover: "qattiq",
             price: null,
             weight: null,
           },
         ],
       },
       bookData: null,
-      cover: ["Qattiq muqovali", "Yumshoq muqovali"],
+      cover: ["qattiq", "yumshoq"],
       success: false,
     };
   },
@@ -246,7 +246,7 @@ export default {
     addParticipant() {
       let participant = {
         id: this.book.bookData.length + 1,
-        cover: "Qatiq muqovali",
+        cover: "qattiq",
         price: null,
         weight: null,
       };

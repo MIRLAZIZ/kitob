@@ -65,6 +65,9 @@ const actions = {
   },
   async DELETE_AUDIO(_, id) {
     return await axios.delete(`${apiUrl}/api/book/audio/remove/${id}`)
+  },
+  async AUDIO_SORT(_, data) {
+    return await axios.post(`${apiUrl}/api/book/audio/sort`, data)
   }
   
 };
