@@ -21,7 +21,7 @@ const mutations = {};
 
 const actions = {
   async CREATE_BOOK(_, data) {
-    return await axios.post(`${apiUrl}/api/book/step/change`, data);
+    return await axios.post(`${apiUrl}/api/book/step/create`, data);
   },
   async GET_BOOK_DATA(context, data) {
     return await axios

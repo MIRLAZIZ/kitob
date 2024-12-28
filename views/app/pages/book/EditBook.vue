@@ -8,11 +8,7 @@
               You have to fill out all fields...
             </div>
             <div class="errors" v-if="errorMsg">
-              <div
-                class="alert alert-danger"
-                v-for="(err, key) in errorMsg"
-                :key="key"
-              >
+              <div class="alert alert-danger" v-for="(err, key) in errorMsg" :key="key">
                 {{ err[0] }}
               </div>
             </div>
@@ -26,34 +22,18 @@
               <!-- Cover imaage -->
               <div class="col-sm-4 mb-4">
                 <div class="card mb-4 text-white crop_block" v-if="optionsImg">
-                  <cropper
-                    class="cropper"
-                    :src="optionsImg"
-                    ref="cropperImgoptions"
-                  ></cropper>
-                  <button
-                    type="button"
-                    class="btn_crop"
-                    @click="cropImg('options', 'cropperImgoptions')"
-                  >
+                  <cropper class="cropper" :src="optionsImg" ref="cropperImgoptions"></cropper>
+                  <button type="button" class="btn_crop" @click="cropImg('options', 'cropperImgoptions')">
                     <i class="simple-icon-crop"></i>
                   </button>
                 </div>
                 <div class="p-4 border mt-4">
                   <div class="cover_image">
-                    <img
-                      :src="apiUrl + '/' + formdata.image"
-                      alt=""
-                      class="img-fluid"
-                    />
+                    <img :src="apiUrl + '/' + formdata.image" alt="" class="img-fluid" />
                   </div>
                   <div class="btn-group m-3 text-center d-flex">
                     <label class="btn btn-primary btn-xs">
-                      <input
-                        type="file"
-                        class="d-none"
-                        @change="setEbookImage($event, 'options')"
-                      />
+                      <input type="file" class="d-none" @change="setEbookImage($event, 'options')" />
                       {{ $t("book.change") }}
                     </label>
                     <label class="btn btn-danger btn-xs">{{
@@ -65,17 +45,9 @@
 
               <!-- Epub file -->
               <div class="col-sm-4 mb-4">
-                <div
-                  class="p-4 border mt-4"
-                  style="position: relative"
-                  v-if="!epubfile"
-                >
+                <div class="p-4 border mt-4" style="position: relative" v-if="!epubfile">
                   <label class="form-group has-float-label jv_input_file_label">
-                    <input
-                      type="file"
-                      class="form-control jv_input_file"
-                      @change="setEpubFile($event, 'ebook')"
-                    />
+                    <input type="file" class="form-control jv_input_file" @change="setEpubFile($event, 'ebook')" />
                     <i class="simple-icon-notebook"></i>
                   </label>
                   <span>{{ $t("book.ebook") }}</span>
@@ -83,18 +55,10 @@
                   <!-- <div class="progress_bar"  v-if="progBarCount > 0">
                           <div class="progress_line" :data-pernum="progBarCount+'%'" :style="{width: progBarCount+'%'}"></div>
                         </div> -->
-                  <b-progress
-                    v-if="progBarCount > 0"
-                    :value="progBarCount"
-                    max="100"
-                    animated
-                  ></b-progress>
+                  <b-progress v-if="progBarCount > 0" :value="progBarCount" max="100" animated></b-progress>
                 </div>
                 <div class="p-4 border mt-4" style="position: relative" v-else>
-                  <label
-                    class="form-group has-float-label jv_input_file_label jv_error_btn"
-                    @click="deleteEpub"
-                  >
+                  <label class="form-group has-float-label jv_input_file_label jv_error_btn" @click="deleteEpub">
                     <i class="simple-icon-close"></i>
                   </label>
                   <span>{{ epubfile.name }}</span>
@@ -108,24 +72,17 @@
                     <template v-for="(mp3, index) in formdata.audio">
                       <div class="card p-3 shadow mb-2" :key="index">
                         <h5 class="text-primary">
-                          {{ mp3.song }} 
+                          {{ mp3.song }}
                           <small class="text-secondary">
                             {{ mp3.artist }}
                           </small>
                         </h5>
                         <div class="d-flex align-items-center">
                           <audio id="audio" controls class="w-100">
-                            <source
-                              :src="apiUrl + '/' + mp3.audio"
-                              type="audio/mpeg"
-                            />
+                            <source :src="apiUrl + '/' + mp3.audio" type="audio/mpeg" />
                             Your browser does not support the audio element.
                           </audio>
-                          <button
-                            class="btn btn-transparent"
-                            type="button"
-                            @click="removeAudio(mp3)"
-                          >
+                          <button class="btn btn-transparent" type="button" @click="removeAudio(mp3)">
                             <i class="iconsminds-close text-danger h5 ml-2"></i>
                           </button>
                         </div>
@@ -133,11 +90,7 @@
                     </template>
                   </div>
                   <label class="form-group has-float-label jv_input_file_label">
-                    <input
-                      type="file"
-                      class="form-control jv_input_file"
-                      @change="setAudioFile($event)"
-                    />
+                    <input type="file" class="form-control jv_input_file" @change="setAudioFile($event)" />
                     <i class="iconsminds-loudspeaker"></i>
                   </label>
                   <span>{{ $t("book.audio") }}</span>
@@ -148,34 +101,18 @@
                 <button class="btn btn-info" type="button" v-b-modal.modallong>
                   {{ $t("book.add_toc") }}
                 </button>
-                <b-modal
-                  id="modallong"
-                  ref="modallong"
-                  :title="$t('book.add_toc')"
-                >
+                <b-modal id="modallong" ref="modallong" :title="$t('book.add_toc')">
                   <div>
                     <label class="form-group has-float-label">
-                      <input
-                        type="text"
-                        class="form-control"
-                        v-model="tocData.title"
-                      />
+                      <input type="text" class="form-control" v-model="tocData.title" />
                       <span>{{ $t("book.title") }}</span>
                     </label>
                     <label class="form-group has-float-label">
-                      <input
-                        type="text"
-                        class="form-control"
-                        v-model="tocData.sort"
-                      />
+                      <input type="text" class="form-control" v-model="tocData.sort" />
                       <span>{{ $t("book.sort") }}</span>
                     </label>
                     <label class="form-group has-float-label">
-                      <input
-                        type="text"
-                        class="form-control"
-                        v-model="tocData.page"
-                      />
+                      <input type="text" class="form-control" v-model="tocData.page" />
                       <span>{{ $t("book.page") }}</span>
                     </label>
                   </div>
@@ -194,11 +131,7 @@
                         <td>{{ item.sort }}</td>
                         <td>{{ item.page }}</td>
                         <td>
-                          <button
-                            type="button"
-                            class="btn btn-danger"
-                            @click="rmTocItem(item.id)"
-                          >
+                          <button type="button" class="btn btn-danger" @click="rmTocItem(item.id)">
                             Remove
                           </button>
                         </td>
@@ -207,56 +140,33 @@
                   </table>
 
                   <template slot="modal-footer">
-                    <b-button
-                      variant="primary"
-                      @click="sendToc()"
-                      class="mr-1"
-                      >{{ $t("menu.add") }}</b-button
-                    >
+                    <b-button variant="primary" @click="sendToc()" class="mr-1">{{ $t("menu.add") }}</b-button>
                   </template>
                 </b-modal>
               </div>
               <!-- Title -->
               <div class="col-sm-12 mb-4">
                 <label class="form-group has-float-label">
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="formdata.name"
-                  />
+                  <input type="text" class="form-control" v-model="formdata.name" />
                   <span>{{ $t("book.name") }}</span>
                 </label>
               </div>
               <!-- Publisher -->
               <div class="col-sm-6 mb-4">
                 <label class="form-group has-float-label">
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="formdata.publishing_house"
-                  />
+                  <input type="text" class="form-control" v-model="formdata.publishing_house" />
                   <span>{{ $t("book.publishing_house") }}</span>
                 </label>
               </div>
               <!-- Author -->
               <div class="col-md-6 mb-4">
                 <label class="form-group has-float-label">
-                  <v-select
-                    multiple
-                    :options="authorsListArray"
-                    v-model="formdata.author"
-                    :reduce="(option) => option.id"
-                    label="fio"
-                  />
+                  <v-select multiple :options="authorsListArray" v-model="formdata.author" :reduce="(option) => option.id"
+                    label="fio" />
 
                   <span>{{ $t("book.author_id") }}</span>
 
-                  <button
-                    class="btn_add_select"
-                    v-b-modal.authormodal
-                    variant="outline-primary"
-                    type="button"
-                  >
+                  <button class="btn_add_select" v-b-modal.authormodal variant="outline-primary" type="button">
                     <i class="simple-icon-plus"></i>
                   </button>
                 </label>
@@ -264,180 +174,112 @@
               <!-- ISBN -->
               <div class="col-md-6 mb-4">
                 <label class="form-group has-float-label">
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="formdata.isbn"
-                  />
+                  <input type="text" class="form-control" v-model="formdata.isbn" />
                   <span>{{ $t("book.isbn") }}</span>
                 </label>
               </div>
               <!-- UUID -->
               <div class="col-md-6 mb-4">
                 <label class="form-group has-float-label">
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="formdata.uuid"
-                  />
+                  <input type="text" class="form-control" v-model="formdata.uuid" />
                   <span>{{ $t("book.uuid") }}</span>
                 </label>
               </div>
               <!-- Category -->
               <div class="col-md-6 mb-4">
-                <treeselect
-                  v-model="formdata.category"
-                  :multiple="true"
-                  :options="categoryListArray"
-                />
+                <treeselect v-model="formdata.category" :multiple="true" :options="categoryListArray" />
               </div>
               <!-- Total pages -->
               <div class="col-md-3 mb-4">
                 <label class="form-group has-float-label">
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="formdata.number_of_pages"
-                  />
+                  <input type="text" class="form-control" v-model="formdata.number_of_pages" />
                   <span>{{ $t("book.number_of_pages") }}</span>
                 </label>
               </div>
               <!-- Age restriction -->
               <div class="col-md-3 mb-4">
                 <label class="form-group has-float-label">
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="formdata.age_access"
-                  />
+                  <input type="text" class="form-control" v-model="formdata.age_access" />
                   <span>{{ $t("book.age_access") }}</span>
                 </label>
               </div>
               <!-- Published year -->
               <div class="col-md-3 mb-4">
                 <label class="form-group has-float-label">
-                  <input
-                    type="number"
-                    min="1900"
-                    max="2099"
-                    step="1"
-                    class="form-control"
-                    v-model="formdata.year"
-                  />
+                  <input type="number" min="1900" max="2099" step="1" class="form-control" v-model="formdata.year" />
                   <span>{{ $t("book.year") }}</span>
                 </label>
               </div>
               <!-- Edition -->
               <div class="col-md-3 mb-4">
                 <label class="form-group has-float-label">
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="formdata.edition"
-                  />
+                  <input type="text" class="form-control" v-model="formdata.edition" />
                   <span>{{ $t("book.edition") }}</span>
                 </label>
               </div>
               <!-- Options -->
               <div class="border card col-sm-12 mb-4 pb-4" id="options">
-                <b-button v-b-toggle.collapseAccordion4 variant="link"
-                  >Options</b-button
-                >
+                <b-button v-b-toggle.collapseAccordion4 variant="link">Options</b-button>
                 <b-collapse id="collapseAccordion4" accordion="my-accordion">
                   <div class="row">
                     <!-- Description -->
                     <div class="col-md-12">
                       <label class="form-group has-float-label">
-                        <editor
-                          initialValue
-                          v-model="formdata.description"
-                          :init="{
-                            height: 500,
-                            menubar: false,
-                            plugins: [
-                              'advlist autolink lists link image charmap',
-                              'searchreplace visualblocks code fullscreen',
-                              'print preview anchor insertdatetime media',
-                              'paste code help wordcount table image',
-                            ],
-                            toolbar:
-                              'undo redo | formatselect | bold italic | \
-                                                alignleft aligncenter alignright | \
-                                                bullist numlist outdent indent | help',
-                          }"
-                        ></editor>
+                        <editor initialValue v-model="formdata.description" :init="{
+                          height: 500,
+                          menubar: false,
+                          plugins: [
+                            'advlist autolink lists link image charmap',
+                            'searchreplace visualblocks code fullscreen',
+                            'print preview anchor insertdatetime media',
+                            'paste code help wordcount table image',
+                          ],
+                          toolbar:
+                            'undo redo | formatselect | bold italic | \
+                                                                                                                        alignleft aligncenter alignright | \
+                                                                                                                        bullist numlist outdent indent | help',
+                        }"></editor>
                         <span>{{ $t("book.description") }}</span>
                       </label>
                     </div>
                     <!-- Table of contents -->
                     <div class="col-md-7">
                       <label class="form-group has-float-label">
-                        <textarea
-                          cols="12"
-                          rows="20"
-                          class="form-control"
-                          v-model="formdata.content"
-                        ></textarea>
+                        <textarea cols="12" rows="20" class="form-control" v-model="formdata.content"></textarea>
                         <span>{{ $t("book.content") }}</span>
                       </label>
                     </div>
                     <div class="col-md-5">
                       <div class="d-flex mb-3">
                         <div class="col-md-6 custom-control custom-checkbox">
-                          <input
-                            @change="setCheckBox($event, 'is_new')"
-                            type="checkbox"
-                            class="custom-control-input"
-                            id="is_new"
-                            v-model="formdata.is_new"
-                          />
+                          <input @change="setCheckBox($event, 'is_new')" type="checkbox" class="custom-control-input"
+                            id="is_new" v-model="formdata.is_new" />
                           <label class="custom-control-label" for="is_new">{{
                             $t("book.is_new")
                           }}</label>
                         </div>
                         <div class="col-md-6 custom-control custom-checkbox">
-                          <input
-                            @change="setCheckBox($event, 'is_bestseller')"
-                            type="checkbox"
-                            id="is_bestseller"
-                            true-value="1"
-                            false-value="0"
-                            class="custom-control-input"
-                            v-model="formdata.is_bestseller"
-                          />
-                          <label
-                            class="custom-control-label"
-                            for="is_bestseller"
-                            >{{ $t("book.is_bestseller") }}</label
-                          >
+                          <input @change="setCheckBox($event, 'is_bestseller')" type="checkbox" id="is_bestseller"
+                            true-value="1" false-value="0" class="custom-control-input"
+                            v-model="formdata.is_bestseller" />
+                          <label class="custom-control-label" for="is_bestseller">{{ $t("book.is_bestseller") }}</label>
                         </div>
                       </div>
                       <!-- /. form-inline -->
                       <div class="d-flex">
                         <!-- Status -->
-                        <div
-                          class="col-md-4 form-group pl-0"
-                          v-if="currentUser.role_id == 1"
-                        >
+                        <div class="col-md-4 form-group pl-0" v-if="currentUser.role_id == 1">
                           <label class="form-group has-float-label">
-                            <v-select
-                              v-model="selectedStatus"
-                              :options="selectData"
-                              :dir="direction"
-                              @input="setSelectedStatus"
-                            />
+                            <v-select v-model="selectedStatus" :options="selectData" :dir="direction"
+                              @input="setSelectedStatus" />
                             <span>{{ $t("book.status") }}</span>
                           </label>
                         </div>
                         <!-- Language -->
                         <div class="col-md-4 form-group pl-0">
                           <label class="form-group has-float-label">
-                            <v-select
-                              :options="languages"
-                              :dir="direction"
-                              @input="setSelectedLang"
-                              v-model="selectedLang"
-                            />
+                            <v-select :options="languages" :dir="direction" @input="setSelectedLang"
+                              v-model="selectedLang" />
                             <span>{{ $t("book.language") }}</span>
                           </label>
                         </div>
@@ -450,59 +292,61 @@
               </div>
 
               <div class="border card col-sm-12 mb-4 pb-4" id="gallery">
-                <b-button v-b-toggle.collapseAccordionGallery variant="link"
-                  >Gallery</b-button
-                >
-                <b-collapse
-                  id="collapseAccordionGallery"
-                  accordion="gallery-accordion"
-                >
+                <b-button v-b-toggle.collapseAccordionGallery variant="link">Gallery</b-button>
+                <b-collapse id="collapseAccordionGallery" accordion="gallery-accordion">
                   <div class="card-body">
-                    <div class="form-group">
-                      <label
-                        for="gallery_image"
-                        class="form-group has-float-label m-auto jv_input_file_label"
-                      >
-                        <input
-                          type="file"
-                          id="gallery_image"
-                          class="form-control jv_input_file"
-                          @change="storeToGallery($event, 'ebook')"
-                        />
+                    <b-button @click="is_photo = true">Rasm</b-button>
+                    <b-button @click="is_photo = false">Video havola</b-button>
+
+
+
+
+
+                    <div class="form-group" v-if="is_photo">
+                      <label for="gallery_image" class="form-group has-float-label m-auto jv_input_file_label">
+                        <input type="file" id="gallery_image" class="form-control jv_input_file"
+                          @change="storeToGallery($event, 'ebook')" />
                         <i class="simple-icon-plus"></i>
                       </label>
                     </div>
-                    <hr />
-                    <div
-                      class="d-flex align-items-center justify-content-start"
-                      v-if="galleries && galleries.length"
-                    >
-                      {{ galleries }}
 
-                      <b-card
-                        class="d-flex flex-row active ml-1"
-                        no-body
-                        v-for="(gallery, ind) in galleries"
-                        :key="ind"
-                      >
-                        <img
-                          :src="gallery.path"
-                          class="list-thumbnail responsive border-0"
-                          :alt="gallery.id"
-                        />
-                      </b-card>
+
+                    <div class="d-flex align-items-center flex-column" v-if="!is_photo">
+                      <div class="w-50"> <label for=""> video havolani yuklang:</label></div>
+
+                      <b-form-input aria-label="Text input with checkbox" class=" w-50"></b-form-input>
+                      <div class="d-flex justify-content-end w-100"><b-button>saqlash</b-button></div>
+                    </div>
+                    <hr />
+                    <div class="d-flex align-items-center justify-content-start flex-wrap"
+                      v-if="galleries && galleries.length">
+
+
+                      <div class="ml-2 mb-3 d-flex align-items-center flex-column" no-body
+                        v-for="(gallery, ind) in galleries" :key="ind">
+
+                        <div>
+                          <img v-if="!video_link" :src="apiUrl + '/' + gallery.path" class=" border-0 galeryImg "
+                            :alt="gallery.id" />
+
+                          <iframe v-else width="150" height="150" src="https://www.youtube.com/embed/tgbNymZ7vqY">
+                          </iframe>
+
+
+
+                        </div>
+                        <div class="w-100 mt-2">
+                          <b-button variant="danger" class="w-100">O'chirish</b-button>
+                        </div>
+
+                      </div>
                     </div>
                   </div>
                 </b-collapse>
               </div>
 
               <!-- ebooks -->
-              <b-modal
-                id="authormodal"
-                ref="modalbasic"
-                :title="$t('modal.modal-title')"
-                :hide-footer="true"
-              >
+              <b-modal id="authormodal" ref="modalbasic" :title="$t('modal.modal-title')" :hide-footer="true">
                 <AddAuthor :frommodal="true" />
               </b-modal>
             </div>
@@ -555,6 +399,7 @@ export default {
   data() {
     return {
       apiUrl,
+      is_photo: true,
       direction: getDirection().direction,
       addBookForm: {
         name: "",
@@ -1179,5 +1024,11 @@ export default {
 
 .jv_error_btn:hover {
   background: #f05883;
+}
+
+.galeryImg {
+  width: 150px;
+  height: 150px;
+  border-radius: 5px;
 }
 </style>

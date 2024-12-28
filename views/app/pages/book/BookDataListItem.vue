@@ -18,7 +18,7 @@
                 </router-link>
                 <div class="w-15 w-sm-100">
                     <p class="list-item-heading mb-0 truncate">
-                        <div v-if="data.category.length">
+                        <div v-if="data?.category?.length">
                             <span
                                 class="text-info"
                                 v-for="category in data.category"
@@ -53,7 +53,7 @@
                         :id="'edit_btn'"
                         class="btn btn-success"
                         variant="secondary"
-                        @click.prevent="editBook($event, data.id)"
+                        @click.prevent="editBook(data.step, data.id)"
                     >
                         <i class="simple-icon-note"></i>
                     </button>
@@ -117,8 +117,25 @@ export default {
     props: ["data", "selectedItems"],
     methods: {
         ...mapActions(["getBookList", "deleteBook"]),
-        editBook(event, id) {
-            this.$router.push(`${adminRoot}/book/edit/${id}`);
+        editBook(step, id) {
+            if(step == 0 ) {
+                this.$router.push(`${adminRoot}/book/edit/${id}`);
+
+            }
+            else {
+                let routeLink = null
+                if(step == 1) {
+                    routeLink = 'bookDetils'
+                }
+                if(step == 2) {
+                    routeLink = 'bookContent'
+                }
+                if(step == 3 || step > 3) {
+                    routeLink = 'bookPrice'
+                }
+                this.$router.push(`${adminRoot}/${routeLink}/${id}`)
+            }
+            
         },
         addTranslation(event, id) {
             this.$router.push(`${adminRoot}/book/add-translation/${id}`);

@@ -182,6 +182,9 @@ export default new Vuex.Store({
     //       });
     //   });
     // },
+
+
+    
     logoutAsUser({ commit }) {
       return new Promise((resolve, reject) => {
         //commit("clearError");

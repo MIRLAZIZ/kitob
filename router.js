@@ -373,28 +373,28 @@ const routes = [
                         /* webpackChunkName: "AddBook" */ "./views/app/pages/book/AddBook.vue"
                     )
             },
-            {
-                path: "book-add/step",
-                meta: {
-                    action: "store",
-                    subject: "BookController"
-                },
-                component: () =>
-                    import(
-                        /* webpackChunkName: "AddBook" */ "./views/app/pages/book/addstep/AddBook"
-                    )
-            },
-            {
-                path: "book-add/step/:id",
-                meta: {
-                    action: "store",
-                    subject: "BookController"
-                },
-                component: () =>
-                    import(
-                        /* webpackChunkName: "AddBook" */ "./views/app/pages/book/addstep/AddBook"
-                    )
-            },
+            // {
+            //     path: "book-add/step",
+            //     meta: {
+            //         action: "store",
+            //         subject: "BookController"
+            //     },
+            //     component: () =>
+            //         import(
+            //             /* webpackChunkName: "AddBook" */ "./views/app/pages/book/addstep/AddBook"
+            //         )
+            // },
+            // {
+            //     path: "book-add/step/:id",
+            //     meta: {
+            //         action: "store",
+            //         subject: "BookController"
+            //     },
+            //     component: () =>
+            //         import(
+            //             /* webpackChunkName: "AddBook" */ "./views/app/pages/book/addstep/AddBook"
+            //         )
+            // },
             {
                 path: "book/edit/:id",
                 meta: {

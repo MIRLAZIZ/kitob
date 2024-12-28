@@ -21,12 +21,12 @@ const data = [
         to: `${adminRoot}/book/default`,
         meta: { con: 'BookController', action: 'index' },
       },
-      {
-        icon: "simple-icon-magnifier-add",
-        label: "menu.list",
-        to: `${adminRoot}/book-add/step/1`,
-        meta: { con: 'BookController', action: 'store' },
-      },
+      // {
+      //   icon: "simple-icon-magnifier-add",
+      //   label: "menu.list",
+      //   to: `${adminRoot}/book-add/step/1`,
+      //   meta: { con: 'BookController', action: 'store' },
+      // },
       // {
       //   icon: "simple-icon-magnifier-add",
       //   label: "menu.add-new",

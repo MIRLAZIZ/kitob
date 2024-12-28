@@ -173,11 +173,20 @@ export default {
     methods: {
         ...mapActions(["getBookList", "addBook", "generateFakeBook"]),
         async gotoAddBook() {
-            await this.addBook();
+            let role = JSON.parse(localStorage.getItem('user')).role.id
+            if(role == 1) {
+                await this.addBook();
             if (this.getBookAlertMsg.success) {
+                console.log(this.getBookAlertMsg.result.id);
+                this.$router.push(`${adminRoot}/book/edit/${this.getBookAlertMsg.result.id}`)
+
+            }         
+            }
+            else{
                 this.$router.push(
                     `${adminRoot}/createbook`
                 );
+
             }
         }
         // async fakeData(){
